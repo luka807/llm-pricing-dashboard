@@ -1,204 +1,271 @@
 # LLM Pricing Dashboard — Design Spec
 
-> **Status: proposed design, not yet built.** The repository currently contains only
-> the default `create-next-app` scaffold (one welcome page, no tabs, no components,
-> no data). This document specifies the dashboard described in `AGENTS.md` so a
-> design tool can produce mockups/UI for it. Nothing below exists in code yet —
-> treat it as the target to design toward, not a description of a running app.
+> **Status: describes the app as built.** This reflects the actual implementation in
+> `src/app` and `src/components` as of this writing — every route, component, data
+> source, and interaction that exists in code today. It supersedes the earlier
+> "proposed design" version of this document. Hand this to a design tool as ground
+> truth for what it's redesigning.
 
 ## 1. Purpose
 
-A single-page dashboard that helps someone choose and budget for an LLM API by
-comparing pricing across providers and models, estimating cost for their own usage,
-relating price to model capability, and seeing how pricing has moved over time.
+A single-page dashboard for comparing LLM API pricing, estimating cost for a given
+usage pattern, relating price to model capability, and seeing how pricing has moved
+over time. All data is static, checked into the repo as JSON, sourced from provider
+pricing pages and third-party trackers (Artificial Analysis, BenchLM) — there is no
+live API or backend.
 
-## 2. Global layout
+## 2. Route structure
 
-- **App shell**: a header/title bar at the top ("LLM Pricing Dashboard" + short
-  subtitle), full-width content area below, no sidebar.
-- **Tab bar**: a horizontal row of four tabs directly under the header, always
-  visible. Only one tab's content is shown at a time (client-side tab switching,
-  no page navigation/reload — likely a single route `/` with tab state in the URL
-  as a query param, e.g. `?tab=calculator`, so a tab is linkable/bookmarkable and
-  survives refresh).
-- **Tabs, in order**:
-  1. Pricing Comparison (default/landing tab)
-  2. Cost Calculator
-  3. Cost vs. Capability
-  4. Pricing History
-- **Footer** (optional/light): data-as-of date and a note on sources.
-- **Theming**: supports light and dark mode (Tailwind `dark:` classes, matches
-  system preference), consistent with the scaffold's existing dark-mode setup.
-- **Responsive behavior**: tab bar collapses to a horizontal scroll or dropdown
-  below a mobile breakpoint; tables scroll horizontally rather than reflow;
-  charts resize to container width.
+One route: `/` (`src/app/page.tsx`), which renders a single client component,
+`DashboardApp`. There is no server-side data fetching or dynamic routing — all data
+is imported at build time from `src/data/*.json`.
 
-## 3. Shared data model
+- `src/app/layout.tsx` — root HTML shell. Loads the Geist Sans / Geist Mono fonts via
+  `next/font/google`, sets page `<title>`/`<meta description>` ("LLM Pricing
+  Dashboard"), and wraps `children` in a full-height flex column `<body>`.
+- `src/app/globals.css` — defines the color system as CSS custom properties (see
+  §9) and maps them into Tailwind v4 via `@theme inline`, so components consume them
+  as ordinary utility classes (`bg-card`, `text-muted-foreground`, etc.) rather than
+  inline styles, except where a color is genuinely data-driven (provider/series
+  colors), which use inline `style` bound to the same CSS variables.
+- `src/app/page.tsx` — renders `<DashboardApp />`. No other content.
 
-All tabs read from a common in-repo dataset (`src/data/`), not a live API.
+## 3. App shell — `DashboardApp`
 
-- **Provider**: id, name, logo/color.
-- **Model**: id, provider id, display name, family, modalities (text/image/etc.),
-  context window size, release date, "current" flag (vs. deprecated).
-- **PricingEntry**: model id, unit prices — input tokens (per 1M), output tokens
-  (per 1M), optional cached-input price, optional batch-API discount price,
-  currency, effective date.
-- **CapabilityScore**: model id, benchmark name (e.g. MMLU, a general "quality
-  index"), score, source/date.
-- **PricingHistoryEntry**: model id, price (input/output), effective date, change
-  type (initial listing / increase / decrease).
+Client component (`"use client"`) that owns the one piece of shared UI state: which
+tab is active (`useState<TabKey>`, default `"pricing"`). Renders, top to bottom:
 
-This model backs all four tabs; each tab is a different view/filter/chart over it.
+1. **Header row** — "LLM Pricing Dashboard" (bold, 19px) with a subtitle ("Compare
+   pricing, estimate cost, and track changes across LLM providers"), and a small
+   30×30px accent-colored square on the right (a placeholder logo mark — not
+   interactive).
+2. **`TabNav`** — the four-tab bar.
+3. The active tab's component: `PricingComparisonTab`, `CostCalculatorTab`,
+   `CostVsCapabilityTab`, or `PricingHistoryTab`, mounted/unmounted on switch (not
+   hidden via CSS — each tab's local state, e.g. filters or the selected drawer
+   model, resets when you navigate away and back).
 
-## 4. Shared components
+Tab switching is pure client-side React state — there is no URL query param for the
+active tab, so it is not deep-linkable or preserved on refresh.
 
-These are used across multiple tabs and should be designed once, reused everywhere.
+## 4. `TabNav` (`src/components/TabNav.tsx`)
 
-- **`TabNav`** — the four-item tab bar. Displays tab label, highlights the active
-  tab, shows a count badge only if relevant (none planned initially). Interaction:
-  click/tap a tab to switch; keyboard arrow-key navigation between tabs.
-- **`ProviderFilter`** — multi-select checklist or chip group of providers (e.g.
-  OpenAI, Anthropic, Google, Meta, Mistral). Interaction: toggle a provider chip
-  to show/hide its models everywhere on the current tab.
-- **`ModelSearch`** — a text input that filters the visible model list/table/chart
-  by name as the user types.
-- **`ProviderBadge`** — small colored pill showing a provider's name/logo, used in
-  table rows, legend entries, and tooltips for quick visual identification.
-- **`PriceTag`** — formatted price display (e.g. "$3.00 / 1M input tokens"),
-  used in table cells, calculator results, and chart tooltips.
-- **`EmptyState`** — shown when a filter/search yields no matching models.
-- **`DataAsOfNote`** — small text noting the date the underlying pricing data was
-  last updated, shown near the top or bottom of each tab.
+Renders four `role="tab"` buttons in a `role="tablist"`: **Pricing Comparison**,
+**Cost Calculator**, **Cost vs. Capability**, **Pricing History**. The active tab is
+bold with a 2px accent-colored underline; inactive tabs are muted and brighten on
+hover. Clicking a tab calls the `onChange` callback passed down from `DashboardApp`.
+Horizontally scrollable on narrow viewports (`overflow-x-auto`) rather than wrapping.
 
-## 5. Tab: Pricing Comparison
+## 5. Data model
 
-**Purpose**: let the user scan and compare raw per-token pricing across models
-side by side.
+Three static JSON files in `src/data/`, joined and normalized by `src/lib/pricing.ts`:
 
-**Components**:
-- `ProviderFilter` and `ModelSearch` above the table, plus a **modality filter**
-  (text / vision / audio) and a toggle for **"show deprecated models"**.
-- **`PricingTable`** — the main element. Columns: Provider (badge), Model name,
-  Context window, Input price / 1M tokens, Output price / 1M tokens, Cached-input
-  price (if available), Batch price (if available). Sortable by clicking any
-  numeric column header (ascending/descending toggle). Rows group visually by
-  provider (subtle background banding or sticky provider sub-headers).
-- **`ColumnVisibilityMenu`** — lets the user show/hide optional columns (cached
-  price, batch price, context window) to reduce clutter.
-- Row interaction: clicking a row expands an inline detail panel or opens a side
-  drawer with fuller model info (release date, modalities, notes) — a
-  **`ModelDetailDrawer`**.
+- **`pricing.json`** — 16 models across 6 providers (OpenAI, Anthropic, Google,
+  Mistral, DeepSeek, xAI). Each model has: `model` (name), `tier`
+  (`frontier` | `mid-range` | `lightweight`), `inputPerMillion`, `outputPerMillion`,
+  `cachedInputPerMillion` (nullable), `contextWindowTokens` (nullable), `notes`
+  (nullable free text, often with sourcing detail), and a `pricingModel` discriminator
+  (`"token"` or `"credit"` — all current entries are `"token"`). Each provider block
+  also carries a `sourceUrl` to its official pricing page.
+- **`benchmarks.json`** — per-model `intelligenceIndex` (0–100ish blended benchmark
+  score) and `valueScore` (capability points per dollar of output cost), joined to
+  `pricing.json` by provider + model name. Not every model has a `valueScore`.
+- **`pricing-history.json`** — a curated, non-continuous list of industry pricing
+  **milestones** (launches and price cuts) from GPT-4's March 2023 launch through
+  September 2026, each with `date`, `provider` (nullable), `model`, `event`
+  (`"launch"` | `"price cut"` | `"entered price index"`), either
+  `inputPerMillion`/`outputPerMillion` or a single `blendedPerMillion`, `notes`, and
+  `sourceConfidence` (`"high"` | `"aggregator"`). It also includes one special
+  provider-less entry, a "Frontier token price index" snapshot (index value 16,
+  vs. 100 at the March 2023 baseline).
+- **`src/lib/normalizePricing.ts`** — converts either token-priced or credit-priced
+  raw entries into a common `NormalizedPricing` shape (USD per 1M tokens for input
+  and output). All current data is already token-priced, but every model is still
+  routed through this so a future credit-billed provider needs no new branching.
+- **`src/lib/pricing.ts`** — builds `ALL_MODELS` (the joined, normalized model list),
+  exposes `PROVIDERS`, a fixed `PROVIDER_COLOR_VAR` map (one CSS color variable per
+  provider), the cost-calculation function `calcCost`, and history helpers
+  (`PRICE_MILESTONES`, `FRONTIER_INDEX`, `milestoneBlendedPrice`).
+- **`src/lib/format.ts`** — `formatUSD` (adaptive precision: 3 decimals under $1, else
+  2, with thousands separators), `formatContext` ("1M" / "256K"), `formatDate`.
 
-**Data displayed**: full PricingEntry rows joined with Model + Provider, filtered
-by the shared filters.
+## 6. Shared components
 
-## 6. Tab: Cost Calculator
+Used across two or more tabs:
 
-**Purpose**: estimate the real dollar cost of a workload given expected token
-volumes, and compare that estimate across models.
+- **`ProviderBadge`** (`ProviderBadge.tsx`) — a small colored dot + provider name.
+  Standalone version exists but most tabs inline the same dot-plus-label pattern
+  directly for layout control.
+- **`PriceTag`** (`PriceTag.tsx`) — formats a dollar amount via `formatUSD` with a
+  muted `/1M` suffix.
+- **`ProviderFilter`** (`ProviderFilter.tsx`) — a row of toggleable pill buttons, one
+  per provider, each with the provider's dot color. Multi-select: click to
+  show/hide that provider everywhere on the current tab. All providers are selected
+  by default. Used on the Pricing Comparison, Cost vs. Capability, and Pricing
+  History tabs.
+- **`ModelSearch`** (`ModelSearch.tsx`) — a bordered text input with a magnifying-glass
+  icon; filters the current tab's model list by substring match on model name
+  (case-insensitive). Used on Pricing Comparison and Cost vs. Capability.
+- **`SegmentedControl`** (`SegmentedControl.tsx`) — a generic, reusable button-group
+  (single-select). Backs every toggle in the app: the tier filter, the Cost vs.
+  Capability axis-metric toggles, and the Pricing History event/time-range filters.
+- **`EmptyState`** (`EmptyState.tsx`) — a dashed-border panel with a search icon,
+  title, and description, shown whenever active filters produce zero results.
+- **`DataAsOfNote`** (`DataAsOfNote.tsx`) — small muted footer text: "Data as of
+  [date] · sourced from each provider's official pricing page," reading the date
+  from `pricing.json`'s `generatedAt`.
+- **`ModelDetailDrawer`** (`ModelDetailDrawer.tsx`) — a right-side overlay panel
+  (click-outside or Escape to close) shown when a model row/point is selected.
+  Displays: provider dot + name, a tier badge, model name; an **Overview** section
+  (context window); a **Pricing** section (input, output, cached-input per 1M,
+  each via `PriceTag`-style formatting); a **Capability** section (intelligence
+  index, value score) when benchmark data exists; the model's `notes` text in a
+  muted callout box, if present; and a "View source pricing page" link out to the
+  provider's `sourceUrl`. Triggered from the Pricing Comparison table (row click).
 
-**Components**:
-- **`UsageInputForm`** — the primary interactive element:
-  - Numeric input: input tokens per request (or per month).
-  - Numeric input: output tokens per request (or per month).
-  - Numeric input: number of requests (with a unit toggle: per day / per month).
-  - Optional toggle: "use cached input pricing where available."
-  - Optional toggle: "use batch pricing where available."
-  - Live-updates results as the user types (debounced), no submit button required.
-- **`ModelSelector`** — checklist to choose which models to include in the
-  comparison (defaults to a handful of popular models, reuses `ProviderFilter`
-  styling).
-- **`CostResultsTable`** — one row per selected model: input cost, output cost,
-  total cost (per the chosen time unit), sorted ascending by total cost so the
-  cheapest option surfaces first. Cheapest row visually highlighted.
-- **`CostBarChart`** — horizontal bar chart mirroring the results table, one bar
-  per model, length = total estimated cost, stacked/segmented into input vs.
-  output cost. Hover tooltip shows exact dollar breakdown (`PriceTag`).
-- **`AssumptionsNote`** — small text stating the formula used (e.g. "cost =
-  (tokens / 1,000,000) × price per 1M tokens") so results are transparent.
+## 7. Tab: Pricing Comparison (`PricingComparisonTab.tsx`)
 
-**Data displayed**: derived (computed client-side) from PricingEntry ×
-user-entered usage numbers. No server round-trip needed.
+**State:** search text, selected providers (default: all), tier filter (default:
+"All tiers"), and the currently open drawer model (default: none).
 
-## 7. Tab: Cost vs. Capability
+**Layout:** a toolbar row (`ModelSearch` + `ProviderFilter` on the left, a tier
+`SegmentedControl` — All tiers / Frontier / Mid-range / Lightweight — on the right),
+then either an `EmptyState` or the table, then `DataAsOfNote`.
 
-**Purpose**: visualize whether higher price correlates with higher capability, to
-spot good-value models.
+**`PricingTable`** (`PricingTable.tsx`): one row per model, columns Provider (dot +
+name), Model, Context, Input/1M, Output/1M, Cached/1M. Every numeric column header
+is clickable to sort (ascending, click again to reverse); the active sort column
+shows a filled accent-colored arrow, others a faint gray one. Default sort: Input/1M
+ascending. Rows zebra-stripe. Clicking anywhere on a row opens `ModelDetailDrawer`
+for that model. A trailing chevron icon hints the row is expandable/clickable.
 
-**Components**:
-- **`ScatterPlot`** — X axis: price (a toggleable metric — input price, output
-  price, or a blended price), Y axis: capability score. One point per model,
-  colored by provider (shared color mapping with `ProviderBadge`), point size
-  optionally encoding context window. Hovering a point shows a tooltip with model
-  name, provider, exact price, and score (`PriceTag` reused).
-- **`AxisMetricToggle`** — lets the user switch what's plotted on the X axis
-  (input price / output price / blended) and Y axis (which benchmark, if more
-  than one is available).
-- **`ProviderFilter`** and **`ModelSearch`** — same shared components, filtering
-  which points are plotted.
-- **`QuadrantLabels`** or a simple "best value" reference line/diagonal — optional
-  visual aid showing the value frontier (models that are cheap for their
-  capability).
-- Clicking a point opens the same `ModelDetailDrawer` used in the Pricing
-  Comparison tab.
+## 8. Tab: Cost Calculator (`CostCalculatorTab.tsx`)
 
-**Data displayed**: Model × PricingEntry × CapabilityScore joins.
+**State:** usage inputs (input tokens/request, output tokens/request, request count,
+request-count unit "day"/"month", a "use cached input pricing" toggle) and a set of
+selected model keys.
 
-**Empty/edge case**: models without a capability score are excluded from the plot
-and listed in a small "not enough data" note rather than silently dropped.
+**Defaults:** 1,200 input tokens/request, 600 output tokens/request, 50,000
+requests/month, cached pricing off. Six models are pre-selected (one representative
+model per provider: GPT-5.6 Terra, Claude Sonnet 5, Gemini 3.8 Flash, Mistral Medium
+3.5, DeepSeek-V4-Pro, Grok 4.6).
 
-## 8. Tab: Pricing History
+**Layout:** a left sidebar (`UsageInputForm` above `ModelSelector`) and a right
+column with results.
 
-**Purpose**: show how a model's (or provider's) pricing has changed over time.
+- **`UsageInputForm`** — number fields for input/output tokens per request; a
+  requests field paired with a day/month segmented toggle; a "use cached input
+  pricing" switch; and a one-line note explaining the cost formula. All inputs are
+  live — no submit button, results recompute on every keystroke/toggle.
+- **`ModelSelector`** — a scrollable checklist of all 16 models (checkbox + provider
+  dot + name); click to add/remove a model from the comparison.
+- **`CostResultsTable`** — one row per selected model, sorted ascending by total
+  cost: Model, Input cost, Output cost, Total. The cheapest row is highlighted
+  (accent-tinted background) and tagged with a "Cheapest" pill.
+- **`CostBarChart`** — a horizontal bar per selected model (same ascending order),
+  each bar segmented into input cost (light blue) and output cost (accent blue),
+  with a legend and the total dollar figure at the right of each bar.
+- If no models are selected, an `EmptyState` replaces the results.
 
-**Components**:
-- **`ModelSelector`** (single or multi-select, reused styling) — choose which
-  model(s)' price history to plot; defaults to a small preset set of well-known
-  models.
-- **`PriceHistoryLineChart`** — X axis: date, Y axis: price per 1M tokens, one
-  line per selected model (and typically two lines per model — input and output —
-  distinguished by line style, e.g. solid vs. dashed, sharing that model's color).
-  Step/line chart since prices change in discrete jumps, not continuously.
-  Hovering shows the exact price and effective date at that point.
-- **`MetricToggle`** — switch the chart between input price and output price (or
-  show both, per above).
-- **`PriceChangeTable`** — a chronological list/table below the chart: date,
-  model, metric (input/output), old price → new price, % change, direction
-  (increase/decrease shown with an up/down indicator and color).
-- **`TimeRangeControl`** — quick-select range (e.g. Last 6 months / 1 year / All
-  time) or a date-range picker to zoom the chart and filter the table.
+Cost math (`calcCost` in `pricing.ts`): requests are normalized to a monthly count
+(day × 30); `cost = (tokens ÷ 1,000,000) × price-per-1M`, summed for input and
+output; the cached-input price is substituted for the standard input price when the
+toggle is on and the model has one.
 
-**Data displayed**: PricingHistoryEntry series per selected model, sorted by date.
+## 9. Tab: Cost vs. Capability (`CostVsCapabilityTab.tsx`)
 
-## 9. Interaction summary (cross-tab)
+**State:** search text, selected providers (default: all), X-axis metric (Input
+price / Output price / **Blended**, default Blended), Y-axis metric (**Intelligence
+index** / Value score, default Intelligence index).
+
+**Layout:** toolbar (search + provider filter on the left, the two
+`SegmentedControl` axis toggles on the right), then `CapabilityScatterChart`, then
+`DataAsOfNote`.
+
+**`CapabilityScatterChart`**: one dot per model, positioned by the selected X metric
+(price, **log scale**) and Y metric, colored by provider. Hovering a dot shows a
+tooltip card with model name, provider, exact price, and the Y-metric value.
+X-axis tick labels are auto-generated at "nice" log steps (1/2/5 × 10ⁿ) across the
+data's actual price range. Below the chart: a note when models are excluded for
+lacking the selected Y metric (e.g. DeepSeek-V4-Flash has no published value
+score), and a legend listing every provider's color. Models with a non-positive
+price or a null Y value are filtered out before plotting.
+
+## 10. Tab: Pricing History (`PricingHistoryTab.tsx`)
+
+**State:** selected providers (default: all), event-type filter (All events /
+Launches / Price cuts, default All), and a "since year" filter (auto-built from the
+years present in the data — "All time" plus one option per later year, e.g.
+"2025–now", "2026–now").
+
+**Layout, top to bottom:**
+
+1. **Headline stat card** — "‑84%" in large type, "since GPT-4's March 2023 launch,"
+   with the index's own description text (BenchLM's frontier token price index, 100
+   → 16) alongside it. Static — not affected by the filters below.
+2. Filter row — `ProviderFilter` on the left, event-type and year `SegmentedControl`s
+   on the right.
+3. **`PriceHistoryChart`** — a scatter of every milestone event by date (x, linear)
+   vs. blended price (y, **log scale**), colored by provider; filled dots are
+   launches, hollow-ringed dots are price cuts (a small legend explains the
+   distinction). Hovering a point shows date, provider, model, event type, and
+   price. X-axis ticks are calendar years.
+4. **`PriceChangeTable`** — every filtered milestone as a row, newest first: Date,
+   Model (with its notes text underneath, when present), Event, Price (either
+   "input / output" or a single "blended" figure, depending on what the source
+   reported), and a Source confidence pill ("Verified" for `high`, "Aggregator"
+   otherwise).
+
+An `EmptyState` replaces the chart and table if the current filters match no
+milestones.
+
+## 11. Interaction summary (cross-tab)
 
 | Interaction | Where |
 |---|---|
-| Switch tabs | Tab bar, all pages |
-| Filter by provider | Pricing Comparison, Cost vs. Capability, (Cost Calculator via model selector) |
+| Switch tabs | `TabNav`, all pages (resets that tab's local state) |
+| Filter by provider | Pricing Comparison, Cost vs. Capability, Pricing History |
+| Filter by tier | Pricing Comparison |
 | Search model by name | Pricing Comparison, Cost vs. Capability |
-| Sort table column | Pricing Comparison, Cost Calculator results |
-| Toggle optional columns | Pricing Comparison |
-| Enter usage numbers | Cost Calculator |
-| Toggle cached/batch pricing | Cost Calculator |
-| Switch chart axis metric | Cost vs. Capability |
-| Switch chart price metric | Pricing History |
-| Select time range | Pricing History |
-| Hover for tooltip detail | All charts |
-| Click row/point for detail drawer | Pricing Comparison, Cost vs. Capability |
-| Toggle light/dark mode | Global (follows system, no explicit switch planned) |
+| Sort table column | Pricing Comparison (`PricingTable`) |
+| Click a row/point for detail | Pricing Comparison → `ModelDetailDrawer` |
+| Enter usage numbers, toggle cached pricing | Cost Calculator |
+| Toggle day/month | Cost Calculator |
+| Check/uncheck models to compare | Cost Calculator |
+| Switch X/Y chart metric | Cost vs. Capability |
+| Hover a chart point for a tooltip | Cost vs. Capability, Pricing History |
+| Filter by event type / year | Pricing History |
+| Close the detail drawer (click outside, ✕, or Escape) | Pricing Comparison |
+| Follow "View source pricing page" | Model detail drawer |
 
-## 10. States to design for each data view
+## 12. Theming
 
-- **Loaded/default** — data present, no filters applied.
-- **Filtered/empty** — filters or search exclude all rows/points; show `EmptyState`.
-- **Loading** (if data ever moves to an async fetch instead of static import) —
-  skeleton rows/chart placeholder.
-- **Detail drawer open** — `ModelDetailDrawer` overlays or pushes content.
+Light/dark mode follows `prefers-color-scheme` (no manual toggle in the UI). All
+colors are CSS custom properties defined in `globals.css`:
 
-## 11. Out of scope (not part of this spec)
+- Neutrals: `--background`, `--foreground`, `--card`, `--muted`, `--muted-2`,
+  `--border`, `--muted-foreground`, `--faint-foreground`.
+- Brand/interactive: `--accent`, `--accent-foreground`, `--accent-soft` (used for
+  active tab underline, active segmented-control option, focus rings, the
+  "cheapest" highlight/badge, links).
+- Provider identity: `--series-1`…`--series-6` (OpenAI, Anthropic, Google, Mistral,
+  DeepSeek, xAI, in that order) — one fixed color per provider, reused for filter
+  chips, table dots, chart points, and legends everywhere.
+- Chart-specific: `--bar-input` / `--bar-output` (the two segments of the Cost
+  Calculator's bars — not tied to provider identity).
+- Status: `--good` / `--critical` (defined, currently only referenced for future
+  price-direction styling; the current `PriceChangeTable` does not yet color
+  increases vs. decreases differently).
+- Typography: Geist Sans throughout (`--font-sans`), tabular figures
+  (`.num` / `font-variant-numeric: tabular-nums`) on every price, count, and date
+  column so numbers align.
 
-- User accounts, saved comparisons, or exporting reports.
-- Live/real-time pricing fetched from provider APIs (data is static, checked into
-  `src/data/`, with a manual "as of" date).
-- Currency conversion (USD only).
+## 13. Known simplifications (current implementation, not the original spec)
+
+- No batch-pricing toggle or modality filter — `pricing.json` has no such fields.
+- No "column visibility" control on the Pricing Comparison table — all columns are
+  always shown; the table scrolls horizontally on narrow viewports instead.
+- Tab state is component state, not a URL query param — tabs are not deep-linkable.
+- Pricing History is event/milestone-based (scatter + changelog), not a continuous
+  per-model line chart, because the underlying data is a curated timeline of
+  discrete launches and price cuts, not continuous daily pricing.
