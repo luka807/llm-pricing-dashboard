@@ -7,6 +7,7 @@ import ModelSelector, { modelKey } from "@/components/ModelSelector";
 import CostResultsTable, { type CostRow } from "@/components/CostResultsTable";
 import CostBarChart from "@/components/CostBarChart";
 import EmptyState from "@/components/EmptyState";
+import SectionHeader from "@/components/SectionHeader";
 
 const DEFAULT_SELECTED_MODELS = [
   "GPT-5.6 Terra",
@@ -55,23 +56,38 @@ export default function CostCalculatorTab() {
       .sort((a, b) => a.breakdown.totalCost - b.breakdown.totalCost);
   }, [usage, selectedKeys]);
 
-  return (
-    <div className="flex flex-col gap-5 px-4 py-6 sm:flex-row sm:px-8">
-      <div className="flex w-full shrink-0 flex-col gap-4 sm:w-80">
-        <UsageInputForm value={usage} onChange={setUsage} />
-        <ModelSelector models={ALL_MODELS} selectedKeys={selectedKeys} onToggle={toggleModel} />
-      </div>
+  const assumption =
+    `${usage.inputTokensPerRequest.toLocaleString()} input + ${usage.outputTokensPerRequest.toLocaleString()} output tokens` +
+    ` × ${usage.requests.toLocaleString()} requests / ${usage.requestUnit}` +
+    (usage.useCachedInput ? " · cached input rate where published" : "");
 
-      <div className="flex min-w-0 flex-1 flex-col gap-5">
-        {rows.length === 0 ? (
-          <EmptyState title="No models selected" description="Choose at least one model to see a cost comparison." />
-        ) : (
-          <>
-            <CostResultsTable rows={rows} />
-            <CostBarChart rows={rows} />
-          </>
-        )}
+  return (
+    <section>
+      <SectionHeader
+        eyebrow="Cost Calculator"
+        title="Estimate the cost of your workload"
+        description="Enter expected token volumes; results update live and sort cheapest-first."
+      />
+
+      <div className="grid items-start gap-6 sm:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+        <div className="flex flex-col gap-6">
+          <UsageInputForm value={usage} onChange={setUsage} />
+          <ModelSelector models={ALL_MODELS} selectedKeys={selectedKeys} onToggle={toggleModel} />
+        </div>
+
+        <div className="flex min-w-0 flex-col gap-6">
+          {rows.length === 0 ? (
+            <div className="border shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
+              <EmptyState title="No models selected" description="Choose at least one model to see a cost comparison." />
+            </div>
+          ) : (
+            <>
+              <CostBarChart rows={rows} periodLabel={`per ${usage.requestUnit}`} />
+              <CostResultsTable rows={rows} assumption={assumption} />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

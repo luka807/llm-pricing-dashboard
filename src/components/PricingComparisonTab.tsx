@@ -8,7 +8,7 @@ import SegmentedControl from "@/components/SegmentedControl";
 import PricingTable from "@/components/PricingTable";
 import ModelDetailDrawer from "@/components/ModelDetailDrawer";
 import EmptyState from "@/components/EmptyState";
-import DataAsOfNote from "@/components/DataAsOfNote";
+import SectionHeader from "@/components/SectionHeader";
 
 const TIER_OPTIONS: { value: Tier | "all"; label: string }[] = [
   { value: "all", label: "All tiers" },
@@ -34,24 +34,44 @@ export default function PricingComparisonTab() {
   }, [search, providers, tier]);
 
   return (
-    <div className="flex flex-col gap-5 px-4 py-6 sm:px-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5">
-          <ModelSearch value={search} onChange={setSearch} />
-          <div className="h-5 w-px bg-border" />
-          <ProviderFilter selected={providers} onChange={setProviders} />
+    <section>
+      <SectionHeader
+        eyebrow="Pricing Comparison"
+        title="Per-token pricing, side by side"
+        description="Sort any numeric column to rank models by cost. Prices are USD per 1M tokens."
+      />
+
+      <div className="border bg-[var(--card)] shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
+        <div className="flex flex-wrap items-end justify-between gap-5 border-b px-6 py-5" style={{ borderColor: "var(--border)" }}>
+          <div className="flex flex-wrap items-end gap-5">
+            <div className="flex min-w-0 flex-col gap-2">
+              <span className="eyebrow">Provider</span>
+              <ProviderFilter selected={providers} onChange={setProviders} />
+            </div>
+            <div className="flex min-w-0 flex-col gap-2">
+              <span className="eyebrow">Search</span>
+              <ModelSearch value={search} onChange={setSearch} />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="eyebrow">Tier</span>
+            <SegmentedControl options={TIER_OPTIONS} value={tier} onChange={setTier} />
+          </div>
         </div>
-        <SegmentedControl options={TIER_OPTIONS} value={tier} onChange={setTier} />
+
+        {filtered.length === 0 ? (
+          <EmptyState title="No models match these filters" description="Re-enable a provider or clear the search to see results." />
+        ) : (
+          <PricingTable models={filtered} onSelectModel={setSelected} />
+        )}
+
+        <p className="text-faint-foreground border-t px-6 py-3 text-xs" style={{ borderColor: "var(--border)" }}>
+          {filtered.length} of {ALL_MODELS.length} models shown · click any row for full detail · prices in USD per
+          1M tokens
+        </p>
       </div>
 
-      {filtered.length === 0 ? (
-        <EmptyState title="No models match your filters" description="Try clearing the search or selecting more providers." />
-      ) : (
-        <PricingTable models={filtered} onSelectModel={setSelected} />
-      )}
-
-      <DataAsOfNote />
       <ModelDetailDrawer model={selected} onClose={() => setSelected(null)} />
-    </div>
+    </section>
   );
 }

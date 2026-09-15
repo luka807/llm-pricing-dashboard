@@ -1,15 +1,38 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const proximaNova = localFont({
+  variable: "--font-proxima",
+  display: "swap",
+  src: [
+    { path: "./fonts/ProximaNova-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/ProximaNova-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/ProximaNova-Medium.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/ProximaNova-Semibold.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/ProximaNova-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/ProximaNova-Extrabold.ttf", weight: "800 900", style: "normal" },
+    { path: "./fonts/ProximaNova-LightItalic.ttf", weight: "300", style: "italic" },
+    { path: "./fonts/ProximaNova-Italic.ttf", weight: "400", style: "italic" },
+    { path: "./fonts/ProximaNova-MediumItalic.ttf", weight: "500", style: "italic" },
+    { path: "./fonts/ProximaNova-SemiboldItalic.ttf", weight: "600", style: "italic" },
+    { path: "./fonts/ProximaNova-BoldItalic.ttf", weight: "700", style: "italic" },
+    { path: "./fonts/ProximaNova-ExtraboldItalic.ttf", weight: "800 900", style: "italic" },
+  ],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${proximaNova.variable} ${sourceSerif.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

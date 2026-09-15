@@ -1,27 +1,85 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   Leadership Now Project — Colors & Type
+   Fonts: Proxima Nova (display + body, self-hosted), Source Serif 4
+   (editorial, used sparingly), JetBrains Mono (mono).
+   ========================================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --card: #ffffff;
-  --muted: #fafafa;
-  --muted-2: #f4f4f5;
-  --border: #e4e4e7;
-  --muted-foreground: #52525b;
-  --faint-foreground: #a1a1aa;
-  --accent: #2a78d6;
-  --accent-foreground: #ffffff;
-  --accent-soft: #eaf2fc;
-  --good: #0ca30c;
-  --critical: #d03b3b;
-  --series-1: #2a78d6;
-  --series-2: #eb6834;
-  --series-3: #1baf7a;
-  --series-4: #eda100;
-  --series-5: #e87ba4;
-  --series-6: #008300;
-  --bar-input: #b7d3f6;
-  --bar-output: #2a78d6;
+  /* ---------- Brand colors ---------- */
+  --lnp-gold: #ffb739;
+  --lnp-gold-600: #e89f1f;
+  --lnp-gold-100: #fff1d6;
+
+  --lnp-ink: #1f2024;
+  --lnp-navy-deep: #092b5f;
+  --lnp-navy: #003d4d;
+  --lnp-navy-mid: #3260a9;
+
+  --lnp-white: #ffffff;
+  --lnp-paper: #f7f6f2;
+  --lnp-gray-50: #f3f3f3;
+  --lnp-gray-100: #e8e8ea;
+  --lnp-gray-200: #d1d2d6;
+  --lnp-gray-300: #bfbfbf;
+  --lnp-gray-500: #8a8c93;
+  --lnp-gray-700: #565862;
+  --lnp-gray-900: #1f2024;
+
+  /* ---------- Semantic (app-wide aliases used throughout components) ---------- */
+  --background: var(--lnp-paper);
+  --foreground: var(--lnp-ink);
+  --card: var(--lnp-white);
+  --muted: var(--lnp-paper);
+  --muted-2: var(--lnp-gray-50);
+  --border: var(--lnp-gray-200);
+  --border-strong: var(--lnp-gray-300);
+  --muted-foreground: var(--lnp-gray-700);
+  --faint-foreground: var(--lnp-gray-500);
+
+  --accent: var(--lnp-navy-deep);
+  --accent-foreground: var(--lnp-white);
+  --accent-soft: var(--lnp-gray-100);
+
+  --highlight: var(--lnp-gold);
+  --highlight-foreground: var(--lnp-ink);
+  --highlight-soft: var(--lnp-gold-100);
+
+  --link: var(--lnp-navy-mid);
+  --link-hover: var(--lnp-navy-deep);
+
+  --good: #2f7d5b;
+  --critical: #b33a3a;
+
+  /* Provider categorical colors */
+  --series-1: #003d4d; /* OpenAI */
+  --series-2: #e89f1f; /* Anthropic */
+  --series-3: #3260a9; /* Google */
+  --series-4: #c77a19; /* Mistral */
+  --series-5: #2f7d5b; /* DeepSeek */
+  --series-6: #092b5f; /* xAI */
+
+  --bar-input: var(--lnp-navy-deep);
+  --bar-output: var(--lnp-gold);
+
+  /* ---------- Typography ---------- */
+  --font-display: var(--font-proxima), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-proxima), "Helvetica Neue", Arial, sans-serif;
+  --font-editorial: var(--font-source-serif), "Source Serif Pro", Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --tracking-eyebrow: 0.14em;
+  --tracking-h: -0.005em;
+
+  /* ---------- Shadows (brand UI is mostly flat) ---------- */
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-3: 0 16px 40px rgba(15, 23, 42, 0.12);
+
+  /* ---------- Decorative rule (the iconic gold underline) ---------- */
+  --rule-gold-thickness: 6px;
+  --rule-gold-length: 72px;
 }
 
 @theme inline {
@@ -31,11 +89,15 @@
   --color-muted: var(--muted);
   --color-muted-2: var(--muted-2);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-muted-foreground: var(--muted-foreground);
   --color-faint-foreground: var(--faint-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-soft: var(--accent-soft);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-highlight-soft: var(--highlight-soft);
   --color-good: var(--good);
   --color-critical: var(--critical);
   --color-series-1: var(--series-1);
@@ -46,40 +108,54 @@
   --color-series-6: var(--series-6);
   --color-bar-input: var(--bar-input);
   --color-bar-output: var(--bar-output);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --card: #0a0a0a;
-    --muted: #141414;
-    --muted-2: #1c1c1e;
-    --border: #2c2c2e;
-    --muted-foreground: #a1a1aa;
-    --faint-foreground: #71717a;
-    --accent: #3987e5;
-    --accent-foreground: #ffffff;
-    --accent-soft: #132132;
-    --good: #0ca30c;
-    --critical: #e66767;
-    --series-2: #d95926;
-    --series-3: #199e70;
-    --series-4: #c98500;
-    --series-5: #d55181;
-    --bar-input: #2a78d6;
-    --bar-output: #3987e5;
-  }
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-editorial: var(--font-editorial);
+  --font-mono: var(--font-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--lnp-navy-mid);
+  box-shadow: 0 0 0 3px rgba(50, 96, 169, 0.14);
+}
+button:focus-visible {
+  outline: 2px solid var(--lnp-gold);
+  outline-offset: 2px;
 }
 
 .num {
   font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--faint-foreground);
+}
+
+.rule-gold {
+  display: block;
+  width: var(--rule-gold-length);
+  height: var(--rule-gold-thickness);
+  background: var(--lnp-gold);
+  border: 0;
+  margin: 16px 0 0 0;
 }

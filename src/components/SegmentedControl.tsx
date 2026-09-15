@@ -14,7 +14,7 @@ export default function SegmentedControl<T extends string>({
   className = "",
 }: SegmentedControlProps<T>) {
   return (
-    <div className={`flex h-8 overflow-hidden rounded-lg border border-border ${className}`}>
+    <div className={`flex h-8 overflow-hidden rounded-[2px] border ${className}`} style={{ borderColor: "var(--border-strong)" }}>
       {options.map((opt, i) => {
         const isActive = opt.value === value;
         return (
@@ -23,10 +23,13 @@ export default function SegmentedControl<T extends string>({
             type="button"
             aria-pressed={isActive}
             onClick={() => onChange(opt.value)}
-            className={`px-3 text-[12.5px] font-medium transition-colors ${i > 0 ? "border-l border-border" : ""}`}
+            className={`font-display px-3.5 text-[12px] font-semibold tracking-[0.06em] uppercase transition-colors ${
+              i > 0 ? "border-l" : ""
+            }`}
             style={{
-              background: isActive ? "var(--accent)" : "transparent",
-              color: isActive ? "var(--accent-foreground)" : "var(--muted-foreground)",
+              borderColor: "var(--border)",
+              background: isActive ? "var(--lnp-navy-deep)" : "var(--card)",
+              color: isActive ? "#ffffff" : "var(--muted-foreground)",
             }}
           >
             {opt.label}

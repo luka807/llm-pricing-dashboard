@@ -14,29 +14,30 @@ type ModelSelectorProps = {
 
 export default function ModelSelector({ models, selectedKeys, onToggle }: ModelSelectorProps) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4.5">
-      <div className="mb-3 text-sm font-semibold text-foreground">Compare models</div>
-      <div className="flex max-h-80 flex-col gap-2.5 overflow-y-auto">
+    <div className="flex flex-col gap-2.5 border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
+      <span className="eyebrow">Models</span>
+      <div className="flex flex-wrap gap-2">
         {models.map((m) => {
           const key = modelKey(m);
-          const checked = selectedKeys.has(key);
+          const isOn = selectedKeys.has(key);
           const color = PROVIDER_COLOR_VAR[m.provider];
           return (
-            <label key={key} className="flex cursor-pointer items-center gap-2.5">
-              <span
-                className="flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded border"
-                style={{ background: checked ? "var(--accent)" : "transparent", borderColor: checked ? "var(--accent)" : "var(--border)" }}
-              >
-                {checked && (
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                )}
-              </span>
-              <input type="checkbox" className="sr-only" checked={checked} onChange={() => onToggle(key)} />
-              <span className="inline-block h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: color }} />
-              <span className="text-[13px] text-foreground">{m.model}</span>
-            </label>
+            <button
+              key={key}
+              type="button"
+              aria-pressed={isOn}
+              onClick={() => onToggle(key)}
+              className="inline-flex h-8 cursor-pointer items-center gap-2 rounded-full border pr-3.5 pl-2.5 text-[13px]"
+              style={{
+                borderColor: isOn ? "var(--lnp-navy-deep)" : "var(--border)",
+                background: isOn ? "var(--lnp-navy-deep)" : "var(--card)",
+                color: isOn ? "#ffffff" : "var(--muted-foreground)",
+                fontWeight: isOn ? 600 : 400,
+              }}
+            >
+              <span className="inline-block h-[9px] w-[9px] shrink-0 rounded-full" style={{ background: isOn ? color : "var(--border)" }} />
+              {m.model}
+            </button>
           );
         })}
       </div>

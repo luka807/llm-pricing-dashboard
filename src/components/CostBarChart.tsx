@@ -3,37 +3,41 @@ import { formatUSD } from "@/lib/format";
 
 type CostBarChartProps = {
   rows: CostRow[];
+  periodLabel: string;
 };
 
-export default function CostBarChart({ rows }: CostBarChartProps) {
+export default function CostBarChart({ rows, periodLabel }: CostBarChartProps) {
   const max = Math.max(...rows.map((r) => r.breakdown.totalCost), 1);
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4.5">
-      <div className="mb-4 flex items-center justify-between">
-        <div className="text-sm font-semibold text-foreground">Estimated cost by model</div>
-        <div className="flex items-center gap-3.5 text-xs text-muted-foreground">
-          <Legend color="var(--bar-input)" label="Input" />
-          <Legend color="var(--bar-output)" label="Output" />
-        </div>
-      </div>
-      <div className="flex flex-col gap-3">
+    <div className="border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
+      <h3 className="font-display mb-5 text-sm font-bold" style={{ color: "var(--lnp-navy-deep)" }}>
+        Estimated cost by model <span className="text-faint-foreground font-normal">· {periodLabel}</span>
+      </h3>
+      <div className="grid gap-3">
         {rows.map((row) => {
-          const inputPct = (row.breakdown.inputCost / max) * 100;
-          const outputPct = (row.breakdown.outputCost / max) * 100;
+          const total = row.breakdown.totalCost;
+          const pct = (total / max) * 100;
+          const inputShare = total > 0 ? (row.breakdown.inputCost / total) * 100 : 0;
           return (
-            <div key={`${row.model.provider}-${row.model.model}`} className="flex items-center gap-3">
-              <div className="w-28 shrink-0 truncate text-right text-xs text-muted-foreground">{row.model.model}</div>
-              <div className="relative h-[22px] flex-1 rounded bg-muted-2">
-                <div className="absolute left-0 top-0 h-full rounded-l" style={{ width: `${inputPct}%`, background: "var(--bar-input)" }} />
-                <div className="absolute top-0 h-full rounded-r" style={{ left: `${inputPct}%`, width: `${outputPct}%`, background: "var(--bar-output)" }} />
+            <div key={`${row.model.provider}-${row.model.model}`} className="grid grid-cols-[180px_minmax(0,1fr)_110px] items-center gap-4">
+              <div className="text-muted-foreground truncate text-sm font-semibold" style={{ color: "var(--lnp-navy-deep)" }}>
+                {row.model.model}
               </div>
-              <div className="num w-20 shrink-0 text-right text-[12.5px] font-medium text-foreground">
-                {formatUSD(row.breakdown.totalCost)}
+              <div className="h-[26px]" style={{ background: "var(--muted-2)" }}>
+                <div className="flex h-full" style={{ width: `${pct}%`, minWidth: total > 0 ? 2 : 0 }}>
+                  <div style={{ width: `${inputShare}%`, background: "var(--bar-input)" }} />
+                  <div style={{ width: `${100 - inputShare}%`, background: "var(--bar-output)" }} />
+                </div>
               </div>
+              <div className="num text-right font-mono text-sm font-bold text-foreground">{formatUSD(total)}</div>
             </div>
           );
         })}
+      </div>
+      <div className="text-muted-foreground mt-5 flex items-center gap-5 text-xs">
+        <Legend color="var(--bar-input)" label="Input" />
+        <Legend color="var(--bar-output)" label="Output" />
       </div>
     </div>
   );
@@ -41,8 +45,8 @@ export default function CostBarChart({ rows }: CostBarChartProps) {
 
 function Legend({ color, label }: { color: string; label: string }) {
   return (
-    <span className="flex items-center gap-1.5">
-      <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: color }} />
+    <span className="inline-flex items-center gap-2">
+      <span className="inline-block h-[11px] w-[11px]" style={{ background: color }} />
       {label}
     </span>
   );

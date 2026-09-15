@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ALL_MODELS, PROVIDERS, type Provider } from "@/lib/pricing";
+import { ALL_MODELS, PROVIDERS, type Model, type Provider } from "@/lib/pricing";
 import ModelSearch from "@/components/ModelSearch";
 import ProviderFilter from "@/components/ProviderFilter";
 import SegmentedControl from "@/components/SegmentedControl";
 import CapabilityScatterChart, { type XMetric, type YMetric } from "@/components/CapabilityScatterChart";
-import DataAsOfNote from "@/components/DataAsOfNote";
+import ModelDetailDrawer from "@/components/ModelDetailDrawer";
+import SectionHeader from "@/components/SectionHeader";
 
 const X_OPTIONS: { value: XMetric; label: string }[] = [
   { value: "input", label: "Input price" },
@@ -24,6 +25,7 @@ export default function CostVsCapabilityTab() {
   const [providers, setProviders] = useState<Provider[]>(PROVIDERS);
   const [xMetric, setXMetric] = useState<XMetric>("blended");
   const [yMetric, setYMetric] = useState<YMetric>("intelligenceIndex");
+  const [selected, setSelected] = useState<Model | null>(null);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -31,21 +33,33 @@ export default function CostVsCapabilityTab() {
   }, [search, providers]);
 
   return (
-    <div className="flex flex-col gap-5 px-4 py-6 sm:px-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5">
-          <ModelSearch value={search} onChange={setSearch} />
-          <div className="h-5 w-px bg-border" />
-          <ProviderFilter selected={providers} onChange={setProviders} />
+    <section>
+      <SectionHeader
+        eyebrow="Cost vs. Capability"
+        title="Is higher price buying higher capability?"
+        description="Models toward the upper-left are cheap for their measured quality. Point size encodes context window. Click any point for detail."
+      />
+
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-5">
+        <div className="flex flex-wrap items-end gap-5">
+          <div className="flex min-w-0 flex-col gap-2">
+            <span className="eyebrow">Provider</span>
+            <ProviderFilter selected={providers} onChange={setProviders} />
+          </div>
+          <div className="flex min-w-0 flex-col gap-2">
+            <span className="eyebrow">Search</span>
+            <ModelSearch value={search} onChange={setSearch} />
+          </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-end gap-2.5">
           <SegmentedControl options={X_OPTIONS} value={xMetric} onChange={setXMetric} />
           <SegmentedControl options={Y_OPTIONS} value={yMetric} onChange={setYMetric} />
         </div>
       </div>
 
-      <CapabilityScatterChart models={filtered} xMetric={xMetric} yMetric={yMetric} />
-      <DataAsOfNote />
-    </div>
+      <CapabilityScatterChart models={filtered} xMetric={xMetric} yMetric={yMetric} onSelectModel={setSelected} />
+
+      <ModelDetailDrawer model={selected} onClose={() => setSelected(null)} />
+    </section>
   );
 }

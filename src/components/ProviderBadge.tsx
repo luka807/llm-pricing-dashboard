@@ -7,12 +7,11 @@ type ProviderBadgeProps = {
 
 export default function ProviderBadge({ provider, className = "" }: ProviderBadgeProps) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
-      <span
-        className="inline-block h-[7px] w-[7px] shrink-0 rounded-full"
-        style={{ background: PROVIDER_COLOR_VAR[provider] }}
-      />
-      <span>{provider}</span>
+    <span
+      className={`font-display inline-block rounded-full px-2.5 py-[3px] text-[10px] font-bold tracking-[0.09em] whitespace-nowrap text-white uppercase ${className}`}
+      style={{ background: PROVIDER_COLOR_VAR[provider] }}
+    >
+      {provider}
     </span>
   );
 }

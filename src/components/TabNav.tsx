@@ -16,7 +16,12 @@ type TabNavProps = {
 
 export default function TabNav({ active, onChange }: TabNavProps) {
   return (
-    <div role="tablist" aria-label="Dashboard sections" className="flex gap-1 overflow-x-auto border-b border-border px-4 sm:px-8">
+    <nav
+      role="tablist"
+      aria-label="Dashboard sections"
+      className="flex gap-8 overflow-x-auto"
+      style={{ borderTop: "1px solid rgba(255,255,255,0.14)" }}
+    >
       {TABS.map((tab) => {
         const isActive = tab.key === active;
         return (
@@ -25,18 +30,16 @@ export default function TabNav({ active, onChange }: TabNavProps) {
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.key)}
-            className={`flex shrink-0 flex-col items-center px-4 text-sm outline-none transition-colors ${
-              isActive ? "font-semibold text-foreground" : "font-medium text-muted-foreground hover:text-foreground"
-            }`}
+            className="font-display shrink-0 cursor-pointer appearance-none whitespace-nowrap bg-transparent pt-4 pb-3 text-[12px] font-bold tracking-[0.14em] uppercase outline-none"
+            style={{
+              borderBottom: `4px solid ${isActive ? "var(--lnp-gold)" : "transparent"}`,
+              color: isActive ? "#ffffff" : "rgba(255,255,255,0.62)",
+            }}
           >
-            <span className="py-3">{tab.label}</span>
-            <span
-              className="h-[2px] w-full rounded-t-full"
-              style={{ background: isActive ? "var(--accent)" : "transparent" }}
-            />
+            {tab.label}
           </button>
         );
       })}
-    </div>
+    </nav>
   );
 }

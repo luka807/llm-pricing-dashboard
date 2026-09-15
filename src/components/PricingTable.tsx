@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { PROVIDER_COLOR_VAR, type Model } from "@/lib/pricing";
+import { type Model } from "@/lib/pricing";
 import { formatContext, formatUSD } from "@/lib/format";
+import ProviderBadge from "@/components/ProviderBadge";
 
 type SortKey = "model" | "context" | "input" | "output" | "cached";
 
@@ -53,34 +54,33 @@ export default function PricingTable({ models, onSelectModel }: PricingTableProp
   }, [models, sortKey, sortAsc]);
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-border">
-      <table className="w-full min-w-[720px] border-collapse text-[13.5px]">
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[760px] border-collapse text-sm">
         <thead>
-          <tr className="border-b border-border bg-muted">
-            <th className="px-4 py-2.5 text-left font-medium text-muted-foreground">Provider</th>
+          <tr style={{ background: "var(--lnp-navy-deep)" }}>
+            <th className="font-display px-4 py-2.5 text-left text-[12px] font-bold tracking-[0.09em] text-white uppercase">
+              Provider
+            </th>
             {COLUMNS.map((col) => (
-              <th key={col.key} className={`px-4 py-2.5 font-medium text-muted-foreground ${col.align === "right" ? "text-right" : "text-left"}`}>
+              <th
+                key={col.key}
+                className={`font-display px-4 py-2.5 text-[12px] font-bold tracking-[0.09em] whitespace-nowrap text-white uppercase select-none ${
+                  col.align === "right" ? "text-right" : "text-left"
+                }`}
+              >
                 <button
                   onClick={() => handleSort(col.key)}
-                  className={`inline-flex items-center gap-1 ${col.align === "right" ? "flex-row-reverse" : ""}`}
+                  className={`inline-flex cursor-pointer items-center gap-1.5 ${col.align === "right" ? "flex-row-reverse" : ""}`}
                 >
                   {col.label}
-                  <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={sortKey === col.key ? "var(--accent)" : "currentColor"}
-                    strokeWidth="3"
-                    className={sortKey === col.key ? "" : "text-faint-foreground"}
-                    style={{ transform: sortKey === col.key && !sortAsc ? "rotate(180deg)" : undefined }}
-                  >
-                    <polyline points="18 15 12 9 6 15" />
-                  </svg>
+                  {sortKey === col.key && (
+                    <span className="text-[9px]" style={{ color: "var(--lnp-gold)" }}>
+                      {sortAsc ? "▲" : "▼"}
+                    </span>
+                  )}
                 </button>
               </th>
             ))}
-            <th className="w-9" />
           </tr>
         </thead>
         <tbody>
@@ -88,26 +88,26 @@ export default function PricingTable({ models, onSelectModel }: PricingTableProp
             <tr
               key={`${model.provider}-${model.model}`}
               onClick={() => onSelectModel(model)}
-              className="cursor-pointer border-t border-border hover:bg-muted"
-              style={{ background: i % 2 === 1 ? "var(--muted)" : "transparent" }}
+              className="group cursor-pointer border-b"
+              style={{ background: i % 2 === 1 ? "var(--muted)" : "var(--card)", borderColor: "var(--border)" }}
             >
-              <td className="px-4 py-2.5">
-                <span className="inline-flex items-center gap-2 text-[12.5px] text-muted-foreground">
-                  <span className="inline-block h-2 w-2 rounded-full" style={{ background: PROVIDER_COLOR_VAR[model.provider] }} />
-                  {model.provider}
-                </span>
+              <td className="px-4 py-2.5 group-hover:bg-[var(--highlight-soft)]">
+                <ProviderBadge provider={model.provider} />
               </td>
-              <td className="px-4 py-2.5 font-medium text-foreground">{model.model}</td>
-              <td className="num px-4 py-2.5 text-right text-muted-foreground">{formatContext(model.contextWindowTokens)}</td>
-              <td className="num px-4 py-2.5 text-right font-medium text-foreground">{formatUSD(model.inputPerMillion)}</td>
-              <td className="num px-4 py-2.5 text-right text-muted-foreground">{formatUSD(model.outputPerMillion)}</td>
-              <td className="num px-4 py-2.5 text-right text-muted-foreground">
+              <td className="px-4 py-2.5 font-semibold group-hover:bg-[var(--highlight-soft)]" style={{ color: "var(--lnp-navy-deep)" }}>
+                {model.model}
+              </td>
+              <td className="num text-muted-foreground px-4 py-2.5 text-right font-mono group-hover:bg-[var(--highlight-soft)]">
+                {formatContext(model.contextWindowTokens)}
+              </td>
+              <td className="num px-4 py-2.5 text-right font-mono font-bold group-hover:bg-[var(--highlight-soft)]" style={{ color: "var(--lnp-navy-deep)" }}>
+                {formatUSD(model.inputPerMillion)}
+              </td>
+              <td className="num px-4 py-2.5 text-right font-mono text-foreground group-hover:bg-[var(--highlight-soft)]">
+                {formatUSD(model.outputPerMillion)}
+              </td>
+              <td className="num text-faint-foreground px-4 py-2.5 text-right font-mono group-hover:bg-[var(--highlight-soft)]">
                 {model.cachedInputPerMillion != null ? formatUSD(model.cachedInputPerMillion) : "—"}
-              </td>
-              <td className="px-3 py-2.5 text-right">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inline text-faint-foreground">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
               </td>
             </tr>
           ))}

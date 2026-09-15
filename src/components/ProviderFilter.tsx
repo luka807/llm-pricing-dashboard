@@ -27,15 +27,15 @@ export default function ProviderFilter({ selected, onChange }: ProviderFilterPro
             type="button"
             aria-pressed={isOn}
             onClick={() => toggle(provider)}
-            className="flex h-8 items-center gap-1.5 rounded-full border px-3 text-[12.5px] font-medium transition-opacity"
+            className="inline-flex h-8 cursor-pointer items-center gap-2 rounded-full border pr-3.5 pl-2.5 text-[13px]"
             style={{
-              borderColor: isOn ? color : "var(--border)",
-              background: isOn ? `color-mix(in srgb, ${color} 12%, var(--card))` : "transparent",
-              color: isOn ? "var(--foreground)" : "var(--muted-foreground)",
-              opacity: isOn ? 1 : 0.7,
+              borderColor: isOn ? "var(--lnp-navy-deep)" : "var(--border)",
+              background: isOn ? "var(--lnp-navy-deep)" : "var(--card)",
+              color: isOn ? "#ffffff" : "var(--muted-foreground)",
+              fontWeight: isOn ? 600 : 400,
             }}
           >
-            <span className="inline-block h-[7px] w-[7px] rounded-full" style={{ background: color }} />
+            <span className="inline-block h-[9px] w-[9px] shrink-0 rounded-full" style={{ background: isOn ? color : "var(--border)" }} />
             {provider}
           </button>
         );

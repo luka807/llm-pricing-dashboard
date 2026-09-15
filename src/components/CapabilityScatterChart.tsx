@@ -28,14 +28,26 @@ function yValue(m: Model, metric: YMetric): number | null {
   return metric === "intelligenceIndex" ? m.intelligenceIndex : m.valueScore;
 }
 
+function pointRadius(ctx: number | null): number {
+  if (ctx == null) return 7;
+  const r = 5 + 7 * (Math.log(ctx / 128000) / Math.log(16));
+  return Math.min(16, Math.max(5, r));
+}
+
+const PLOT_LEFT = 72;
+const PLOT_RIGHT = 980;
+const PLOT_TOP = 24;
+const PLOT_BOTTOM = 410;
+
 type CapabilityScatterChartProps = {
   models: Model[];
   xMetric: XMetric;
   yMetric: YMetric;
+  onSelectModel: (model: Model) => void;
 };
 
-export default function CapabilityScatterChart({ models, xMetric, yMetric }: CapabilityScatterChartProps) {
-  const [hovered, setHovered] = useState<string | null>(null);
+export default function CapabilityScatterChart({ models, xMetric, yMetric, onSelectModel }: CapabilityScatterChartProps) {
+  const [hoverKey, setHoverKey] = useState<string | null>(null);
 
   const points = models
     .map((m) => ({ model: m, x: xValue(m, xMetric), y: yValue(m, yMetric) }))
@@ -45,105 +57,109 @@ export default function CapabilityScatterChart({ models, xMetric, yMetric }: Cap
 
   if (points.length === 0) {
     return (
-      <div className="flex h-64 items-center justify-center rounded-xl border border-border text-sm text-muted-foreground">
+      <div className="text-muted-foreground flex h-64 items-center justify-center border text-sm" style={{ borderColor: "var(--border)" }}>
         No models have {Y_LABEL[yMetric].toLowerCase()} data for the current filters.
       </div>
     );
   }
 
-  const xs = points.map((p) => Math.log10(p.x));
+  const logXs = points.map((p) => Math.log10(p.x));
+  const logXMin = Math.min(...logXs);
+  const logXMax = Math.max(...logXs);
   const ys = points.map((p) => p.y);
-  const xMin = Math.min(...xs);
-  const xMax = Math.max(...xs);
   const yMin = Math.min(0, Math.min(...ys));
   const yMax = Math.max(...ys) * 1.08;
 
-  function xPos(logX: number) {
-    const span = xMax - xMin || 1;
-    return 5 + ((logX - xMin) / span) * 90;
-  }
-  function yPos(y: number) {
+  const px = (logX: number) => {
+    const span = logXMax - logXMin || 1;
+    return PLOT_LEFT + ((logX - logXMin) / span) * (PLOT_RIGHT - PLOT_LEFT);
+  };
+  const py = (y: number) => {
     const span = yMax - yMin || 1;
-    return 92 - ((y - yMin) / span) * 82;
-  }
+    return PLOT_BOTTOM - ((y - yMin) / span) * (PLOT_BOTTOM - PLOT_TOP);
+  };
 
-  const xTicks = buildLogTicks(Math.pow(10, xMin), Math.pow(10, xMax));
+  const yTicks = Array.from({ length: 5 }, (_, i) => yMin + ((yMax - yMin) * i) / 4);
+  const xTicks = buildLogTicks(Math.pow(10, logXMin), Math.pow(10, logXMax));
+
+  const hovered = points.find((p) => `${p.model.provider}-${p.model.model}` === hoverKey) ?? null;
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4.5">
-      <div className="relative mx-2 mt-1" style={{ height: 380 }}>
-        {[0.1, 0.325, 0.55, 0.775].map((f) => (
-          <div key={f} className="absolute left-0 right-0 border-t border-border" style={{ top: `${f * 100}%` }} />
+    <div className="border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
+      <svg viewBox="0 0 1000 470" className="block w-full overflow-visible" style={{ height: "auto" }}>
+        {yTicks.map((t, i) => (
+          <line key={i} x1={PLOT_LEFT} x2={PLOT_RIGHT} y1={py(t)} y2={py(t)} stroke="var(--border)" strokeWidth={1} />
         ))}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-faint-foreground" />
-        <div className="absolute bottom-0 left-0 top-0 border-l border-faint-foreground" />
-
+        {yTicks.map((t, i) => (
+          <text key={i} x={PLOT_LEFT - 10} y={py(t) + 4} textAnchor="end" className="font-mono" style={{ fontSize: 11, fill: "var(--faint-foreground)" }}>
+            {Math.round(t)}
+          </text>
+        ))}
+        <line x1={PLOT_LEFT} x2={PLOT_RIGHT} y1={PLOT_BOTTOM} y2={PLOT_BOTTOM} stroke="var(--lnp-ink)" strokeWidth={1.5} />
+        <line x1={PLOT_LEFT} x2={PLOT_LEFT} y1={PLOT_TOP} y2={PLOT_BOTTOM} stroke="var(--lnp-ink)" strokeWidth={1.5} />
+        {xTicks.map((t, i) => (
+          <text key={i} x={px(Math.log10(t))} y={PLOT_BOTTOM + 22} textAnchor="middle" className="font-mono" style={{ fontSize: 11, fill: "var(--faint-foreground)" }}>
+            {formatUSD(t)}
+          </text>
+        ))}
+        <text
+          x={(PLOT_LEFT + PLOT_RIGHT) / 2}
+          y={PLOT_BOTTOM + 50}
+          textAnchor="middle"
+          className="font-display"
+          style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", fill: "var(--faint-foreground)", textTransform: "uppercase" }}
+        >
+          {X_LABEL[xMetric]} ($ / 1M tokens, log scale)
+        </text>
+        <text
+          x={20}
+          y={(PLOT_TOP + PLOT_BOTTOM) / 2}
+          textAnchor="middle"
+          transform={`rotate(-90 20 ${(PLOT_TOP + PLOT_BOTTOM) / 2})`}
+          className="font-display"
+          style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", fill: "var(--faint-foreground)", textTransform: "uppercase" }}
+        >
+          {Y_LABEL[yMetric]}
+        </text>
         {points.map((p) => {
           const key = `${p.model.provider}-${p.model.model}`;
-          const left = xPos(Math.log10(p.x));
-          const top = yPos(p.y);
           return (
-            <div
+            <circle
               key={key}
-              className="absolute z-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full border-2"
-              style={{
-                left: `${left}%`,
-                top: `${top}%`,
-                width: 12,
-                height: 12,
-                background: PROVIDER_COLOR_VAR[p.model.provider],
-                borderColor: "var(--card)",
-              }}
-              onMouseEnter={() => setHovered(key)}
-              onMouseLeave={() => setHovered((h) => (h === key ? null : h))}
-            >
-              {hovered === key && (
-                <div className="absolute bottom-full left-1/2 z-20 mb-2 w-44 -translate-x-1/2 rounded-lg border border-border bg-card p-2.5 text-xs shadow-xl">
-                  <div className="mb-1 flex items-center gap-1.5 font-semibold text-foreground">
-                    <span className="inline-block h-[7px] w-[7px] rounded-full" style={{ background: PROVIDER_COLOR_VAR[p.model.provider] }} />
-                    {p.model.model}
-                  </div>
-                  <div className="mb-1 text-muted-foreground">{p.model.provider}</div>
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>{X_LABEL[xMetric]}</span>
-                    <span className="num text-foreground">{formatUSD(p.x)}</span>
-                  </div>
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>{Y_LABEL[yMetric]}</span>
-                    <span className="num text-foreground">{p.y}</span>
-                  </div>
-                </div>
-              )}
-            </div>
+              cx={px(Math.log10(p.x))}
+              cy={py(p.y)}
+              r={pointRadius(p.model.contextWindowTokens)}
+              fill={PROVIDER_COLOR_VAR[p.model.provider]}
+              stroke="#ffffff"
+              strokeWidth={2}
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => setHoverKey(key)}
+              onMouseLeave={() => setHoverKey((h) => (h === key ? null : h))}
+              onClick={() => onSelectModel(p.model)}
+            />
           );
         })}
-      </div>
+      </svg>
 
-      <div className="mx-2 mt-1.5 flex justify-between">
-        {xTicks.map((t) => (
-          <span key={t} className="num text-[11px] text-faint-foreground">
-            {formatUSD(t)}
-          </span>
-        ))}
-      </div>
-      <div className="mt-1.5 text-center text-[11.5px] text-faint-foreground">
-        {X_LABEL[xMetric]} ($ / 1M tokens, log scale) vs. {Y_LABEL[yMetric]}
-      </div>
-
-      {excluded > 0 && (
-        <div className="mt-2 text-center text-[11px] text-faint-foreground">
-          {excluded} model{excluded > 1 ? "s" : ""} not shown &mdash; missing {Y_LABEL[yMetric].toLowerCase()} data.
-        </div>
-      )}
-
-      <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5 border-t border-border pt-3.5">
+      <div className="text-muted-foreground mt-5 flex flex-wrap items-center gap-5 border-t pt-4 text-xs" style={{ borderColor: "var(--border)" }}>
         {PROVIDERS.map((p) => (
-          <span key={p} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span className="inline-block h-2 w-2 rounded-full" style={{ background: PROVIDER_COLOR_VAR[p] }} />
+          <span key={p} className="inline-flex items-center gap-2">
+            <span className="inline-block h-[11px] w-[11px] rounded-full" style={{ background: PROVIDER_COLOR_VAR[p] }} />
             {p}
           </span>
         ))}
+        <span className="text-faint-foreground italic">
+          {hovered
+            ? `${hovered.model.model} · ${formatUSD(hovered.x)} / 1M · ${Y_LABEL[yMetric].toLowerCase()} ${hovered.y} · point size = context window`
+            : "Hover a point for detail; click to open the full model record."}
+        </span>
       </div>
+
+      {excluded > 0 && (
+        <div className="text-faint-foreground mt-2 text-center text-[11px]">
+          {excluded} model{excluded > 1 ? "s" : ""} not shown — missing {Y_LABEL[yMetric].toLowerCase()} data.
+        </div>
+      )}
     </div>
   );
 }

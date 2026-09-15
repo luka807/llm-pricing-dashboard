@@ -13,6 +13,7 @@ import SegmentedControl from "@/components/SegmentedControl";
 import PriceHistoryChart from "@/components/PriceHistoryChart";
 import PriceChangeTable from "@/components/PriceChangeTable";
 import EmptyState from "@/components/EmptyState";
+import SectionHeader from "@/components/SectionHeader";
 
 const EVENT_OPTIONS: { value: string; label: string }[] = [
   { value: "all", label: "All events" },
@@ -43,40 +44,47 @@ export default function PricingHistoryTab() {
   );
 
   return (
-    <div className="flex flex-col gap-5 px-4 py-6 sm:px-8">
+    <section>
+      <SectionHeader
+        eyebrow="Pricing History"
+        title="How pricing has moved"
+        description="Each point is a published launch price or price cut; hover for detail."
+      />
+
       {FRONTIER_INDEX && "indexValue" in FRONTIER_INDEX && (
-        <div className="flex flex-wrap items-center gap-5 rounded-xl border border-border bg-card p-4.5">
+        <div className="mb-6 flex flex-wrap items-center gap-6 border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-baseline gap-2">
-            <span className="num text-3xl font-bold text-foreground">-84%</span>
-            <span className="text-xs text-muted-foreground">since GPT-4&apos;s March 2023 launch</span>
+            <span className="num font-display text-4xl font-extrabold" style={{ color: "var(--lnp-navy-deep)" }}>
+              -84%
+            </span>
+            <span className="text-faint-foreground text-xs">since GPT-4&apos;s March 2023 launch</span>
           </div>
-          <div className="h-8 w-px bg-border" />
-          <div className="max-w-md text-[12.5px] leading-relaxed text-muted-foreground">
-            {FRONTIER_INDEX_BASELINE.description}
-          </div>
+          <div className="h-8 w-px" style={{ background: "var(--border)" }} />
+          <div className="text-muted-foreground max-w-md text-[12.5px] leading-relaxed">{FRONTIER_INDEX_BASELINE.description}</div>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <ProviderFilter selected={providers} onChange={setProviders} />
-        <div className="flex flex-wrap items-center gap-2.5">
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-5">
+        <div className="flex flex-col gap-2">
+          <span className="eyebrow">Provider</span>
+          <ProviderFilter selected={providers} onChange={setProviders} />
+        </div>
+        <div className="flex flex-wrap items-end gap-2.5">
           <SegmentedControl options={EVENT_OPTIONS} value={eventType} onChange={setEventType} />
-          <SegmentedControl
-            options={yearOptions}
-            value={String(minYear)}
-            onChange={(v) => setMinYear(Number(v))}
-          />
+          <SegmentedControl options={yearOptions} value={String(minYear)} onChange={(v) => setMinYear(Number(v))} />
         </div>
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState title="No pricing events match your filters" description="Try a wider date range or more providers." />
+        <div className="border shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
+          <EmptyState title="No pricing events match your filters" description="Try a wider date range or more providers." />
+        </div>
       ) : (
-        <>
+        <div className="flex flex-col gap-6">
           <PriceHistoryChart milestones={filtered} />
           <PriceChangeTable milestones={filtered} />
-        </>
+        </div>
       )}
-    </div>
+    </section>
   );
 }
