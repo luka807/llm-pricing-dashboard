@@ -1,0 +1,249 @@
+{
+  "$schema": "LLM pricing history data — Tab 4 (Pricing History)",
+  "generatedAt": "2026-09-15",
+  "unit": "USD per 1,000,000 tokens",
+  "baseline": {
+    "description": "BenchLM's frontier token price index uses GPT-4's March 2023 launch price as index value 100. As of 2026-09-14 the index stood at 16 — an 84% drop in frontier pricing over roughly 3.5 years.",
+    "sourceUrl": "https://benchlm.ai/llm-pricing-trends"
+  },
+  "notes": "Curated launch-price and price-cut milestones, not continuous daily data, per the onboarding spec. Prices are as originally announced at each date, not today's price (see pricing.json for current rates). Some pre-2025 figures come from third-party aggregator sites rather than the original provider announcement and could not be independently cross-checked against a primary source — those are flagged in their own 'notes' field; treat them as reasonably-sourced rather than verified.",
+  "milestones": [
+    {
+      "date": "2023-03-01",
+      "provider": "OpenAI",
+      "model": "GPT-3.5 Turbo",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 2.00,
+      "notes": "Launched with a single blended rate ($0.002/1K tokens), not separate input/output pricing.",
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2023-03-14",
+      "provider": "OpenAI",
+      "model": "GPT-4 (8K)",
+      "event": "launch",
+      "inputPerMillion": 30.00,
+      "outputPerMillion": 60.00,
+      "notes": "Anchor point (index = 100) for BenchLM's frontier token price index.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2023-07-11",
+      "provider": "Anthropic",
+      "model": "Claude 2",
+      "event": "launch",
+      "inputPerMillion": 8.00,
+      "outputPerMillion": 24.00,
+      "notes": null,
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2023-11-06",
+      "provider": "OpenAI",
+      "model": "GPT-4 Turbo",
+      "event": "launch",
+      "inputPerMillion": 10.00,
+      "outputPerMillion": 30.00,
+      "notes": "3x cheaper than original GPT-4 (8K) launch pricing.",
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2023-12-13",
+      "provider": "Google",
+      "model": "Gemini 1.0 Pro",
+      "event": "launch",
+      "inputPerMillion": 0.50,
+      "outputPerMillion": 1.50,
+      "notes": null,
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-02-15",
+      "provider": "Google",
+      "model": "Gemini 1.5 Pro",
+      "event": "launch",
+      "inputPerMillion": 3.50,
+      "outputPerMillion": 10.50,
+      "notes": null,
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-03-04",
+      "provider": "Anthropic",
+      "model": "Claude 3 Opus",
+      "event": "launch",
+      "inputPerMillion": 15.00,
+      "outputPerMillion": 75.00,
+      "notes": "Launched alongside Claude 3 Sonnet and Claude 3 Haiku the same day.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2024-03-04",
+      "provider": "Anthropic",
+      "model": "Claude 3 Sonnet",
+      "event": "launch",
+      "inputPerMillion": 3.00,
+      "outputPerMillion": 15.00,
+      "notes": null,
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2024-03-04",
+      "provider": "Anthropic",
+      "model": "Claude 3 Haiku",
+      "event": "launch",
+      "inputPerMillion": 0.25,
+      "outputPerMillion": 1.25,
+      "notes": null,
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2024-05-13",
+      "provider": "OpenAI",
+      "model": "GPT-4o",
+      "event": "launch",
+      "inputPerMillion": 5.00,
+      "outputPerMillion": 15.00,
+      "notes": "4x cheaper than original GPT-4 at comparable or better quality.",
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-05-14",
+      "provider": "Google",
+      "model": "Gemini 1.5 Flash",
+      "event": "launch",
+      "inputPerMillion": 0.35,
+      "outputPerMillion": 1.05,
+      "notes": null,
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-06-20",
+      "provider": "Anthropic",
+      "model": "Claude 3.5 Sonnet",
+      "event": "launch",
+      "inputPerMillion": 3.00,
+      "outputPerMillion": 15.00,
+      "notes": "Same price as Claude 3 Sonnet despite the capability jump.",
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-07-18",
+      "provider": "OpenAI",
+      "model": "GPT-4o mini",
+      "event": "launch",
+      "inputPerMillion": 0.15,
+      "outputPerMillion": 0.60,
+      "notes": "~200x cheaper than GPT-4's original 2023 pricing.",
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-08-06",
+      "provider": "OpenAI",
+      "model": "GPT-4o",
+      "event": "price cut",
+      "inputPerMillion": 2.50,
+      "outputPerMillion": 10.00,
+      "notes": "50% input / 33% output cut from the May 2024 launch price, attributed to competitive pressure. Confirmed via TechCrunch/the-decoder coverage of the announcement.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2024-11-04",
+      "provider": "Anthropic",
+      "model": "Claude 3.5 Haiku",
+      "event": "launch",
+      "inputPerMillion": 1.00,
+      "outputPerMillion": 5.00,
+      "notes": "A price *increase* despite the 'Haiku' (budget) branding — 4x more than Claude 3 Haiku's $0.25/$1.25, justified by Anthropic as reflecting that 3.5 Haiku surpassed the older Claude 3 Opus on many benchmarks. Confirmed via TechCrunch coverage.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2024-12-11",
+      "provider": "Google",
+      "model": "Gemini 2.0 Flash",
+      "event": "launch",
+      "inputPerMillion": 0.10,
+      "outputPerMillion": 0.40,
+      "notes": null,
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2024-12-26",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V3",
+      "event": "launch",
+      "inputPerMillion": 0.27,
+      "outputPerMillion": 1.10,
+      "notes": "Frontier-class benchmark results at budget pricing — this release is widely credited with triggering the 'DeepSeek moment' repricing pressure across the industry in early 2025.",
+      "sourceConfidence": "aggregator"
+    },
+    {
+      "date": "2025-01-20",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-R1",
+      "event": "launch",
+      "inputPerMillion": 0.55,
+      "outputPerMillion": 2.19,
+      "notes": "Cache-miss input price shown ($0.55/M); cache-hit input was $0.14/M. Sourced directly from DeepSeek's own release announcement (api-docs.deepseek.com).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-08-08",
+      "provider": "OpenAI",
+      "model": "GPT-5",
+      "event": "launch",
+      "inputPerMillion": 1.25,
+      "outputPerMillion": 10.00,
+      "notes": "Cached input priced separately at $0.125/M. Priced low enough that press coverage described it as risking a renewed price war. Sourced directly from TechCrunch's launch-day coverage.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-14",
+      "provider": "Anthropic",
+      "model": "Claude Fable 5.1",
+      "event": "entered price index",
+      "inputPerMillion": null,
+      "outputPerMillion": null,
+      "blendedPerMillion": 20.00,
+      "notes": "BenchLM's index tracks a single blended rate per model rather than separate input/output figures; this is not directly comparable to the $10/$50 input/output split in pricing.json, which comes from Anthropic's own pricing page.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-14",
+      "provider": "OpenAI",
+      "model": "GPT-5.6 Sol",
+      "event": "price cut",
+      "blendedPerMillion": 8.00,
+      "notes": "Cut from a blended $11.25/M to $8.00/M (28.9% decrease), per BenchLM's change ledger. Blended figure, not directly comparable to pricing.json's separate input/output rates.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-14",
+      "provider": "OpenAI",
+      "model": "GPT-5.6 Terra",
+      "event": "price cut",
+      "blendedPerMillion": 4.50,
+      "notes": "Cut from a blended $5.63/M to $4.50/M (20% decrease), per BenchLM's change ledger.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-14",
+      "provider": "OpenAI",
+      "model": "GPT-5.6 Luna",
+      "event": "price cut",
+      "blendedPerMillion": 0.45,
+      "notes": "Cut from a blended $2.25/M to $0.45/M (80% decrease) — the largest single cut in BenchLM's latest change-ledger snapshot.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-14",
+      "provider": null,
+      "model": "Frontier token price index",
+      "event": "index snapshot",
+      "indexValue": 16,
+      "notes": "84% below the March 2023 GPT-4 baseline (index = 100). This is the single number that best tells Tab 4's overall story: frontier LLM pricing has fallen by roughly 6x since GPT-4's original launch.",
+      "sourceConfidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "LLM benchmark/capability data — Tab 3 (Cost vs. Capability)",
+  "generatedAt": "2026-09-15",
+  "notes": "Two headline scores per model: Artificial Analysis's Intelligence Index (a blended benchmark score, higher is better, roughly 0-100 in this snapshot) and BenchLM's Value Score (quality points per dollar of *output* cost — higher means more capability per dollar spent). Where a model publishes multiple scores at different reasoning-effort levels (e.g. GPT-5.6's low/medium/high/xhigh/max), the 'high' tier was used for consistency unless only one figure was published.",
+  "sources": [
+    "https://artificialanalysis.ai/leaderboards/models",
+    "https://benchlm.ai/llm-pricing"
+  ],
+  "providers": [
+    {
+      "provider": "OpenAI",
+      "models": [
+        { "model": "GPT-5.6 Sol", "intelligenceIndex": 42, "valueScore": 4.0, "notes": "Intelligence Index at 'high' reasoning effort (ranges 34-47 across low-max tiers)." },
+        { "model": "GPT-5.6 Terra", "intelligenceIndex": 34, "valueScore": 5.9, "notes": "Intelligence Index at 'high' reasoning effort (ranges 28-42 across low-max tiers)." },
+        { "model": "GPT-5.6 Luna", "intelligenceIndex": 32, "valueScore": 53.9, "notes": "Intelligence Index at 'high' reasoning effort (ranges 22-38 across low-max tiers). By far the best value score in the OpenAI lineup." }
+      ]
+    },
+    {
+      "provider": "Anthropic",
+      "models": [
+        { "model": "Claude Fable 5.1", "intelligenceIndex": 53, "valueScore": 1.7, "notes": "Highest Intelligence Index of any model in this dataset, but the lowest value score — capability comes at a steep price premium." },
+        { "model": "Claude Opus 5", "intelligenceIndex": 51, "valueScore": 3.3, "notes": null },
+        { "model": "Claude Sonnet 5", "intelligenceIndex": 38, "valueScore": 7.0, "notes": null },
+        { "model": "Claude Haiku 4.5", "intelligenceIndex": 18, "valueScore": 10.6, "notes": "Lowest Intelligence Index in this dataset." }
+      ]
+    },
+    {
+      "provider": "Google",
+      "models": [
+        { "model": "Gemini 3.1 Pro Preview", "intelligenceIndex": 30, "valueScore": 5.8, "notes": null },
+        { "model": "Gemini 3.8 Flash", "intelligenceIndex": 41, "valueScore": 20.2, "notes": "Intelligence Index at 'high' thinking level. Strong middle ground: near-frontier reasoning score at a mid-range value score." },
+        { "model": "Gemini 3.5 Flash-Lite", "intelligenceIndex": 23, "valueScore": 23.6, "notes": null }
+      ]
+    },
+    {
+      "provider": "Mistral",
+      "models": [
+        { "model": "Mistral Large 3", "intelligenceIndex": 10, "valueScore": 30.4, "notes": "Lowest Intelligence Index among frontier-tier models in this dataset despite the 'flagship' label." },
+        { "model": "Mistral Medium 3.5", "intelligenceIndex": 15, "valueScore": 5.7, "notes": "Scores higher on Intelligence Index than Large 3 despite Mistral's own tiering naming it 'Medium' — consistent with Medium 3.5 also being priced above Large 3 (see pricing.json)." },
+        { "model": "Mistral Small 4", "intelligenceIndex": 11, "valueScore": 71.7, "notes": null }
+      ]
+    },
+    {
+      "provider": "DeepSeek",
+      "models": [
+        { "model": "DeepSeek-V4-Pro", "intelligenceIndex": 31, "valueScore": 76.3, "notes": "Best value score of any model in this dataset." },
+        { "model": "DeepSeek-V4-Flash", "intelligenceIndex": 35, "valueScore": null, "notes": "BenchLM did not publish a value score for this model at fetch time. Scores higher than V4-Pro on Intelligence Index despite being the cheaper/lighter tier — worth re-verifying rather than assuming a typo." }
+      ]
+    },
+    {
+      "provider": "xAI",
+      "models": [
+        { "model": "Grok 4.6", "intelligenceIndex": 44, "valueScore": 11.7, "notes": "Intelligence Index at 'high' reasoning effort." }
+      ]
+    }
+  ]
+}

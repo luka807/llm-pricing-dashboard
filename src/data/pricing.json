@@ -1,0 +1,204 @@
+{
+  "$schema": "LLM pricing comparison data — Tab 1 (Pricing Comparison) and Tab 2 (Cost Calculator)",
+  "generatedAt": "2026-09-15",
+  "unit": "USD per 1,000,000 tokens",
+  "notes": "Prices pulled directly from each provider's official pricing page on 2026-09-15. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
+  "providers": [
+    {
+      "provider": "OpenAI",
+      "sourceUrl": "https://openai.com/api/pricing/",
+      "models": [
+        {
+          "model": "GPT-5.6 Sol",
+          "tier": "frontier",
+          "inputPerMillion": 5.0,
+          "outputPerMillion": 30.0,
+          "cachedInputPerMillion": 0.5,
+          "contextWindowTokens": 1000000,
+          "notes": "Context window not shown on openai.com/api/pricing; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "pricingModel": "token"
+        },
+        {
+          "model": "GPT-5.6 Terra",
+          "tier": "mid-range",
+          "inputPerMillion": 2.0,
+          "outputPerMillion": 12.0,
+          "cachedInputPerMillion": 0.2,
+          "contextWindowTokens": 1000000,
+          "notes": "Context window not shown on openai.com/api/pricing; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "pricingModel": "token"
+        },
+        {
+          "model": "GPT-5.6 Luna",
+          "tier": "lightweight",
+          "inputPerMillion": 0.2,
+          "outputPerMillion": 1.2,
+          "cachedInputPerMillion": 0.02,
+          "contextWindowTokens": 1000000,
+          "notes": "Context window not shown on openai.com/api/pricing; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "pricingModel": "token"
+        }
+      ]
+    },
+    {
+      "provider": "Anthropic",
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "models": [
+        {
+          "model": "Claude Fable 5.1",
+          "tier": "frontier",
+          "inputPerMillion": 10.0,
+          "outputPerMillion": 50.0,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 1000000,
+          "notes": "Full 1M token context included at standard pricing.",
+          "pricingModel": "token"
+        },
+        {
+          "model": "Claude Opus 5",
+          "tier": "frontier",
+          "inputPerMillion": 5.0,
+          "outputPerMillion": 25.0,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 1000000,
+          "notes": null,
+          "pricingModel": "token"
+        },
+        {
+          "model": "Claude Sonnet 5",
+          "tier": "mid-range",
+          "inputPerMillion": 2.0,
+          "outputPerMillion": 10.0,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 1000000,
+          "notes": null,
+          "pricingModel": "token"
+        },
+        {
+          "model": "Claude Haiku 4.5",
+          "tier": "lightweight",
+          "inputPerMillion": 1.0,
+          "outputPerMillion": 5.0,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 1000000,
+          "notes": null,
+          "pricingModel": "token"
+        }
+      ]
+    },
+    {
+      "provider": "Google",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "models": [
+        {
+          "model": "Gemini 3.1 Pro Preview",
+          "tier": "frontier",
+          "inputPerMillion": 2.0,
+          "outputPerMillion": 12.0,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 200000,
+          "notes": "Tiered pricing: rates shown are for prompts <=200k tokens. Above 200k tokens: $4.00 input / $18.00 output. Batch API gets 50% off; Priority tier is a 1.8x multiplier.",
+          "pricingModel": "token"
+        },
+        {
+          "model": "Gemini 3.8 Flash",
+          "tier": "mid-range",
+          "inputPerMillion": 0.75,
+          "outputPerMillion": 3.75,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 1000000,
+          "notes": "Promotional rate through Dec 31, 2026; rises to $1.50 input / $7.50 output after. Batch API gets 50% off. 64k max output tokens.",
+          "pricingModel": "token"
+        },
+        {
+          "model": "Gemini 3.5 Flash-Lite",
+          "tier": "lightweight",
+          "inputPerMillion": 0.3,
+          "outputPerMillion": 2.5,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 1000000,
+          "notes": "Batch API gets 50% off. 64k max output tokens.",
+          "pricingModel": "token"
+        }
+      ]
+    },
+    {
+      "provider": "Mistral",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing",
+      "models": [
+        {
+          "model": "Mistral Large 3",
+          "tier": "frontier",
+          "inputPerMillion": 0.5,
+          "outputPerMillion": 1.5,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 256000,
+          "notes": "Flagship model. Context window from docs.mistral.ai/models/mistral-large-3-25-12 (not shown on the pricing page itself).",
+          "pricingModel": "token"
+        },
+        {
+          "model": "Mistral Medium 3.5",
+          "tier": "mid-range",
+          "inputPerMillion": 1.5,
+          "outputPerMillion": 7.5,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 256000,
+          "notes": "Priced higher than Large 3 on this provider's page as of 2026-09-15 — worth double-checking, this is not a typo in this file. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself).",
+          "pricingModel": "token"
+        },
+        {
+          "model": "Mistral Small 4",
+          "tier": "lightweight",
+          "inputPerMillion": 0.15,
+          "outputPerMillion": 0.6,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 256000,
+          "notes": "Context window from docs.mistral.ai/models/mistral-small-4-0-26-03 (not shown on the pricing page itself).",
+          "pricingModel": "token"
+        }
+      ]
+    },
+    {
+      "provider": "DeepSeek",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing",
+      "models": [
+        {
+          "model": "DeepSeek-V4-Pro",
+          "tier": "frontier",
+          "inputPerMillion": 0.66,
+          "outputPerMillion": 1.98,
+          "cachedInputPerMillion": 0.022,
+          "contextWindowTokens": 1000000,
+          "notes": "Off-peak rates shown. Peak (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) doubles all rates to $1.32 input / $3.96 output / $0.044 cached.",
+          "pricingModel": "token"
+        },
+        {
+          "model": "DeepSeek-V4-Flash",
+          "tier": "lightweight",
+          "inputPerMillion": 0.15,
+          "outputPerMillion": 0.6,
+          "cachedInputPerMillion": 0.003,
+          "contextWindowTokens": 1000000,
+          "notes": "Off-peak rates shown. Peak (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) doubles all rates to $0.30 input / $1.20 output / $0.006 cached.",
+          "pricingModel": "token"
+        }
+      ]
+    },
+    {
+      "provider": "xAI",
+      "sourceUrl": "https://x.ai/api",
+      "models": [
+        {
+          "model": "Grok 4.6",
+          "tier": "frontier",
+          "inputPerMillion": 2.0,
+          "outputPerMillion": 6.0,
+          "cachedInputPerMillion": null,
+          "contextWindowTokens": 500000,
+          "notes": "Flagship model. Grok 4.5 also listed on provider page but pricing wasn't broken out separately at fetch time — check x.ai/api or docs.x.ai directly before publishing.",
+          "pricingModel": "token"
+        }
+      ]
+    }
+  ]
+}
