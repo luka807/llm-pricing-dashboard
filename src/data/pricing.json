@@ -2,7 +2,7 @@
   "$schema": "LLM pricing comparison data — Tab 1 (Pricing Comparison) and Tab 2 (Cost Calculator)",
   "generatedAt": "2026-09-15",
   "unit": "USD per 1,000,000 tokens",
-  "notes": "Input/output prices pulled directly from each provider's official pricing page on 2026-09-15. Where a provider doesn't publish a cached-input rate directly, it's derived from Artificial Analysis's published cache-hit discount for that model (artificialanalysis.ai/models/<model-slug>) applied to the input price — flagged per-model in that model's notes field. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
+  "notes": "Prices pulled directly from each provider's official pricing page on 2026-09-15. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
   "providers": [
     {
       "provider": "OpenAI",
@@ -49,9 +49,9 @@
           "tier": "frontier",
           "inputPerMillion": 10.0,
           "outputPerMillion": 50.0,
-          "cachedInputPerMillion": 0.2,
+          "cachedInputPerMillion": 0.25,
           "contextWindowTokens": 1000000,
-          "notes": "Full 1M token context included at standard pricing. Cached-input price derived from Artificial Analysis's published 98% cache-hit discount off the input price (artificialanalysis.ai/models/claude-fable-5-1) — not shown directly on Anthropic's own pricing page.",
+          "notes": "Full 1M token context included at standard pricing. Cached input shown is the cache-read (hit) rate — unusually 0.025x base input for this model/Mythos 5.1 (vs. 0.1x for other Claude models). Writing to cache costs extra: 1.25x base input for a 5-min TTL cache ($12.50/MTok) or 2x for a 1-hour TTL ($20/MTok).",
           "pricingModel": "token"
         },
         {
@@ -59,9 +59,9 @@
           "tier": "frontier",
           "inputPerMillion": 5.0,
           "outputPerMillion": 25.0,
-          "cachedInputPerMillion": 0.5,
+          "cachedInputPerMillion": 0.50,
           "contextWindowTokens": 1000000,
-          "notes": "Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/claude-opus-5) — not shown directly on Anthropic's own pricing page.",
+          "notes": "Cached input shown is the cache-read (hit) rate (0.1x base input, standard across Claude models except Fable/Mythos 5.1). Writing to cache costs extra: 1.25x base input for a 5-min TTL ($6.25/MTok) or 2x for a 1-hour TTL ($10/MTok).",
           "pricingModel": "token"
         },
         {
@@ -69,9 +69,9 @@
           "tier": "mid-range",
           "inputPerMillion": 2.0,
           "outputPerMillion": 10.0,
-          "cachedInputPerMillion": 0.2,
+          "cachedInputPerMillion": 0.20,
           "contextWindowTokens": 1000000,
-          "notes": "Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/claude-sonnet-5) — not shown directly on Anthropic's own pricing page.",
+          "notes": "Cached input shown is the cache-read (hit) rate (0.1x base input). Writing to cache costs extra: 1.25x base input for a 5-min TTL ($2.50/MTok) or 2x for a 1-hour TTL ($4/MTok).",
           "pricingModel": "token"
         },
         {
@@ -79,9 +79,9 @@
           "tier": "lightweight",
           "inputPerMillion": 1.0,
           "outputPerMillion": 5.0,
-          "cachedInputPerMillion": 0.1,
+          "cachedInputPerMillion": 0.10,
           "contextWindowTokens": 1000000,
-          "notes": "Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/claude-4-5-haiku) — not shown directly on Anthropic's own pricing page.",
+          "notes": "Cached input shown is the cache-read (hit) rate (0.1x base input). Writing to cache costs extra: 1.25x base input for a 5-min TTL ($1.25/MTok) or 2x for a 1-hour TTL ($2/MTok).",
           "pricingModel": "token"
         }
       ]
@@ -95,9 +95,9 @@
           "tier": "frontier",
           "inputPerMillion": 2.0,
           "outputPerMillion": 12.0,
-          "cachedInputPerMillion": 0.2,
+          "cachedInputPerMillion": 0.20,
           "contextWindowTokens": 200000,
-          "notes": "Tiered pricing: rates shown are for prompts <=200k tokens. Above 200k tokens: $4.00 input / $18.00 output. Batch API gets 50% off; Priority tier is a 1.8x multiplier. Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/gemini-3-1-pro-preview) — not shown directly on Google's own pricing page.",
+          "notes": "Tiered pricing: rates shown are for prompts <=200k tokens. Above 200k tokens: $4.00 input / $18.00 output / $0.40 cached. Batch API gets 50% off; Priority tier is a 1.8x multiplier. Cached-content storage is billed separately at $4.50 per million tokens per hour.",
           "pricingModel": "token"
         },
         {
@@ -107,7 +107,7 @@
           "outputPerMillion": 3.75,
           "cachedInputPerMillion": 0.075,
           "contextWindowTokens": 1000000,
-          "notes": "Promotional rate through Dec 31, 2026; rises to $1.50 input / $7.50 output after. Batch API gets 50% off. 64k max output tokens. Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/gemini-3-8-flash) — not shown directly on Google's own pricing page.",
+          "notes": "Promotional rate through Dec 31, 2026; rises to $1.50 input / $7.50 output / $0.15 cached after. Batch API gets 50% off. 64k max output tokens. Cached-content storage is billed separately at $0.50 per million tokens per hour (rising to $1.00 in 2027).",
           "pricingModel": "token"
         },
         {
@@ -115,9 +115,9 @@
           "tier": "lightweight",
           "inputPerMillion": 0.3,
           "outputPerMillion": 2.5,
-          "cachedInputPerMillion": 0.03,
+          "cachedInputPerMillion": null,
           "contextWindowTokens": 1000000,
-          "notes": "Batch API gets 50% off. 64k max output tokens. Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/gemini-3-5-flash-lite) — not shown directly on Google's own pricing page.",
+          "notes": "Batch API gets 50% off. 64k max output tokens. Context/prompt caching is not offered for this model in the Standard tier, unlike the rest of the Gemini lineup — leave cached input blank rather than guessing.",
           "pricingModel": "token"
         }
       ]
@@ -131,9 +131,9 @@
           "tier": "frontier",
           "inputPerMillion": 0.5,
           "outputPerMillion": 1.5,
-          "cachedInputPerMillion": null,
+          "cachedInputPerMillion": 0.05,
           "contextWindowTokens": 256000,
-          "notes": "Flagship model. Context window from docs.mistral.ai/models/mistral-large-3-25-12 (not shown on the pricing page itself). Checked Artificial Analysis (artificialanalysis.ai/models/mistral-large-3) for a cache-hit rate; its blended-price figure implies no cache discount (cache = full input price), consistent with Mistral not publishing a distinct cached-input rate.",
+          "notes": "Flagship model. Context window from docs.mistral.ai/models/mistral-large-3-25-12 (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
           "pricingModel": "token"
         },
         {
@@ -143,7 +143,7 @@
           "outputPerMillion": 7.5,
           "cachedInputPerMillion": 0.15,
           "contextWindowTokens": 256000,
-          "notes": "Priced higher than Large 3 on this provider's page as of 2026-09-15 — worth double-checking, this is not a typo in this file. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself). Cached-input price derived from Artificial Analysis's published 90% cache-hit discount off the input price (artificialanalysis.ai/models/mistral-medium-3-5) — not shown directly on Mistral's own pricing page.",
+          "notes": "Priced higher than Large 3 on this provider's page as of 2026-09-15 — worth double-checking, this is not a typo in this file. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
           "pricingModel": "token"
         },
         {
@@ -151,9 +151,9 @@
           "tier": "lightweight",
           "inputPerMillion": 0.15,
           "outputPerMillion": 0.6,
-          "cachedInputPerMillion": null,
+          "cachedInputPerMillion": 0.015,
           "contextWindowTokens": 256000,
-          "notes": "Context window from docs.mistral.ai/models/mistral-small-4-0-26-03 (not shown on the pricing page itself). Checked Artificial Analysis (artificialanalysis.ai/models/mistral-small-4) for a cache-hit rate; its blended-price figure implies no cache discount (cache = full input price), consistent with Mistral not publishing a distinct cached-input rate.",
+          "notes": "Context window from docs.mistral.ai/models/mistral-small-4-0-26-03 (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
           "pricingModel": "token"
         }
       ]
@@ -193,9 +193,9 @@
           "tier": "frontier",
           "inputPerMillion": 2.0,
           "outputPerMillion": 6.0,
-          "cachedInputPerMillion": 0.5,
+          "cachedInputPerMillion": 0.50,
           "contextWindowTokens": 500000,
-          "notes": "Flagship model. Grok 4.5 also listed on provider page but pricing wasn't broken out separately at fetch time — check x.ai/api or docs.x.ai directly before publishing. Cached-input price derived from Artificial Analysis's published 75% cache-hit discount off the input price (artificialanalysis.ai/models/grok-4-6) — not shown directly on x.ai's own pricing page.",
+          "notes": "Cached input shown is the short-context cache rate (from docs.x.ai/developers/pricing, not the main x.ai/api marketing page). Long-context requests (once prompt tokens exceed the model's long-context threshold) use higher rates for everything: $4.00 input / $1.00 cached / $12.00 output.",
           "pricingModel": "token"
         }
       ]
