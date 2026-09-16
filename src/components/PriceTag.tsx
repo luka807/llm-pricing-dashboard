@@ -8,7 +8,7 @@ type PriceTagProps = {
 
 export default function PriceTag({ amount, suffix = "/1M", className = "" }: PriceTagProps) {
   return (
-    <span className={`num ${className}`}>
+    <span className={`num font-mono ${className}`}>
       {formatUSD(amount)}
       {suffix && <span className="text-faint-foreground"> {suffix}</span>}
     </span>

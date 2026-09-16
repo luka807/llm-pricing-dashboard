@@ -148,7 +148,7 @@ export default function CapabilityScatterChart({ models, xMetric, yMetric, onSel
             {p}
           </span>
         ))}
-        <span className="text-faint-foreground italic">
+        <span className={`text-faint-foreground ${hovered ? "num font-mono" : "italic"}`}>
           {hovered
             ? `${hovered.model.model} · ${formatUSD(hovered.x)} / 1M · ${Y_LABEL[yMetric].toLowerCase()} ${hovered.y} · point size = context window`
             : "Hover a point for detail; click to open the full model record."}
@@ -157,7 +157,8 @@ export default function CapabilityScatterChart({ models, xMetric, yMetric, onSel
 
       {excluded > 0 && (
         <div className="text-faint-foreground mt-2 text-center text-[11px]">
-          {excluded} model{excluded > 1 ? "s" : ""} not shown — missing {Y_LABEL[yMetric].toLowerCase()} data.
+          <span className="num font-mono">{excluded}</span> model{excluded > 1 ? "s" : ""} not shown — missing{" "}
+          {Y_LABEL[yMetric].toLowerCase()} data.
         </div>
       )}
     </div>

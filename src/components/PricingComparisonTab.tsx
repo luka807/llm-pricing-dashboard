@@ -9,6 +9,7 @@ import PricingTable from "@/components/PricingTable";
 import ModelDetailDrawer from "@/components/ModelDetailDrawer";
 import EmptyState from "@/components/EmptyState";
 import SectionHeader from "@/components/SectionHeader";
+import MethodologyNote from "@/components/MethodologyNote";
 
 const TIER_OPTIONS: { value: Tier | "all"; label: string }[] = [
   { value: "all", label: "All tiers" },
@@ -65,13 +66,23 @@ export default function PricingComparisonTab() {
           <PricingTable models={filtered} onSelectModel={setSelected} />
         )}
 
-        <p className="text-faint-foreground border-t px-6 py-3 text-xs" style={{ borderColor: "var(--border)" }}>
+        <p className="text-faint-foreground border-t px-6 py-3 font-mono text-xs" style={{ borderColor: "var(--border)" }}>
           {filtered.length} of {ALL_MODELS.length} models shown · click any row for full detail · prices in USD per
           1M tokens
         </p>
       </div>
 
       <ModelDetailDrawer model={selected} onClose={() => setSelected(null)} />
+
+      <MethodologyNote
+        items={[
+          "Prices are pulled directly from each provider's official pricing page as of the \"data as of\" date in the footer — click any row for the source link.",
+          "Figures are USD per 1,000,000 tokens at published list price; negotiated, enterprise, or volume-discount rates aren't reflected.",
+          "Tier (frontier / mid-range / lightweight) is assigned by this dashboard based on each model's price and positioning within its own provider's lineup, not a third-party standard.",
+          "Cached-input price reflects the provider's published prompt-caching rate where one exists; it's blank for providers that don't publish one.",
+          "LLM pricing changes frequently — treat this as a snapshot and verify against the source before relying on it.",
+        ]}
+      />
     </section>
   );
 }

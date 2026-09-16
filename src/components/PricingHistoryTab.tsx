@@ -14,6 +14,7 @@ import PriceHistoryChart from "@/components/PriceHistoryChart";
 import PriceChangeTable from "@/components/PriceChangeTable";
 import EmptyState from "@/components/EmptyState";
 import SectionHeader from "@/components/SectionHeader";
+import MethodologyNote from "@/components/MethodologyNote";
 
 const EVENT_OPTIONS: { value: string; label: string }[] = [
   { value: "all", label: "All events" },
@@ -54,7 +55,7 @@ export default function PricingHistoryTab() {
       {FRONTIER_INDEX && "indexValue" in FRONTIER_INDEX && (
         <div className="mb-6 flex flex-wrap items-center gap-6 border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-baseline gap-2">
-            <span className="num font-display text-4xl font-extrabold" style={{ color: "var(--lnp-navy-deep)" }}>
+            <span className="num font-mono text-4xl font-extrabold" style={{ color: "var(--lnp-navy-deep)" }}>
               -84%
             </span>
             <span className="text-faint-foreground text-xs">since GPT-4&apos;s March 2023 launch</span>
@@ -85,6 +86,15 @@ export default function PricingHistoryTab() {
           <PriceChangeTable milestones={filtered} />
         </div>
       )}
+
+      <MethodologyNote
+        items={[
+          "This tab shows curated launch-price and price-cut milestones, not continuous daily pricing data.",
+          "Each point is the price as originally announced on that date — not today's price. See the Pricing Comparison tab for current rates.",
+          "Rows tagged \"Verified\" were cross-checked against the original provider announcement; rows tagged \"Aggregator\" come from a third-party aggregator site and could not be independently cross-checked — treat them as reasonably-sourced rather than verified.",
+          "The frontier token price index (shown above the filters) is sourced from BenchLM and anchored to GPT-4's March 2023 launch price as index value 100.",
+        ]}
+      />
     </section>
   );
 }

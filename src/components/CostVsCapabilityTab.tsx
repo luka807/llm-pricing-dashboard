@@ -8,6 +8,7 @@ import SegmentedControl from "@/components/SegmentedControl";
 import CapabilityScatterChart, { type XMetric, type YMetric } from "@/components/CapabilityScatterChart";
 import ModelDetailDrawer from "@/components/ModelDetailDrawer";
 import SectionHeader from "@/components/SectionHeader";
+import MethodologyNote from "@/components/MethodologyNote";
 
 const X_OPTIONS: { value: XMetric; label: string }[] = [
   { value: "input", label: "Input price" },
@@ -60,6 +61,18 @@ export default function CostVsCapabilityTab() {
       <CapabilityScatterChart models={filtered} xMetric={xMetric} yMetric={yMetric} onSelectModel={setSelected} />
 
       <ModelDetailDrawer model={selected} onClose={() => setSelected(null)} />
+
+      <MethodologyNote
+        items={[
+          "Intelligence Index is sourced from Artificial Analysis's leaderboard — a blended benchmark score, roughly 0–100 in this snapshot, where higher is better.",
+          "Value Score is sourced from BenchLM — quality points per dollar of output cost, where higher means more capability per dollar spent.",
+          "Where a model publishes scores at multiple reasoning-effort or thinking levels, the \"high\" tier figure is used for consistency across models, unless only one figure was published.",
+          "\"Blended\" price on the x-axis is a simple average of input and output per-token price, not weighted by any assumed usage mix.",
+          "Point size encodes published context window on a log scale; models with no published context window get a fixed mid-size point rather than being scaled.",
+          "Models missing a score for the selected y-axis metric are omitted from the chart (see the count below it), not plotted at zero.",
+          "Benchmark and pricing data are compiled independently and may not reflect the exact same snapshot date.",
+        ]}
+      />
     </section>
   );
 }

@@ -8,6 +8,7 @@ import CostResultsTable, { type CostRow } from "@/components/CostResultsTable";
 import CostBarChart from "@/components/CostBarChart";
 import EmptyState from "@/components/EmptyState";
 import SectionHeader from "@/components/SectionHeader";
+import MethodologyNote from "@/components/MethodologyNote";
 
 const DEFAULT_SELECTED_MODELS = [
   "GPT-5.6 Terra",
@@ -88,6 +89,15 @@ export default function CostCalculatorTab() {
           )}
         </div>
       </div>
+
+      <MethodologyNote
+        items={[
+          "Cost = (input tokens × requests ÷ 1,000,000 × input rate) + (output tokens × requests ÷ 1,000,000 × output rate), using current list prices from the Pricing Comparison tab.",
+          "Toggling \"cached input\" substitutes the provider's published cached-input rate for input tokens only; output tokens are always billed at the standard output rate. Models without a published cached rate are unaffected by the toggle.",
+          "A \"per day\" request volume is multiplied by 30 to approximate a monthly figure — no calendar-accurate day counts are used.",
+          "No volume discounts, minimum commitments, batch-API discounts, or rate limits are modeled; this is a linear estimate only.",
+        ]}
+      />
     </section>
   );
 }

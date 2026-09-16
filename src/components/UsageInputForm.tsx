@@ -50,7 +50,7 @@ export default function UsageInputForm({ value, onChange }: UsageInputFormProps)
         </label>
       </div>
 
-      <p className="text-faint-foreground text-[11.5px] leading-relaxed">
+      <p className="text-faint-foreground font-mono text-[11.5px] leading-relaxed">
         Cost = (tokens ÷ 1,000,000) × price per 1M tokens, summed across all requests for the period above.
       </p>
     </div>
