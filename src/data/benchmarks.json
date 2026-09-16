@@ -10,6 +10,7 @@
     {
       "provider": "OpenAI",
       "models": [
+        { "model": "GPT-6 Astra", "intelligenceIndex": 51, "valueScore": null, "notes": "Intelligence Index at 'high' reasoning effort per Artificial Analysis (#6/199 models; rises to 53 at 'max' effort, level with Claude Fable 5.1). BenchLM had not published a Value Score for this model at fetch time — leave blank rather than guessing. Notably token-efficient (26M output tokens vs. a 90M median for comparable runs) and shows a sharp hallucination-rate drop (92%->51%) on Artificial Analysis's Omniscience benchmark at max effort, though it trades this off for higher latency." },
         { "model": "GPT-5.6 Sol", "intelligenceIndex": 42, "valueScore": 4.0, "notes": "Intelligence Index at 'high' reasoning effort (ranges 34-47 across low-max tiers)." },
         { "model": "GPT-5.6 Terra", "intelligenceIndex": 34, "valueScore": 5.9, "notes": "Intelligence Index at 'high' reasoning effort (ranges 28-42 across low-max tiers)." },
         { "model": "GPT-5.6 Luna", "intelligenceIndex": 32, "valueScore": 53.9, "notes": "Intelligence Index at 'high' reasoning effort (ranges 22-38 across low-max tiers). By far the best value score in the OpenAI lineup." }

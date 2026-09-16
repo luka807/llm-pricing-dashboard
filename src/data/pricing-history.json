@@ -289,6 +289,16 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2026-09-03",
+      "provider": "OpenAI",
+      "model": "GPT-6 Astra",
+      "event": "launch",
+      "inputPerMillion": 10.00,
+      "outputPerMillion": 50.00,
+      "notes": "Launched at roughly 2.5x GPT-5.6 Sol's list price. Rate shown is for prompts <=272,000 tokens (1.05M token context window); above that threshold pricing rises to $20 input / $75 output. Cached input priced separately at $1/M (90% off base), cache writes at $12.50/M. OpenAI's own pricing page returned a 403 while compiling this dataset, so this is cross-checked against OpenAI's launch announcement post and multiple independent trackers (Yotta Labs, Layer3 Labs, AiCybr) that all agree on these figures.",
+      "sourceConfidence": "high"
+    },
+    {
       "date": "2026-09-14",
       "provider": "Anthropic",
       "model": "Claude Fable 5.1",

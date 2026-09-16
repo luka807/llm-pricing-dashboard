@@ -9,6 +9,16 @@
       "sourceUrl": "https://openai.com/api/pricing/",
       "models": [
         {
+          "model": "GPT-6 Astra",
+          "tier": "frontier",
+          "inputPerMillion": 10.0,
+          "outputPerMillion": 50.0,
+          "cachedInputPerMillion": 1.0,
+          "contextWindowTokens": 1050000,
+          "notes": "Launched 2026-09-03, priced ~2.5x GPT-5.6 Sol. openai.com/api/pricing/ was unreachable while compiling this entry (403), so figures are cross-checked across OpenAI's own launch post (openai.com/index/gpt-6-astra/) and multiple third-party trackers (Yotta Labs, Layer3 Labs, AiCybr) that agree on these numbers. Rate shown is for prompts <=272,000 tokens; above that threshold pricing rises to $20 input / $75 output / $2 cached (2x input & cache, 1.5x output). Cache writes cost extra at $12.50/MTok. Fast mode (up to 2x speed) is 2x standard rates; Batch/Flex processing is 50% of standard.",
+          "pricingModel": "token"
+        },
+        {
           "model": "GPT-5.6 Sol",
           "tier": "frontier",
           "inputPerMillion": 5.0,
