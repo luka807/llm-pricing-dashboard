@@ -79,7 +79,7 @@ export default function PricingComparisonTab() {
           "Prices are pulled directly from each provider's official pricing page as of the \"data as of\" date in the footer — click any row for the source link.",
           "Figures are USD per 1,000,000 tokens at published list price; negotiated, enterprise, or volume-discount rates aren't reflected.",
           "Tier (frontier / mid-range / lightweight) is assigned by this dashboard based on each model's price and positioning within its own provider's lineup, not a third-party standard.",
-          "Cached-input price reflects the provider's published prompt-caching rate where one exists; it's blank for providers that don't publish one.",
+          "Cached-input price reflects the provider's own published prompt-caching rate where one exists; where a provider doesn't publish one directly, it's derived from Artificial Analysis's published cache-hit discount for that model instead (flagged in the model's detail drawer). It's blank where neither source shows a distinct cached rate.",
           "LLM pricing changes frequently — treat this as a snapshot and verify against the source before relying on it.",
         ]}
       />
