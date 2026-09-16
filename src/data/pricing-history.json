@@ -192,10 +192,10 @@
       "date": "2025-11-24",
       "provider": "Anthropic",
       "model": "Claude Opus 4.5",
-      "event": "price cut",
+      "event": "launch",
       "inputPerMillion": 5.00,
       "outputPerMillion": 25.00,
-      "notes": "A 67% cut from the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch (see that entry) and carried through Opus 4 / 4.1 unchanged. Sourced directly from Anthropic's own launch post; the 67% figure is corroborated by multiple outlets' headlines (InfoWorld, VentureBeat, How2Shout). This is the price point today's Opus 5 still uses.",
+      "notes": "Launch price, per Anthropic's own announcement post (\"Pricing is now $5/$25 per million tokens\") — there was no earlier Claude Opus 4.5 price to cut from. Anthropic's post doesn't itself frame this against prior Opus pricing, but it lands 67% below the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch and carried through Opus 4 / 4.1 unchanged (see that entry); that comparison is corroborated by multiple outlets' headlines (InfoWorld, VentureBeat, How2Shout). This is the price point today's Opus 5 still uses.",
       "sourceConfidence": "high"
     },
     {
