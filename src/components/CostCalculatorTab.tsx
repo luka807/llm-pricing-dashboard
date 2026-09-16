@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ALL_MODELS, calcCost } from "@/lib/pricing";
+import { ALL_MODELS, PROVIDERS, PROVIDER_SOURCE_URL, calcCost } from "@/lib/pricing";
 import UsageInputForm, { type UsageInputs } from "@/components/UsageInputForm";
 import ModelSelector, { modelKey } from "@/components/ModelSelector";
 import CostResultsTable, { type CostRow } from "@/components/CostResultsTable";
@@ -96,6 +96,10 @@ export default function CostCalculatorTab() {
           "Toggling \"cached input\" substitutes the provider's published cached-input rate for input tokens only; output tokens are always billed at the standard output rate. Models without a published cached rate are unaffected by the toggle.",
           "A \"per day\" request volume is multiplied by 30 to approximate a monthly figure — no calendar-accurate day counts are used.",
           "No volume discounts, minimum commitments, batch-API discounts, or rate limits are modeled; this is a linear estimate only.",
+        ]}
+        sources={[
+          ...PROVIDERS.map((p) => ({ label: `${p} pricing`, url: PROVIDER_SOURCE_URL[p] })),
+          { label: "Artificial Analysis (cached pricing)", url: "https://artificialanalysis.ai/models" },
         ]}
       />
     </section>

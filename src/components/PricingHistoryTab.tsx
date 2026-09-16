@@ -94,6 +94,7 @@ export default function PricingHistoryTab() {
           "Rows tagged \"Verified\" were cross-checked against the original provider announcement; rows tagged \"Aggregator\" come from a third-party aggregator site and could not be independently cross-checked — treat them as reasonably-sourced rather than verified.",
           "The frontier token price index (shown above the filters) is sourced from BenchLM and anchored to GPT-4's March 2023 launch price as index value 100.",
         ]}
+        sources={[{ label: "BenchLM frontier token price index", url: FRONTIER_INDEX_BASELINE.sourceUrl }]}
       />
     </section>
   );

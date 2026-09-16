@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ALL_MODELS, PROVIDERS, type Model, type Provider, type Tier } from "@/lib/pricing";
+import { ALL_MODELS, PROVIDERS, PROVIDER_SOURCE_URL, type Model, type Provider, type Tier } from "@/lib/pricing";
 import ModelSearch from "@/components/ModelSearch";
 import ProviderFilter from "@/components/ProviderFilter";
 import SegmentedControl from "@/components/SegmentedControl";
@@ -81,6 +81,10 @@ export default function PricingComparisonTab() {
           "Tier (frontier / mid-range / lightweight) is assigned by this dashboard based on each model's price and positioning within its own provider's lineup, not a third-party standard.",
           "Cached-input price reflects the provider's own published prompt-caching rate where one exists; where a provider doesn't publish one directly, it's derived from Artificial Analysis's published cache-hit discount for that model instead (flagged in the model's detail drawer). It's blank where neither source shows a distinct cached rate.",
           "LLM pricing changes frequently — treat this as a snapshot and verify against the source before relying on it.",
+        ]}
+        sources={[
+          ...PROVIDERS.map((p) => ({ label: `${p} pricing`, url: PROVIDER_SOURCE_URL[p] })),
+          { label: "Artificial Analysis (cached pricing)", url: "https://artificialanalysis.ai/models" },
         ]}
       />
     </section>

@@ -72,6 +72,10 @@ export default function CostVsCapabilityTab() {
           "Models missing a score for the selected y-axis metric are omitted from the chart (see the count below it), not plotted at zero.",
           "Benchmark and pricing data are compiled independently and may not reflect the exact same snapshot date.",
         ]}
+        sources={[
+          { label: "Artificial Analysis (Intelligence Index)", url: "https://artificialanalysis.ai/leaderboards/models" },
+          { label: "BenchLM (Value Score)", url: "https://benchlm.ai/llm-pricing" },
+        ]}
       />
     </section>
   );

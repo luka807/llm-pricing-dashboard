@@ -22,6 +22,10 @@ export type Model = {
 
 export const PROVIDERS: Provider[] = pricingData.providers.map((p) => p.provider as Provider);
 
+export const PROVIDER_SOURCE_URL: Record<Provider, string> = Object.fromEntries(
+  pricingData.providers.map((p) => [p.provider, p.sourceUrl])
+) as Record<Provider, string>;
+
 export const PROVIDER_COLOR_VAR: Record<Provider, string> = {
   OpenAI: "var(--series-1)",
   Anthropic: "var(--series-2)",
