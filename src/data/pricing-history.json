@@ -259,6 +259,36 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2025-12-02",
+      "provider": "Mistral",
+      "model": "Mistral Large 3",
+      "event": "launch",
+      "inputPerMillion": 0.50,
+      "outputPerMillion": 1.50,
+      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. Sourced directly from Mistral's own announcement post (mistral.ai/news/mistral-3/), published 2025-12-02.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-03-16",
+      "provider": "Mistral",
+      "model": "Mistral Small 4",
+      "event": "launch",
+      "inputPerMillion": 0.15,
+      "outputPerMillion": 0.60,
+      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. Sourced directly from Mistral's own announcement post (mistral.ai/news/mistral-small-4/).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-04-29",
+      "provider": "Mistral",
+      "model": "Mistral Medium 3.5",
+      "event": "launch",
+      "inputPerMillion": 1.50,
+      "outputPerMillion": 7.50,
+      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. The dedicated launch post wasn't directly accessible while compiling this dataset; date and price are corroborated by Mistral's own docs model card (docs.mistral.ai/models/mistral-medium-3-5-26-04) and independent coverage (Winbuzzer), which agree with each other.",
+      "sourceConfidence": "medium"
+    },
+    {
       "date": "2026-07-09",
       "provider": "OpenAI",
       "model": "GPT-5.6 Sol",
@@ -289,6 +319,16 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2026-08-12",
+      "provider": "xAI",
+      "model": "Grok 4.6",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 6.00,
+      "notes": "Rate shown is for short-context requests (under the model's 200k-token long-context threshold); above that, all rates double. Same list price as pricing.json's current rate — no price cut on record since launch. Sourced directly from xAI's own announcement post (x.ai/news/grok-4-6).",
+      "sourceConfidence": "high"
+    },
+    {
       "date": "2026-09-03",
       "provider": "OpenAI",
       "model": "GPT-6 Astra",
@@ -299,14 +339,14 @@
       "sourceConfidence": "high"
     },
     {
-      "date": "2026-09-14",
+      "date": "2026-09-01",
       "provider": "Anthropic",
       "model": "Claude Fable 5.1",
-      "event": "entered price index",
+      "event": "launch",
       "inputPerMillion": null,
       "outputPerMillion": null,
       "blendedPerMillion": 20.00,
-      "notes": "BenchLM's index tracks a single blended rate per model rather than separate input/output figures; this is not directly comparable to the $10/$50 input/output split in pricing.json, which comes from Anthropic's own pricing page.",
+      "notes": "Blended rate is BenchLM's figure, not Anthropic's — BenchLM's index tracks a single blended rate per model rather than separate input/output figures.",
       "sourceConfidence": "high"
     },
     {
