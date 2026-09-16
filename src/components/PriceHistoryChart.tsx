@@ -56,6 +56,17 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
 
   const hoveredPoint = points.find((p) => p.i === hovered) ?? null;
 
+  const series = new Map<string, typeof points>();
+  for (const p of points) {
+    const key = `${p.m.provider ?? "industry"}::${p.m.model}`;
+    const group = series.get(key);
+    if (group) group.push(p);
+    else series.set(key, [p]);
+  }
+  const connectors = Array.from(series.values())
+    .filter((group) => group.length > 1)
+    .map((group) => [...group].sort((a, b) => a.t - b.t));
+
   return (
     <div className="border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
       <div className="relative" style={{ aspectRatio: "1000 / 400" }}>
@@ -75,6 +86,19 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
               {y.label}
             </text>
           ))}
+          {connectors.map((group) => {
+            const color = group[0].m.provider ? PROVIDER_COLOR_VAR[group[0].m.provider as Provider] : "var(--faint-foreground)";
+            return (
+              <polyline
+                key={`${group[0].m.provider ?? "industry"}::${group[0].m.model}`}
+                points={group.map((p) => `${px(p.t)},${py(Math.log10(p.price))}`).join(" ")}
+                fill="none"
+                stroke={color}
+                strokeWidth={1.5}
+                strokeOpacity={0.45}
+              />
+            );
+          })}
           {points.map((p) => {
             const isCut = p.m.event === "price cut";
             const color = p.m.provider ? PROVIDER_COLOR_VAR[p.m.provider as Provider] : "var(--faint-foreground)";
@@ -130,6 +154,10 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-2.5 w-2.5 rounded-full border-2" style={{ borderColor: "var(--faint-foreground)", background: "var(--card)" }} />
           Price cut
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span className="inline-block h-px w-4" style={{ background: "var(--faint-foreground)", opacity: 0.45 }} />
+          Same model over time
         </span>
       </div>
     </div>
