@@ -32,7 +32,7 @@ const sourceSerif = Source_Serif_4({
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "700", "800"],
 });
 
 export const metadata: Metadata = {
