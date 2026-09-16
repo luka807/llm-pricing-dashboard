@@ -25,7 +25,7 @@
       "event": "launch",
       "inputPerMillion": 30.00,
       "outputPerMillion": 60.00,
-      "notes": "Anchor point (index = 100) for BenchLM's frontier token price index.",
+      "notes": "Anchor point (index = 100) for BenchLM's frontier token price index. Confirmed directly via TechCrunch's launch-day coverage ($0.03/$0.06 per 1K tokens).",
       "sourceConfidence": "high"
     },
     {
@@ -35,8 +35,8 @@
       "event": "launch",
       "inputPerMillion": 8.00,
       "outputPerMillion": 24.00,
-      "notes": null,
-      "sourceConfidence": "aggregator"
+      "notes": "Not directly confirmed for the July 2023 launch itself, but InfoQ's coverage of the Claude 2.1 update (Nov 2023) confirms this exact rate ($8/$24 per million) was still in effect for the 2.1 point release, and Anthropic did not typically reprice minor version bumps — reasonable but not certain evidence the launch price was the same.",
+      "sourceConfidence": "medium"
     },
     {
       "date": "2023-11-06",
@@ -45,8 +45,8 @@
       "event": "launch",
       "inputPerMillion": 10.00,
       "outputPerMillion": 30.00,
-      "notes": "3x cheaper than original GPT-4 (8K) launch pricing.",
-      "sourceConfidence": "aggregator"
+      "notes": "3x cheaper input / 2x cheaper output than original GPT-4 (8K). Confirmed directly via OpenAI's own DevDay announcement post ($0.01/$0.03 per 1K tokens).",
+      "sourceConfidence": "high"
     },
     {
       "date": "2023-12-13",
@@ -55,18 +55,48 @@
       "event": "launch",
       "inputPerMillion": 0.50,
       "outputPerMillion": 1.50,
-      "notes": null,
+      "notes": "Caveat found while cross-checking: Google's own launch post ('It's time for developers and enterprises to build with Gemini Pro') describes billing as 'per 1,000 characters or per image,' not per token. The $0.50/$1.50-per-million-tokens figure may be a later token-equivalent conversion rather than what was literally announced at launch — worth flagging if this milestone is presented as a direct quote.",
       "sourceConfidence": "aggregator"
     },
     {
       "date": "2024-02-15",
       "provider": "Google",
       "model": "Gemini 1.5 Pro",
-      "event": "launch",
+      "event": "research preview announced (no public pricing)",
+      "inputPerMillion": null,
+      "outputPerMillion": null,
+      "notes": "Announced as a free research preview on this date, not with paid pricing. Paid/GA pricing followed in May 2024 (see next entry) — kept as a separate milestone since it's the actual announcement date most sources cite, but don't pair this date with the $3.50/$10.50 price.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2024-05-14",
+      "provider": "Google",
+      "model": "Gemini 1.5 Pro",
+      "event": "GA / paid pricing launch",
       "inputPerMillion": 3.50,
       "outputPerMillion": 10.50,
-      "notes": null,
-      "sourceConfidence": "aggregator"
+      "notes": "Rate for prompts <=128K tokens. Confirmed via a dedicated Gemini pricing-history writeup (zerlo.net) cross-checked against Google's own Oct 2024 price-cut post, whose stated 64%/52% cut percentages are consistent with this starting price.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2024-08-12",
+      "provider": "Google",
+      "model": "Gemini 1.5 Flash",
+      "event": "price cut",
+      "inputPerMillion": 0.075,
+      "outputPerMillion": 0.30,
+      "notes": "Rate for prompts <=128K tokens. A steep cut from its May 2024 launch price within about 3 months.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2024-10-01",
+      "provider": "Google",
+      "model": "Gemini 1.5 Pro",
+      "event": "price cut",
+      "inputPerMillion": 1.25,
+      "outputPerMillion": 5.00,
+      "notes": "Rate for prompts <=128K tokens. Google's own blog post (developers.googleblog.com) confirms this date and states a '64% price reduction on input tokens, a 52% price reduction on output tokens' — consistent with the $3.50/$10.50 starting price above ($3.50 x 0.36 = $1.26 ~= $1.25; $10.50 x 0.48 = $5.04 ~= $5.00).",
+      "sourceConfidence": "high"
     },
     {
       "date": "2024-03-04",
@@ -114,9 +144,9 @@
       "model": "Gemini 1.5 Flash",
       "event": "launch",
       "inputPerMillion": 0.35,
-      "outputPerMillion": 1.05,
-      "notes": null,
-      "sourceConfidence": "aggregator"
+      "outputPerMillion": 0.53,
+      "notes": "Rate for prompts <=128K tokens. Sources disagree on the output figure: a dedicated Gemini pricing-history writeup (zerlo.net) says $0.53, while another aggregator we used earlier said $1.05 — going with $0.53 since that source explicitly frames it as the documented initial paid price, but this one is worth double-checking before treating as final.",
+      "sourceConfidence": "medium"
     },
     {
       "date": "2024-06-20",
@@ -159,6 +189,36 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2025-11-24",
+      "provider": "Anthropic",
+      "model": "Claude Opus 4.5",
+      "event": "price cut",
+      "inputPerMillion": 5.00,
+      "outputPerMillion": 25.00,
+      "notes": "A 67% cut from the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch (see that entry) and carried through Opus 4 / 4.1 unchanged. Sourced directly from Anthropic's own launch post; the 67% figure is corroborated by multiple outlets' headlines (InfoWorld, VentureBeat, How2Shout). This is the price point today's Opus 5 still uses.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-06-30",
+      "provider": "Anthropic",
+      "model": "Claude Sonnet 5",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 10.00,
+      "notes": "First real cut to the Sonnet tier's price in this dataset — Sonnet had held at $3/$15 since Claude 3 Sonnet's March 2024 launch straight through 3.5, 3.7, 4, 4.5, and 4.6, per third-party aggregator tracking (not independently confirmed here). Introductory/launch pricing, explicitly framed by Anthropic as temporary at the time (see the Aug 2026 entry below).",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2026-08-10",
+      "provider": "Anthropic",
+      "model": "Claude Sonnet 5",
+      "event": "planned price increase cancelled",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 10.00,
+      "notes": "Anthropic had scheduled Sonnet 5's introductory $2/$10 rate to rise 50% to $3/$15 on September 1, 2026, but cancelled the hike on this date and made $2/$10 permanent instead. Worth knowing for Tab 4: this is the one entry in the dataset where a price move went the *other* way from what was announced. Separately, Sonnet 5 uses a new tokenizer that produces roughly 30% more tokens than Sonnet 4.6 for the same text — so real-world workload cost may have effectively risen ~30% even though the rate card didn't move.",
+      "sourceConfidence": "medium"
+    },
+    {
       "date": "2024-12-11",
       "provider": "Google",
       "model": "Gemini 2.0 Flash",
@@ -196,6 +256,36 @@
       "inputPerMillion": 1.25,
       "outputPerMillion": 10.00,
       "notes": "Cached input priced separately at $0.125/M. Priced low enough that press coverage described it as risking a renewed price war. Sourced directly from TechCrunch's launch-day coverage.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-07-09",
+      "provider": "OpenAI",
+      "model": "GPT-5.6 Sol",
+      "event": "launch",
+      "inputPerMillion": 5.00,
+      "outputPerMillion": 30.00,
+      "notes": "Sourced directly from OpenAI's own GPT-5.6 announcement post. Same list price as pricing.json's current rate — the Sept 2026 blended-price cut recorded below apparently didn't touch the sticker input/output rate, so it likely reflects a change to cached-input pricing instead (not captured by this dataset's input/output fields).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-07-09",
+      "provider": "OpenAI",
+      "model": "GPT-5.6 Terra",
+      "event": "launch",
+      "inputPerMillion": 2.50,
+      "outputPerMillion": 15.00,
+      "notes": "Sourced directly from OpenAI's own GPT-5.6 announcement post. Cut to $2.00/$12.00 by Sept 2026 (see price-cut entry below) — a 20% reduction on both input and output, consistent with BenchLM's reported 20% blended-price cut.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-07-09",
+      "provider": "OpenAI",
+      "model": "GPT-5.6 Luna",
+      "event": "launch",
+      "inputPerMillion": 1.00,
+      "outputPerMillion": 6.00,
+      "notes": "Sourced directly from OpenAI's own GPT-5.6 announcement post. Cut to $0.20/$1.20 by Sept 2026 (see price-cut entry below) — an 80% reduction on both input and output, consistent with BenchLM's reported 80% blended-price cut (the largest in their latest ledger).",
       "sourceConfidence": "high"
     },
     {
