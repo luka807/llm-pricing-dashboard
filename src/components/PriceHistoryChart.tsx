@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ALL_MODELS, DATA_AS_OF, PROVIDER_COLOR_VAR, milestoneBlendedPrice, type PriceMilestone, type Provider } from "@/lib/pricing";
+import { ALL_MODELS, DATA_AS_OF, MODEL_TO_LINEAGE_KEY, PROVIDER_COLOR_VAR, milestoneBlendedPrice, type PriceMilestone, type Provider } from "@/lib/pricing";
 import { formatDate, formatUSD } from "@/lib/format";
 
 type PriceHistoryChartProps = {
@@ -53,11 +53,15 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
     );
   }
 
-  // Group by model so each series can be extended with a synthetic point at
+  // Group by lineage so each series can be extended with a synthetic point at
   // today's current price — a model that hasn't changed since its last
   // recorded milestone should still read as "priced through today," not as
-  // a line that mysteriously stops months or years ago.
-  const seriesKey = (p: Pick<PlotPoint, "provider" | "model">) => `${p.provider ?? "industry"}::${p.model}`;
+  // a line that mysteriously stops months or years ago. Lineages also chain
+  // successive generations of the same tier (e.g. Gemini 1.0 Pro -> 1.5 Pro
+  // -> 2.5 Pro) via MODEL_TO_LINEAGE_KEY, falling back to the exact
+  // provider+model pair for anything not in a defined lineage.
+  const seriesKey = (p: Pick<PlotPoint, "provider" | "model">) =>
+    (p.provider && MODEL_TO_LINEAGE_KEY.get(`${p.provider}::${p.model}`)) || `${p.provider ?? "industry"}::${p.model}`;
   const grouped = new Map<string, PlotPoint[]>();
   for (const p of realPoints) {
     const key = seriesKey(p);
@@ -67,13 +71,13 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
   }
 
   const seriesGroups: PlotPoint[][] = [];
-  for (const [key, group] of grouped) {
+  for (const group of grouped.values()) {
     const sorted = [...group].sort((a, b) => a.t - b.t);
-    const current = CURRENT_PRICE_BY_KEY.get(key);
     const last = sorted[sorted.length - 1];
+    const current = last.provider ? CURRENT_PRICE_BY_KEY.get(`${last.provider}::${last.model}`) : undefined;
     if (current != null && NOW_T > last.t) {
       sorted.push({
-        key: `synthetic-${key}`,
+        key: `synthetic-${seriesKey(last)}`,
         t: NOW_T,
         price: current,
         provider: last.provider,
@@ -221,7 +225,7 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
         </span>
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-[2px] w-4 rounded-full" style={{ background: "var(--faint-foreground)" }} />
-          Same model over time
+          Same model / lineage over time
         </span>
       </div>
     </div>

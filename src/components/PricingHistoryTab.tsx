@@ -90,8 +90,8 @@ export default function PricingHistoryTab() {
       <MethodologyNote
         items={[
           "This tab shows curated launch-price and price-cut milestones, not continuous daily pricing data.",
-          "Each point is the price as originally announced on that date — not today's price. See the Pricing Comparison tab for current rates.",
-          "A connecting line links two or more milestones for the same model (e.g. a launch price and its later price cuts) so you can trace one model's trajectory; models with only one milestone on record show as an unconnected point.",
+          "Each dot is the price as originally announced on that date — not today's price. See the Pricing Comparison tab for current rates.",
+          "A connecting line traces one model's price trajectory over time — including price cuts to the same model and, where a provider replaced a model with its next generation in the same tier (e.g. Gemini 1.0 Pro -> 1.5 Pro -> 2.5 Pro), the handoff to that successor. For models still being sold today, the line runs on past its last recorded milestone to a small end-marker at today's actual price, rather than stopping wherever the historical record happens to end. A discontinued model with no tracked successor shows as a single dot (or a short line ending at its last known price) rather than continuing indefinitely.",
           "Rows tagged \"Verified\" were cross-checked against the original provider announcement; rows tagged \"Aggregator\" come from a third-party aggregator site and could not be independently cross-checked — treat them as reasonably-sourced rather than verified.",
           "Many milestones were found or corrected by searching the Wayback Machine / Internet Archive for old snapshots of each provider's own pricing pages, rather than relying solely on press coverage or launch announcements — those entries cite the specific archived page and date used as evidence.",
           "The frontier token price index (shown above the filters) is sourced from BenchLM and anchored to GPT-4's March 2023 launch price as index value 100.",
