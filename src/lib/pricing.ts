@@ -42,8 +42,12 @@ export const PROVIDER_COLOR_VAR: Record<Provider, string> = {
 // same-tier sibling as a successor) would misstate the pricing history.
 // Anything not listed here falls back to being its own single-model lineage.
 export const MODEL_LINEAGES: { provider: Provider; label: string; models: string[] }[] = [
-  { provider: "OpenAI", label: "OpenAI flagship", models: ["GPT-3.5 Turbo", "GPT-4 (8K)", "GPT-4 Turbo", "GPT-4o", "GPT-5", "GPT-5.6 Sol", "GPT-6 Astra"] },
-  { provider: "Anthropic", label: "Claude flagship", models: ["Claude 2", "Claude 3 Opus", "Claude Opus 4.5"] },
+  // GPT-6 Astra deliberately excluded: it launched alongside GPT-5.6 Sol as a
+  // separate, pricier frontier option, not a replacement for it — both are
+  // still sold today (see pricing.json), so chaining them would falsely
+  // suggest a succession and bury Astra's own current price mid-line.
+  { provider: "OpenAI", label: "OpenAI flagship", models: ["GPT-3.5 Turbo", "GPT-4 (8K)", "GPT-4 Turbo", "GPT-4o", "GPT-5", "GPT-5.6 Sol"] },
+  { provider: "Anthropic", label: "Claude flagship", models: ["Claude 2", "Claude 3 Opus", "Claude Opus 4.5", "Claude Opus 5"] },
   { provider: "Anthropic", label: "Claude Sonnet", models: ["Claude 3 Sonnet", "Claude 3.5 Sonnet", "Claude Sonnet 5"] },
   { provider: "Anthropic", label: "Claude Haiku", models: ["Claude 3 Haiku", "Claude 3.5 Haiku", "Claude Haiku 4.5"] },
   { provider: "Google", label: "Gemini Pro", models: ["Gemini 1.0 Pro", "Gemini 1.5 Pro", "Gemini 2.5 Pro", "Gemini 3 Pro Preview", "Gemini 3.1 Pro Preview"] },
@@ -97,9 +101,6 @@ export const FRONTIER_INDEX = historyData.milestones.find(
 export const FRONTIER_INDEX_BASELINE = historyData.baseline;
 
 export function milestoneBlendedPrice(m: PriceMilestone): number | null {
-  if ("blendedPerMillion" in m && typeof m.blendedPerMillion === "number") {
-    return m.blendedPerMillion;
-  }
   if (typeof m.inputPerMillion === "number" && typeof m.outputPerMillion === "number") {
     return (m.inputPerMillion + m.outputPerMillion) / 2;
   }

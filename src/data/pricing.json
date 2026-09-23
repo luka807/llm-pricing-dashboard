@@ -1,8 +1,8 @@
 {
   "$schema": "LLM pricing comparison data — Tab 1 (Pricing Comparison) and Tab 2 (Cost Calculator)",
-  "generatedAt": "2026-09-15",
+  "generatedAt": "2026-09-23",
   "unit": "USD per 1,000,000 tokens",
-  "notes": "Prices pulled directly from each provider's official pricing page on 2026-09-15. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
+  "notes": "Prices pulled directly from each provider's official pricing page, most recently re-checked 2026-09-23 (OpenAI, Google, and xAI were re-verified live on that date; Anthropic, Mistral, and DeepSeek were last directly re-fetched 2026-09-15 but independently confirmed unchanged since via Wayback Machine research through at least that window — see pricing-history.json for the underlying evidence). One known exception: Anthropic announced Claude Opus 5.5 on 2026-09-22, which may supersede the Claude Opus 5 entry below — not yet investigated or reflected here. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
   "providers": [
     {
       "provider": "OpenAI",
@@ -153,7 +153,7 @@
           "outputPerMillion": 7.5,
           "cachedInputPerMillion": 0.15,
           "contextWindowTokens": 256000,
-          "notes": "Priced higher than Large 3 on this provider's page as of 2026-09-15 — worth double-checking, this is not a typo in this file. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
+          "notes": "Priced higher than Large 3 on this provider's page — worth double-checking, this is not a typo in this file. Confirmed still the case via Wayback Machine snapshots of mistral.ai's pricing pages through 2026-09-21, with no evidence of change since. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
           "pricingModel": "token"
         },
         {

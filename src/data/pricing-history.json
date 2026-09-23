@@ -1,6 +1,6 @@
 {
   "$schema": "LLM pricing history data — Tab 4 (Pricing History)",
-  "generatedAt": "2026-09-15",
+  "generatedAt": "2026-09-23",
   "unit": "USD per 1,000,000 tokens",
   "baseline": {
     "description": "BenchLM's frontier token price index uses GPT-4's March 2023 launch price as index value 100. As of 2026-09-14 the index stood at 16 — an 84% drop in frontier pricing over roughly 3.5 years.",
@@ -205,7 +205,17 @@
       "event": "launch",
       "inputPerMillion": 5.00,
       "outputPerMillion": 25.00,
-      "notes": "Launch price, per Anthropic's own announcement post (\"Pricing is now $5/$25 per million tokens\") — there was no earlier Claude Opus 4.5 price to cut from. Anthropic's post doesn't itself frame this against prior Opus pricing, but it lands 67% below the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch and carried through Opus 4 / 4.1 unchanged; that chain is now directly confirmed via archived anthropic.com/docs pricing tables (Opus 3, 4, and 4.1 all showing $15/$75 as of a 2025-11-19 snapshot), not just outlet headlines as previously noted. This is the price point today's Opus 5 still uses.",
+      "notes": "Launch price, per Anthropic's own announcement post (\"Pricing is now $5/$25 per million tokens\") — there was no earlier Claude Opus 4.5 price to cut from. Anthropic's post doesn't itself frame this against prior Opus pricing, but it lands 67% below the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch and carried through Opus 4 / 4.1 unchanged; that chain is now directly confirmed via archived anthropic.com/docs pricing tables (Opus 3, 4, and 4.1 all showing $15/$75 as of a 2025-11-19 snapshot), not just outlet headlines as previously noted. Superseded by an intermediate 'Claude Opus 4.8' at some point before mid-2026 (see next entry) — same price, no separate milestone recorded since nothing changed.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-07-24",
+      "provider": "Anthropic",
+      "model": "Claude Opus 5",
+      "event": "launch",
+      "inputPerMillion": 5.00,
+      "outputPerMillion": 25.00,
+      "notes": "Previously missing from this dataset entirely, despite being Anthropic's current top-tier model in pricing.json — its price was never recorded anywhere in this history, only asserted in a stray note on the Opus 4.5 entry ('the price point today's Opus 5 still uses'). Same $5/$25 rate as Opus 4.5, explicitly described in Anthropic's own launch post as unchanged 'the same as Opus 4.8' — an intermediate point release between 4.5 and 5 that this dataset has not independently dated or otherwise recorded, since its price didn't change either. Sourced directly from Anthropic's own announcement post (anthropic.com/news/claude-opus-5).",
       "sourceConfidence": "high"
     },
     {
@@ -643,10 +653,9 @@
       "provider": "Anthropic",
       "model": "Claude Fable 5.1",
       "event": "launch",
-      "inputPerMillion": null,
-      "outputPerMillion": null,
-      "blendedPerMillion": 20.00,
-      "notes": "Blended rate is BenchLM's figure, not Anthropic's — BenchLM's index tracks a single blended rate per model rather than separate input/output figures.",
+      "inputPerMillion": 10.00,
+      "outputPerMillion": 50.00,
+      "notes": "Input/output figures backfilled from pricing.json's current Fable 5.1 entry (Anthropic's own rate card) — at initial write-up, only BenchLM's own blended figure ($20/M, a 0.75x-input/0.25x-output weighting rather than the simple average used elsewhere in this dataset) was available, which caused an artificial jump against later same-model points plotted with the simple-average formula. No price change implied by this correction, just a consistent unit.",
       "sourceConfidence": "high"
     },
     {
@@ -664,8 +673,9 @@
       "provider": "OpenAI",
       "model": "GPT-5.6 Sol",
       "event": "price cut",
-      "blendedPerMillion": 8.00,
-      "notes": "BenchLM's change-ledger figure (blended $11.25/M -> $8.00/M, 28.9% decrease) for the same Aug 21 sticker-price cut recorded directly above — BenchLM just recorded it a few weeks later. Blended figure, not directly comparable to the separate input/output rates tracked elsewhere in this dataset.",
+      "inputPerMillion": 4.00,
+      "outputPerMillion": 20.00,
+      "notes": "Same rate as the Aug 21 entry directly above — BenchLM's change ledger (blended $11.25/M -> $8.00/M, 28.9% decrease, on their 0.75x-input/0.25x-output weighting) just recorded this a few weeks later; no additional price change happened on this date. Input/output backfilled here (rather than left as a blended-only figure) to plot on the same simple-average scale as the rest of this dataset.",
       "sourceConfidence": "high"
     },
     {
@@ -673,8 +683,9 @@
       "provider": "OpenAI",
       "model": "GPT-5.6 Terra",
       "event": "price cut",
-      "blendedPerMillion": 4.50,
-      "notes": "Cut from a blended $5.63/M to $4.50/M (20% decrease), per BenchLM's change ledger.",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 12.00,
+      "notes": "20% cut from the $2.50/$15.00 launch price, matching the current listed rate. Reported by BenchLM as a blended $5.63/M -> $4.50/M change (their 0.75x-input/0.25x-output weighting); input/output backfilled here to plot on the same simple-average scale as the rest of this dataset.",
       "sourceConfidence": "high"
     },
     {
@@ -682,8 +693,9 @@
       "provider": "OpenAI",
       "model": "GPT-5.6 Luna",
       "event": "price cut",
-      "blendedPerMillion": 0.45,
-      "notes": "Cut from a blended $2.25/M to $0.45/M (80% decrease) — the largest single cut in BenchLM's latest change-ledger snapshot.",
+      "inputPerMillion": 0.20,
+      "outputPerMillion": 1.20,
+      "notes": "80% cut from the $1.00/$6.00 launch price, matching the current listed rate — the largest single cut in BenchLM's latest change-ledger snapshot (blended $2.25/M -> $0.45/M on their 0.75x-input/0.25x-output weighting). Input/output backfilled here to plot on the same simple-average scale as the rest of this dataset.",
       "sourceConfidence": "high"
     },
     {

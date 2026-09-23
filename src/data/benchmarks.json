@@ -1,6 +1,6 @@
 {
   "$schema": "LLM benchmark/capability data — Tab 3 (Cost vs. Capability)",
-  "generatedAt": "2026-09-15",
+  "generatedAt": "2026-09-23",
   "notes": "Two headline scores per model: Artificial Analysis's Intelligence Index (a blended benchmark score, higher is better, roughly 0-100 in this snapshot) and BenchLM's Value Score (quality points per dollar of *output* cost — higher means more capability per dollar spent). Where a model publishes multiple scores at different reasoning-effort levels (e.g. GPT-5.6's low/medium/high/xhigh/max), the 'high' tier was used for consistency unless only one figure was published.",
   "sources": [
     "https://artificialanalysis.ai/leaderboards/models",
