@@ -16,7 +16,7 @@ const DEFAULT_SELECTED_MODELS = [
   "Gemini 3.8 Flash",
   "Mistral Medium 3.5",
   "DeepSeek-V4-Pro",
-  "Grok 4.6",
+  "Grok 4.7",
 ];
 
 export default function CostCalculatorTab() {

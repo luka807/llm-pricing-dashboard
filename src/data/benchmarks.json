@@ -51,7 +51,7 @@
     {
       "provider": "xAI",
       "models": [
-        { "model": "Grok 4.6", "intelligenceIndex": 44, "valueScore": 11.7, "notes": "Intelligence Index at 'high' reasoning effort." }
+        { "model": "Grok 4.7", "intelligenceIndex": 46, "valueScore": null, "notes": "Intelligence Index at 'high' reasoning effort, per Artificial Analysis — up 2 points over Grok 4.6's 44, bringing xAI into the top 4 labs on this index. BenchLM has not yet published a Value Score for this model (still shows as provisional/insufficient coverage on their leaderboard) — leave blank rather than carrying over Grok 4.6's 11.7." }
       ]
     }
   ]

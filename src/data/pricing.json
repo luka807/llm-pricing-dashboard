@@ -6,7 +6,7 @@
   "providers": [
     {
       "provider": "OpenAI",
-      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "models": [
         {
           "model": "GPT-6 Astra",
@@ -21,11 +21,11 @@
         {
           "model": "GPT-5.6 Sol",
           "tier": "frontier",
-          "inputPerMillion": 5.0,
-          "outputPerMillion": 30.0,
-          "cachedInputPerMillion": 0.5,
+          "inputPerMillion": 4.0,
+          "outputPerMillion": 20.0,
+          "cachedInputPerMillion": 0.4,
           "contextWindowTokens": 1000000,
-          "notes": "Context window not shown on openai.com/api/pricing; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "notes": "Promotional pricing (20% off input, 33% off output vs. the $5/$30 launch price) in effect since 2026-08-21 and confirmed available at least through 2026-11-21, per developers.openai.com/api/docs/pricing (checked 2026-09-23). Context window not shown on that page; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
           "pricingModel": "token"
         },
         {
@@ -125,9 +125,9 @@
           "tier": "lightweight",
           "inputPerMillion": 0.3,
           "outputPerMillion": 2.5,
-          "cachedInputPerMillion": null,
+          "cachedInputPerMillion": 0.03,
           "contextWindowTokens": 1000000,
-          "notes": "Batch API gets 50% off. 64k max output tokens. Context/prompt caching is not offered for this model in the Standard tier, unlike the rest of the Gemini lineup — leave cached input blank rather than guessing.",
+          "notes": "Batch API gets 50% off (cached input drops to $0.02/M in Batch). 64k max output tokens. Context/prompt caching is now offered for this model in the Standard tier at $0.03/M cached input — reversing the prior finding that it wasn't available; cached-content storage billed separately at $1.00 per million tokens per hour. Re-verified directly on ai.google.dev/gemini-api/docs/pricing on 2026-09-23.",
           "pricingModel": "token"
         }
       ]
@@ -199,13 +199,13 @@
       "sourceUrl": "https://x.ai/api",
       "models": [
         {
-          "model": "Grok 4.6",
+          "model": "Grok 4.7",
           "tier": "frontier",
           "inputPerMillion": 2.0,
           "outputPerMillion": 6.0,
           "cachedInputPerMillion": 0.50,
           "contextWindowTokens": 500000,
-          "notes": "Cached input shown is the short-context cache rate (from docs.x.ai/developers/pricing, not the main x.ai/api marketing page). Long-context requests (once prompt tokens exceed the model's long-context threshold) use higher rates for everything: $4.00 input / $1.00 cached / $12.00 output.",
+          "notes": "Launched 2026-09-21, replacing Grok 4.6 at the identical list price (xAI's own announcement highlighted this as unchanged pricing despite a larger base model). Cached input shown is the short-context cache rate (from docs.x.ai/developers/pricing, not the main x.ai/api marketing page). Long-context requests (once prompt tokens exceed the model's long-context threshold) use higher rates for everything: $4.00 input / $1.00 cached / $12.00 output.",
           "pricingModel": "token"
         }
       ]
