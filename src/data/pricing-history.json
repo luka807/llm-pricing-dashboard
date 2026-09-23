@@ -6,7 +6,7 @@
     "description": "BenchLM's frontier token price index uses GPT-4's March 2023 launch price as index value 100. As of 2026-09-14 the index stood at 16 — an 84% drop in frontier pricing over roughly 3.5 years.",
     "sourceUrl": "https://benchlm.ai/llm-pricing-trends"
   },
-  "notes": "Curated launch-price and price-cut milestones, not continuous daily data, per the onboarding spec. Prices are as originally announced at each date, not today's price (see the Pricing Comparison tab for current rates). Some pre-2025 figures come from third-party aggregator sites rather than the original provider announcement and could not be independently cross-checked against a primary source — those are flagged in their own 'notes' field; treat them as reasonably-sourced rather than verified.",
+  "notes": "Curated launch-price and price-cut milestones, not continuous daily data, per the onboarding spec. Prices are as originally announced at each date, not today's price (see the Pricing Comparison tab for current rates). Some pre-2025 figures come from third-party aggregator sites rather than the original provider announcement and could not be independently cross-checked against a primary source — those are flagged in their own 'notes' field; treat them as reasonably-sourced rather than verified. A number of milestones were found or corrected by scrubbing the Wayback Machine / Internet Archive (web.archive.org) for archived snapshots of each provider's own pricing pages — those entries cite the specific archived URL/timestamp used as evidence, and are treated as primary-source-equivalent since they're direct captures of the provider's own page, not a third party's summary of it.",
   "milestones": [
     {
       "date": "2023-03-01",

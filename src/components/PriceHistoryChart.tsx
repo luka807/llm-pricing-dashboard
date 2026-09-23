@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { PROVIDER_COLOR_VAR, milestoneBlendedPrice, type PriceMilestone, type Provider } from "@/lib/pricing";
+import { ALL_MODELS, DATA_AS_OF, PROVIDER_COLOR_VAR, milestoneBlendedPrice, type PriceMilestone, type Provider } from "@/lib/pricing";
 import { formatDate, formatUSD } from "@/lib/format";
 
 type PriceHistoryChartProps = {
   milestones: PriceMilestone[];
+};
+
+type PlotPoint = {
+  key: string;
+  t: number;
+  price: number;
+  provider: Provider | null;
+  model: string;
+  synthetic: boolean;
+  milestone?: PriceMilestone;
 };
 
 const PLOT_LEFT = 72;
@@ -13,20 +23,68 @@ const PLOT_RIGHT = 980;
 const PLOT_TOP = 24;
 const PLOT_BOTTOM = 340;
 
+const CURRENT_PRICE_BY_KEY = new Map<string, number>(
+  ALL_MODELS.map((m) => [`${m.provider}::${m.model}`, (m.inputPerMillion + m.outputPerMillion) / 2])
+);
+
+const NOW_T = Date.parse(DATA_AS_OF);
+
 export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps) {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
 
-  const points = milestones
-    .map((m, i) => ({ m, i, price: milestoneBlendedPrice(m), t: Date.parse(m.date) }))
-    .filter((p): p is { m: PriceMilestone; i: number; price: number; t: number } => p.price != null && p.price > 0);
+  const rawPoints = milestones.map((m, i) => ({
+    key: `real-${i}`,
+    t: Date.parse(m.date),
+    price: milestoneBlendedPrice(m),
+    provider: (m.provider as Provider | null) ?? null,
+    model: m.model,
+    synthetic: false as const,
+    milestone: m,
+  }));
+  const realPoints: PlotPoint[] = rawPoints.filter(
+    (p): p is typeof p & { price: number } => p.price != null && p.price > 0
+  );
 
-  if (points.length === 0) {
+  if (realPoints.length === 0) {
     return (
       <div className="text-muted-foreground flex h-64 items-center justify-center border text-sm" style={{ borderColor: "var(--border)" }}>
         No pricing events match the current filters.
       </div>
     );
   }
+
+  // Group by model so each series can be extended with a synthetic point at
+  // today's current price — a model that hasn't changed since its last
+  // recorded milestone should still read as "priced through today," not as
+  // a line that mysteriously stops months or years ago.
+  const seriesKey = (p: Pick<PlotPoint, "provider" | "model">) => `${p.provider ?? "industry"}::${p.model}`;
+  const grouped = new Map<string, PlotPoint[]>();
+  for (const p of realPoints) {
+    const key = seriesKey(p);
+    const group = grouped.get(key);
+    if (group) group.push(p);
+    else grouped.set(key, [p]);
+  }
+
+  const seriesGroups: PlotPoint[][] = [];
+  for (const [key, group] of grouped) {
+    const sorted = [...group].sort((a, b) => a.t - b.t);
+    const current = CURRENT_PRICE_BY_KEY.get(key);
+    const last = sorted[sorted.length - 1];
+    if (current != null && NOW_T > last.t) {
+      sorted.push({
+        key: `synthetic-${key}`,
+        t: NOW_T,
+        price: current,
+        provider: last.provider,
+        model: last.model,
+        synthetic: true,
+      });
+    }
+    seriesGroups.push(sorted);
+  }
+
+  const points = seriesGroups.flat();
 
   const ts = points.map((p) => p.t);
   const logPrices = points.map((p) => Math.log10(p.price));
@@ -54,18 +112,9 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
     if (t >= tMin - 31536000000 && t <= tMax + 31536000000) yearTicks.push({ label: String(y), t });
   }
 
-  const hoveredPoint = points.find((p) => p.i === hovered) ?? null;
+  const hoveredPoint = points.find((p) => p.key === hovered) ?? null;
 
-  const series = new Map<string, typeof points>();
-  for (const p of points) {
-    const key = `${p.m.provider ?? "industry"}::${p.m.model}`;
-    const group = series.get(key);
-    if (group) group.push(p);
-    else series.set(key, [p]);
-  }
-  const connectors = Array.from(series.values())
-    .filter((group) => group.length > 1)
-    .map((group) => [...group].sort((a, b) => a.t - b.t));
+  const connectors = seriesGroups.filter((group) => group.length > 1);
 
   return (
     <div className="border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
@@ -87,10 +136,10 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
             </text>
           ))}
           {connectors.map((group) => {
-            const color = group[0].m.provider ? PROVIDER_COLOR_VAR[group[0].m.provider as Provider] : "var(--faint-foreground)";
+            const color = group[0].provider ? PROVIDER_COLOR_VAR[group[0].provider] : "var(--faint-foreground)";
             return (
               <polyline
-                key={`${group[0].m.provider ?? "industry"}::${group[0].m.model}`}
+                key={seriesKey(group[0])}
                 points={group.map((p) => `${px(p.t)},${py(Math.log10(p.price))}`).join(" ")}
                 fill="none"
                 stroke={color}
@@ -100,18 +149,33 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
               />
             );
           })}
-          {points.map((p) => {
-            const isCut = p.m.event === "price cut";
-            const color = p.m.provider ? PROVIDER_COLOR_VAR[p.m.provider as Provider] : "var(--faint-foreground)";
-            const cx = px(p.t);
-            const cy = py(Math.log10(p.price));
-            return (
-              <g key={p.i} style={{ cursor: "pointer" }} onMouseEnter={() => setHovered(p.i)} onMouseLeave={() => setHovered((h) => (h === p.i ? null : h))}>
-                <circle cx={cx} cy={cy} r={6.5} fill="var(--card)" />
-                <circle cx={cx} cy={cy} r={5} fill={isCut ? "var(--card)" : color} stroke={color} strokeWidth={2} />
-              </g>
-            );
-          })}
+          {points
+            .filter((p) => !p.synthetic)
+            .map((p) => {
+              const isCut = p.milestone?.event === "price cut";
+              const color = p.provider ? PROVIDER_COLOR_VAR[p.provider] : "var(--faint-foreground)";
+              const cx = px(p.t);
+              const cy = py(Math.log10(p.price));
+              return (
+                <g key={p.key} style={{ cursor: "pointer" }} onMouseEnter={() => setHovered(p.key)} onMouseLeave={() => setHovered((h) => (h === p.key ? null : h))}>
+                  <circle cx={cx} cy={cy} r={6.5} fill="var(--card)" />
+                  <circle cx={cx} cy={cy} r={5} fill={isCut ? "var(--card)" : color} stroke={color} strokeWidth={2} />
+                </g>
+              );
+            })}
+          {points
+            .filter((p) => p.synthetic)
+            .map((p) => {
+              const color = p.provider ? PROVIDER_COLOR_VAR[p.provider] : "var(--faint-foreground)";
+              const cx = px(p.t);
+              const cy = py(Math.log10(p.price));
+              return (
+                <g key={p.key} style={{ cursor: "pointer" }} onMouseEnter={() => setHovered(p.key)} onMouseLeave={() => setHovered((h) => (h === p.key ? null : h))}>
+                  <circle cx={cx} cy={cy} r={5.5} fill="var(--card)" />
+                  <circle cx={cx} cy={cy} r={3.5} fill={color} />
+                </g>
+              );
+            })}
         </svg>
 
         {hoveredPoint && (
@@ -122,12 +186,13 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
             <div className="mb-1 flex items-center gap-2 font-semibold" style={{ color: "var(--lnp-navy-deep)" }}>
               <span
                 className="inline-block h-[9px] w-[9px] shrink-0 rounded-full"
-                style={{ background: hoveredPoint.m.provider ? PROVIDER_COLOR_VAR[hoveredPoint.m.provider as Provider] : "var(--faint-foreground)" }}
+                style={{ background: hoveredPoint.provider ? PROVIDER_COLOR_VAR[hoveredPoint.provider] : "var(--faint-foreground)" }}
               />
-              {hoveredPoint.m.model}
+              {hoveredPoint.model}
             </div>
             <div className="text-muted-foreground mb-1">
-              {hoveredPoint.m.provider ?? "Industry"} · {formatDate(hoveredPoint.m.date)} · {hoveredPoint.m.event}
+              {hoveredPoint.provider ?? "Industry"} ·{" "}
+              {hoveredPoint.synthetic ? `Current as of ${formatDate(DATA_AS_OF)}` : `${formatDate(hoveredPoint.milestone!.date)} · ${hoveredPoint.milestone!.event}`}
             </div>
             <div className="text-muted-foreground flex justify-between">
               <span>Blended price</span>
@@ -138,7 +203,7 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
       </div>
 
       <div className="text-faint-foreground mt-3 text-center text-[11.5px]">
-        Blended launch / price-cut rate over time ($ / 1M tokens, log scale)
+        Blended launch / price-cut rate over time ($ / 1M tokens, log scale) — lines run through to today&apos;s price for models still on the market
       </div>
 
       <div className="text-muted-foreground mt-4 flex flex-wrap items-center justify-center gap-5 border-t pt-4 text-xs" style={{ borderColor: "var(--border)" }}>
@@ -149,6 +214,10 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-2.5 w-2.5 rounded-full border-2" style={{ borderColor: "var(--faint-foreground)", background: "var(--card)" }} />
           Price cut
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span className="inline-block h-2 w-2 rounded-full" style={{ background: "var(--faint-foreground)" }} />
+          Current price
         </span>
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-[2px] w-4 rounded-full" style={{ background: "var(--faint-foreground)" }} />

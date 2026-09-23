@@ -93,6 +93,7 @@ export default function PricingHistoryTab() {
           "Each point is the price as originally announced on that date — not today's price. See the Pricing Comparison tab for current rates.",
           "A connecting line links two or more milestones for the same model (e.g. a launch price and its later price cuts) so you can trace one model's trajectory; models with only one milestone on record show as an unconnected point.",
           "Rows tagged \"Verified\" were cross-checked against the original provider announcement; rows tagged \"Aggregator\" come from a third-party aggregator site and could not be independently cross-checked — treat them as reasonably-sourced rather than verified.",
+          "Many milestones were found or corrected by searching the Wayback Machine / Internet Archive for old snapshots of each provider's own pricing pages, rather than relying solely on press coverage or launch announcements — those entries cite the specific archived page and date used as evidence.",
           "The frontier token price index (shown above the filters) is sourced from BenchLM and anchored to GPT-4's March 2023 launch price as index value 100.",
         ]}
         sources={[{ label: "BenchLM frontier token price index", url: FRONTIER_INDEX_BASELINE.sourceUrl }]}
