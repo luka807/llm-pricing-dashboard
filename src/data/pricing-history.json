@@ -6,7 +6,7 @@
     "description": "BenchLM's frontier token price index uses GPT-4's March 2023 launch price as index value 100. As of 2026-09-14 the index stood at 16 — an 84% drop in frontier pricing over roughly 3.5 years.",
     "sourceUrl": "https://benchlm.ai/llm-pricing-trends"
   },
-  "notes": "Curated launch-price and price-cut milestones, not continuous daily data, per the onboarding spec. Prices are as originally announced at each date, not today's price (see pricing.json for current rates). Some pre-2025 figures come from third-party aggregator sites rather than the original provider announcement and could not be independently cross-checked against a primary source — those are flagged in their own 'notes' field; treat them as reasonably-sourced rather than verified.",
+  "notes": "Curated launch-price and price-cut milestones, not continuous daily data, per the onboarding spec. Prices are as originally announced at each date, not today's price (see the Pricing Comparison tab for current rates). Some pre-2025 figures come from third-party aggregator sites rather than the original provider announcement and could not be independently cross-checked against a primary source — those are flagged in their own 'notes' field; treat them as reasonably-sourced rather than verified.",
   "milestones": [
     {
       "date": "2023-03-01",
@@ -235,7 +235,7 @@
       "event": "launch",
       "inputPerMillion": 2.00,
       "outputPerMillion": 12.00,
-      "notes": "Rate for prompts <=200k tokens, same as pricing.json's current rate — no price cut on record since launch. Launch date confirmed directly via Google's own announcement post (blog.google/.../gemini-3-1-pro/), which doesn't itself state pricing; the price comes from ai.google.dev/gemini-api/docs/pricing, the same source used for pricing.json.",
+      "notes": "Rate for prompts <=200k tokens, same as the current listed rate — no price cut on record since launch. Launch date confirmed directly via Google's own announcement post (blog.google/.../gemini-3-1-pro/), which doesn't itself state pricing; the price comes from ai.google.dev/gemini-api/docs/pricing.",
       "sourceConfidence": "high"
     },
     {
@@ -245,7 +245,7 @@
       "event": "launch",
       "inputPerMillion": 0.30,
       "outputPerMillion": 2.50,
-      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. Sourced directly from Google's own announcement post (blog.google/.../gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/).",
+      "notes": "Same list price as the current listed rate — no price cut on record since launch. Sourced directly from Google's own announcement post (blog.google/.../gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/).",
       "sourceConfidence": "high"
     },
     {
@@ -255,7 +255,7 @@
       "event": "launch",
       "inputPerMillion": 0.75,
       "outputPerMillion": 3.75,
-      "notes": "Introductory rate, matching pricing.json's current rate; set to rise to $1.50/$7.50 on Jan 1, 2027 per the same announcement. Sourced directly from Google's own announcement post (blog.google/.../3-8-flash-and-3-8-flash-cyber/).",
+      "notes": "Introductory rate, matching the current listed rate; set to rise to $1.50/$7.50 on Jan 1, 2027 per the same announcement. Sourced directly from Google's own announcement post (blog.google/.../3-8-flash-and-3-8-flash-cyber/).",
       "sourceConfidence": "high"
     },
     {
@@ -295,7 +295,7 @@
       "event": "price increase",
       "inputPerMillion": 0.66,
       "outputPerMillion": 1.98,
-      "notes": "A steep hike from the Aug 13 launch flat rate, introduced alongside a new peak/off-peak split — off-peak rate shown here (matches pricing.json's current rate); peak hours (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) double everything to $1.32 input / $3.96 output. Confirmed via DeepSeek's own announcement, corroborated by multiple outlets (Engadget, InfoWorld, Qz) reporting increases 'up to 1,100%' on some token types.",
+      "notes": "A steep hike from the Aug 13 launch flat rate, introduced alongside a new peak/off-peak split — off-peak rate shown here (matches the current listed rate); peak hours (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) double everything to $1.32 input / $3.96 output. Confirmed via DeepSeek's own announcement, corroborated by multiple outlets (Engadget, InfoWorld, Qz) reporting increases 'up to 1,100%' on some token types.",
       "sourceConfidence": "high"
     },
     {
@@ -305,7 +305,7 @@
       "event": "launch",
       "inputPerMillion": 0.15,
       "outputPerMillion": 0.60,
-      "notes": "Off-peak rate, matching pricing.json's current rate for this model; peak doubles everything per the standard V4-family split. Note: several independent trackers (Yotta Labs, AI Pricing Guru, Intelligent Living) refer to this release as 'DeepSeek-V4.1-Flash' rather than 'V4-Flash' — flagging the naming discrepancy with pricing.json rather than guessing which is correct.",
+      "notes": "Off-peak rate, matching the current listed rate for this model; peak doubles everything per the standard V4-family split. Note: several independent trackers (Yotta Labs, AI Pricing Guru, Intelligent Living) refer to this release as 'DeepSeek-V4.1-Flash' rather than 'V4-Flash' — flagging the naming discrepancy rather than guessing which is correct.",
       "sourceConfidence": "high"
     },
     {
@@ -325,7 +325,7 @@
       "event": "launch",
       "inputPerMillion": 0.50,
       "outputPerMillion": 1.50,
-      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. Sourced directly from Mistral's own announcement post (mistral.ai/news/mistral-3/), published 2025-12-02.",
+      "notes": "Same list price as the current listed rate — no price cut on record since launch. Sourced directly from Mistral's own announcement post (mistral.ai/news/mistral-3/), published 2025-12-02.",
       "sourceConfidence": "high"
     },
     {
@@ -335,7 +335,7 @@
       "event": "launch",
       "inputPerMillion": 0.15,
       "outputPerMillion": 0.60,
-      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. Sourced directly from Mistral's own announcement post (mistral.ai/news/mistral-small-4/).",
+      "notes": "Same list price as the current listed rate — no price cut on record since launch. Sourced directly from Mistral's own announcement post (mistral.ai/news/mistral-small-4/).",
       "sourceConfidence": "high"
     },
     {
@@ -345,7 +345,7 @@
       "event": "launch",
       "inputPerMillion": 1.50,
       "outputPerMillion": 7.50,
-      "notes": "Same list price as pricing.json's current rate — no price cut on record since launch. The dedicated launch post wasn't directly accessible while compiling this dataset; date and price are corroborated by Mistral's own docs model card (docs.mistral.ai/models/mistral-medium-3-5-26-04) and independent coverage (Winbuzzer), which agree with each other.",
+      "notes": "Same list price as the current listed rate — no price cut on record since launch. The dedicated launch post wasn't directly accessible while compiling this dataset; date and price are corroborated by Mistral's own docs model card (docs.mistral.ai/models/mistral-medium-3-5-26-04) and independent coverage (Winbuzzer), which agree with each other.",
       "sourceConfidence": "medium"
     },
     {
@@ -395,7 +395,7 @@
       "event": "launch",
       "inputPerMillion": 2.00,
       "outputPerMillion": 6.00,
-      "notes": "Same list price as Grok 4.6 despite a larger base model and longer RL training cycle — xAI's own announcement explicitly called out the unchanged pricing. Rate shown is for short-context requests (under the 200k-token long-context threshold); above that, all rates double to $4.00 input / $12.00 output (cached input: $0.50 short-context / $1.00 long-context). Matches pricing.json's current rate. Sourced directly from xAI's own announcement, corroborated by press coverage (MarkTechPost, the-decoder) confirming the identical $2/$6 pricing.",
+      "notes": "Same list price as Grok 4.6 despite a larger base model and longer RL training cycle — xAI's own announcement explicitly called out the unchanged pricing. Rate shown is for short-context requests (under the 200k-token long-context threshold); above that, all rates double to $4.00 input / $12.00 output (cached input: $0.50 short-context / $1.00 long-context). Matches the current listed rate. Sourced directly from xAI's own announcement, corroborated by press coverage (MarkTechPost, the-decoder) confirming the identical $2/$6 pricing.",
       "sourceConfidence": "high"
     },
     {
@@ -426,7 +426,7 @@
       "event": "price cut",
       "inputPerMillion": 4.00,
       "outputPerMillion": 20.00,
-      "notes": "20% input cut / 33% output cut from the $5.00/$30.00 launch price ($0.50->$0.40 cached input too); matches pricing.json's current rate. This is the actual sticker-price event the Sept 14 blended-price entry below was tracking (0.75*input + 0.25*output reproduces both the $11.25/M launch and $8.00/M post-cut blended figures exactly) — not a cached-input-only change as earlier notes in this file speculated. Confirmed as promotional pricing in effect at least through 2026-11-21. Sourced from OpenAI's own developer community announcement ('20% price reduction for GPT 5.6 Sol'), corroborated by citybiz coverage, and verified live on developers.openai.com/api/docs/pricing (checked 2026-09-23).",
+      "notes": "20% input cut / 33% output cut from the $5.00/$30.00 launch price ($0.50->$0.40 cached input too); matches the current listed rate. This is the actual sticker-price event the Sept 14 blended-price entry below was tracking (0.75*input + 0.25*output reproduces both the $11.25/M launch and $8.00/M post-cut blended figures exactly) — not a cached-input-only change as earlier notes in this file speculated. Confirmed as promotional pricing in effect at least through 2026-11-21. Sourced from OpenAI's own developer community announcement ('20% price reduction for GPT 5.6 Sol'), corroborated by citybiz coverage, and verified live on developers.openai.com/api/docs/pricing (checked 2026-09-23).",
       "sourceConfidence": "high"
     },
     {
@@ -435,7 +435,7 @@
       "model": "GPT-5.6 Sol",
       "event": "price cut",
       "blendedPerMillion": 8.00,
-      "notes": "BenchLM's change-ledger figure (blended $11.25/M -> $8.00/M, 28.9% decrease) for the same Aug 21 sticker-price cut recorded directly above — BenchLM just recorded it a few weeks later. Blended figure, not directly comparable to pricing.json's separate input/output rates.",
+      "notes": "BenchLM's change-ledger figure (blended $11.25/M -> $8.00/M, 28.9% decrease) for the same Aug 21 sticker-price cut recorded directly above — BenchLM just recorded it a few weeks later. Blended figure, not directly comparable to the separate input/output rates tracked elsewhere in this dataset.",
       "sourceConfidence": "high"
     },
     {
