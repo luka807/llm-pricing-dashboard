@@ -94,27 +94,22 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
                 points={group.map((p) => `${px(p.t)},${py(Math.log10(p.price))}`).join(" ")}
                 fill="none"
                 stroke={color}
-                strokeWidth={1.5}
-                strokeOpacity={0.45}
+                strokeWidth={2}
+                strokeLinejoin="round"
+                strokeLinecap="round"
               />
             );
           })}
           {points.map((p) => {
             const isCut = p.m.event === "price cut";
             const color = p.m.provider ? PROVIDER_COLOR_VAR[p.m.provider as Provider] : "var(--faint-foreground)";
+            const cx = px(p.t);
+            const cy = py(Math.log10(p.price));
             return (
-              <circle
-                key={p.i}
-                cx={px(p.t)}
-                cy={py(Math.log10(p.price))}
-                r={5.5}
-                fill={isCut ? "var(--card)" : color}
-                stroke={color}
-                strokeWidth={2}
-                style={{ cursor: "pointer" }}
-                onMouseEnter={() => setHovered(p.i)}
-                onMouseLeave={() => setHovered((h) => (h === p.i ? null : h))}
-              />
+              <g key={p.i} style={{ cursor: "pointer" }} onMouseEnter={() => setHovered(p.i)} onMouseLeave={() => setHovered((h) => (h === p.i ? null : h))}>
+                <circle cx={cx} cy={cy} r={6.5} fill="var(--card)" />
+                <circle cx={cx} cy={cy} r={5} fill={isCut ? "var(--card)" : color} stroke={color} strokeWidth={2} />
+              </g>
             );
           })}
         </svg>
@@ -156,7 +151,7 @@ export default function PriceHistoryChart({ milestones }: PriceHistoryChartProps
           Price cut
         </span>
         <span className="inline-flex items-center gap-2">
-          <span className="inline-block h-px w-4" style={{ background: "var(--faint-foreground)", opacity: 0.45 }} />
+          <span className="inline-block h-[2px] w-4 rounded-full" style={{ background: "var(--faint-foreground)" }} />
           Same model over time
         </span>
       </div>

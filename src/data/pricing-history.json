@@ -189,13 +189,23 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2024-12-03",
+      "provider": "Anthropic",
+      "model": "Claude 3.5 Haiku",
+      "event": "price cut",
+      "inputPerMillion": 0.80,
+      "outputPerMillion": 4.00,
+      "notes": "A 20% across-the-board cut from the Nov 2024 launch price, found via Wayback Machine archives rather than a press announcement — a 2025-02-03 archived snapshot of anthropic.com/pricing shows this rate, and the page's own CMS metadata timestamps the pricing card's last edit at 2024-12-03T03:49:45Z. Cache write also cut $1.25->$1.00/M and cache read $0.125->$0.08/M. Not previously recorded in this dataset.",
+      "sourceConfidence": "high"
+    },
+    {
       "date": "2025-11-24",
       "provider": "Anthropic",
       "model": "Claude Opus 4.5",
       "event": "launch",
       "inputPerMillion": 5.00,
       "outputPerMillion": 25.00,
-      "notes": "Launch price, per Anthropic's own announcement post (\"Pricing is now $5/$25 per million tokens\") — there was no earlier Claude Opus 4.5 price to cut from. Anthropic's post doesn't itself frame this against prior Opus pricing, but it lands 67% below the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch and carried through Opus 4 / 4.1 unchanged (see that entry); that comparison is corroborated by multiple outlets' headlines (InfoWorld, VentureBeat, How2Shout). This is the price point today's Opus 5 still uses.",
+      "notes": "Launch price, per Anthropic's own announcement post (\"Pricing is now $5/$25 per million tokens\") — there was no earlier Claude Opus 4.5 price to cut from. Anthropic's post doesn't itself frame this against prior Opus pricing, but it lands 67% below the $15/$75 Opus rate that had held since Claude 3 Opus's March 2024 launch and carried through Opus 4 / 4.1 unchanged; that chain is now directly confirmed via archived anthropic.com/docs pricing tables (Opus 3, 4, and 4.1 all showing $15/$75 as of a 2025-11-19 snapshot), not just outlet headlines as previously noted. This is the price point today's Opus 5 still uses.",
       "sourceConfidence": "high"
     },
     {
@@ -205,8 +215,8 @@
       "event": "launch",
       "inputPerMillion": 2.00,
       "outputPerMillion": 10.00,
-      "notes": "First real cut to the Sonnet tier's price in this dataset — Sonnet had held at $3/$15 since Claude 3 Sonnet's March 2024 launch straight through 3.5, 3.7, 4, 4.5, and 4.6, per third-party aggregator tracking (not independently confirmed here). Introductory/launch pricing, explicitly framed by Anthropic as temporary at the time (see the Aug 2026 entry below).",
-      "sourceConfidence": "medium"
+      "notes": "First real cut to the Sonnet tier's price in this dataset — Sonnet had held at $3/$15 since Claude 3 Sonnet's March 2024 launch straight through 3.5, 3.7, 4, and 4.5, now directly confirmed via archived docs.anthropic.com pricing tables (a 2025-05-12 snapshot shows 3/3.5/3.7 at $3/$15; a 2025-11-19 snapshot shows 4/4.5 at $3/$15). A 'Sonnet 4.6' is mentioned in some third-party aggregator tracking as part of this unbroken chain, but no archived snapshot through Nov 2025 shows such a model existing — treat its existence as unconfirmed rather than assuming it held the same price. Introductory/launch pricing, explicitly framed by Anthropic as temporary at the time (see the Aug 2026 entry below).",
+      "sourceConfidence": "high"
     },
     {
       "date": "2026-08-10",
@@ -229,6 +239,56 @@
       "sourceConfidence": "aggregator"
     },
     {
+      "date": "2025-06-17",
+      "provider": "Google",
+      "model": "Gemini 2.5 Pro",
+      "event": "GA launch",
+      "inputPerMillion": 1.25,
+      "outputPerMillion": 10.00,
+      "notes": "Rate for prompts <=200k tokens (>200k rises to $2.50/$15.00); cached input $0.125/M. Entered experimental testing ~March 2025, public preview on Vertex AI from April 9, then GA on this date. Previously missing from this dataset entirely — an untracked model generation between Gemini 2.0 Flash (Dec 2024) and Gemini 3.1 Pro Preview (Feb 2026). Price is the currently-listed rate; not independently re-verified via an archived GA-day snapshot, so treat the exact launch-day figure as reasonably-sourced rather than certain.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2025-06-17",
+      "provider": "Google",
+      "model": "Gemini 2.5 Flash",
+      "event": "GA launch",
+      "inputPerMillion": 0.30,
+      "outputPerMillion": 2.50,
+      "notes": "Cached input $0.03/M. In preview since April 17, 2025; GA'd alongside Gemini 2.5 Pro at Google I/O 2025. Previously missing from this dataset entirely. Price is the currently-listed rate, not independently re-verified via an archived GA-day snapshot.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2025-07-22",
+      "provider": "Google",
+      "model": "Gemini 2.5 Flash-Lite",
+      "event": "stable launch",
+      "inputPerMillion": 0.10,
+      "outputPerMillion": 0.40,
+      "notes": "Cached input $0.01/M. Released as a stable version for developers and enterprise builders on this date. Previously missing from this dataset entirely. Price is the currently-listed rate, not independently re-verified via an archived launch-day snapshot.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2025-11-18",
+      "provider": "Google",
+      "model": "Gemini 3 Pro Preview",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 12.00,
+      "notes": "Rate for prompts <=200k tokens; cached input $0.20/M. Launched at the exact same price Gemini 3.1 Pro Preview still uses today — 3.1 was a model bump at flat pricing, not a repricing of 3, confirmed via archive.org snapshots of ai.google.dev showing 3 Pro Preview at this rate through its Mar 9, 2026 retirement/redirect to 3.1. Previously missing from this dataset entirely.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-12-17",
+      "provider": "Google",
+      "model": "Gemini 3 Flash Preview",
+      "event": "launch",
+      "inputPerMillion": 0.50,
+      "outputPerMillion": 3.00,
+      "notes": "Batch API $0.25/$1.50; cached input $0.05/M. Previously missing from this dataset entirely — the mid-tier counterpart to Gemini 3 Pro Preview's Nov 2025 launch. Price is the currently/recently-listed rate per third-party trackers (tokencost, pricepertoken), not independently re-verified via an archived launch-day snapshot.",
+      "sourceConfidence": "medium"
+    },
+    {
       "date": "2026-02-19",
       "provider": "Google",
       "model": "Gemini 3.1 Pro Preview",
@@ -249,6 +309,26 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2026-07-21",
+      "provider": "Google",
+      "model": "Gemini 3.6 Flash",
+      "event": "launch",
+      "inputPerMillion": 0.75,
+      "outputPerMillion": 3.75,
+      "notes": "Introductory rate (same announcement as Gemini 3.5 Flash-Lite above), matching the current listed rate; list price of $1.50/$7.50 applies starting Jan 1, 2027 per the same announcement. Previously missing from this dataset entirely, despite being the direct predecessor Gemini 3.7 Flash was benchmarked against three weeks later. Sourced directly from Google's own announcement post (blog.google/.../gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/), corroborated by press coverage (9to5Google) confirming the Dec 31, 2026 introductory-pricing cutoff.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-08-13",
+      "provider": "Google",
+      "model": "Gemini 3.7 Flash",
+      "event": "launch",
+      "inputPerMillion": 0.75,
+      "outputPerMillion": 3.75,
+      "notes": "Introductory rate, described by Google as a 50% discount versus Gemini 3.6 Flash's $1.50/$7.50 list price; same $1.50/$7.50 list price applies to this model too starting Jan 1, 2027. Previously missing from this dataset entirely. Sourced via press coverage (VentureBeat, 9to5Google, Android Headlines) of Google's own announcement.",
+      "sourceConfidence": "high"
+    },
+    {
       "date": "2026-09-02",
       "provider": "Google",
       "model": "Gemini 3.8 Flash",
@@ -265,7 +345,7 @@
       "event": "launch",
       "inputPerMillion": 0.27,
       "outputPerMillion": 1.10,
-      "notes": "Frontier-class benchmark results at budget pricing — this release is widely credited with triggering the 'DeepSeek moment' repricing pressure across the industry in early 2025.",
+      "notes": "Frontier-class benchmark results at budget pricing — this release is widely credited with triggering the 'DeepSeek moment' repricing pressure across the industry in early 2025. Figures shown are the list/sticker price; a launch-day introductory discount actually billed at $0.14 input / $0.28 output through ~2025-02-07 (see the Feb 2025 entry below), confirmed via an archived 2024-12-26 snapshot of api-docs.deepseek.com/quick_start/pricing showing the list prices struck through next to the discounted ones.",
       "sourceConfidence": "aggregator"
     },
     {
@@ -279,13 +359,103 @@
       "sourceConfidence": "high"
     },
     {
-      "date": "2026-08-13",
+      "date": "2025-02-08",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V3",
+      "event": "price increase",
+      "inputPerMillion": 0.27,
+      "outputPerMillion": 1.10,
+      "notes": "The launch-day introductory discount ($0.14/$0.28 effective price) expired, reverting to the $0.27/$1.10 list price that had been on the rate card since Dec 2024 but not actually charged. Archived snapshots pin this to between 2025-02-07 (still discounted) and 2025-02-09 (discount gone) — exact day not independently confirmed. Not previously recorded in this dataset.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2025-02-08",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V3",
+      "event": "off-peak discount introduced",
+      "inputPerMillion": 0.27,
+      "outputPerMillion": 1.10,
+      "notes": "Standard price unchanged; DeepSeek introduced its first off-peak discount scheme alongside the Feb 2025 repricing above — 50% off during 16:30-00:30 UTC each day. This is the structural precedent for the peak/off-peak split later applied to the V4 family (Aug 2026). Confirmed via archived api-docs.deepseek.com pricing table footnote. Not previously recorded in this dataset.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-02-08",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-R1",
+      "event": "off-peak discount introduced",
+      "inputPerMillion": 0.55,
+      "outputPerMillion": 2.19,
+      "notes": "Standard price unchanged; same Feb 2025 repricing introduced a 75% off-peak discount for R1 (steeper than V3's 50%) during 16:30-00:30 UTC each day. Confirmed via archived api-docs.deepseek.com pricing table footnote. Not previously recorded in this dataset.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-09-05",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V3.1",
+      "event": "price change",
+      "inputPerMillion": 0.56,
+      "outputPerMillion": 1.68,
+      "notes": "Covers both deepseek-chat (V3.1 non-thinking) and deepseek-reasoner (V3.1 thinking) — DeepSeek-V3.1 itself had released 2025-08-21 without a pricing change of its own. Effective 16:00 UTC this date, DeepSeek unified chat/reasoner onto one flat rate ($0.07 cache-hit / $0.56 cache-miss / $1.68 output) and explicitly cancelled the Feb 2025 nighttime discount scheme for both models. Confirmed via DeepSeek's own pricing-page announcement text. Not previously recorded in this dataset.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-09-29",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V3.2-Exp",
+      "event": "launch",
+      "inputPerMillion": 0.28,
+      "outputPerMillion": 0.42,
+      "notes": "A 50-60% cut from the Sept 5 unified V3.1 rate ($0.56/$1.68) at launch. Cache-hit input $0.028/M. Renamed to GA as 'DeepSeek-V3.2' on 2025-12-01 with no further price change. Confirmed via DeepSeek's own release post (api-docs.deepseek.com/news/news250929/). Not previously recorded in this dataset.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-04-24",
       "provider": "DeepSeek",
       "model": "DeepSeek-V4-Pro",
       "event": "launch",
+      "inputPerMillion": 1.74,
+      "outputPerMillion": 3.48,
+      "notes": "Real launch date and list price — corrects a prior version of this dataset, which mistakenly recorded this model's launch as 2026-08-13 at $0.435/$0.87 (that was actually a later promotional rate, see entries below; 2026-08-13 was just a same-priced version-tag bump to 'V4-Pro-0813' immediately preceding the real Aug 16 price hike). Cache-hit input $0.145/M at launch, no peak/off-peak split yet. Launched alongside DeepSeek-V4-Flash (see separate entry). Confirmed via archived api-docs.deepseek.com pricing snapshots.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-04-24",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V4-Flash",
+      "event": "launch",
+      "inputPerMillion": 0.14,
+      "outputPerMillion": 0.28,
+      "notes": "Real launch date and price — corrects a prior version of this dataset, which mistakenly recorded this model's launch as 2026-09-10 at $0.15/$0.60 (that was actually a later rename+reprice to 'DeepSeek-V4.1-Flash', see entry below). Cache-hit input $0.028/M at launch, flat rate with no peak/off-peak split yet. Confirmed via archived api-docs.deepseek.com pricing snapshots.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-04-26",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V4-Pro",
+      "event": "price cut",
       "inputPerMillion": 0.435,
       "outputPerMillion": 0.87,
-      "notes": "Launch was a single flat rate, not yet split into peak/off-peak tiers. Confirmed via DeepSeek's own GA release post (api-docs.deepseek.com/news/news260813/) cross-checked against press coverage (Engadget, InfoWorld) of the price hike three days later (see next entry), which cites this as the 'current flat rate' being replaced.",
+      "notes": "At 12:15 UTC: a permanent 10x cut to cache-hit pricing across the V4 family, plus a limited-time 75% promotional discount on V4-Pro specifically (initially through 05/05, later extended to 05/31 — see next entry) that brought the effective rate here to $0.435/$0.87. This is the number a prior version of this dataset mistakenly labeled as the model's launch price. Confirmed via archived api-docs.deepseek.com pricing snapshots.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-05-31",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V4-Pro",
+      "event": "promotional price made permanent",
+      "inputPerMillion": 0.435,
+      "outputPerMillion": 0.87,
+      "notes": "At 15:59 UTC, per a 2026-05-22 announcement, the Apr 26 promotional 75%-off rate became the permanent official price rather than reverting to the $1.74/$3.48 list price. No numeric change from the entry above — flagging the status change (temporary -> permanent) since it's what made $0.435/$0.87 the durable 'current' rate before the Aug 16 hike. Confirmed via a 2026-06-02 archived snapshot showing no discount/strikethrough language.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-08-16",
+      "provider": "DeepSeek",
+      "model": "DeepSeek-V4-Flash",
+      "event": "peak/off-peak split introduced",
+      "inputPerMillion": 0.22,
+      "outputPerMillion": 0.66,
+      "notes": "Off-peak rate shown, introduced alongside V4-Pro's Aug 16 hike (see next entry); peak hours double everything to $0.44/$1.32. Up from the flat $0.14/$0.28 launch rate. Confirmed via archived api-docs.deepseek.com pricing snapshots. Not previously recorded in this dataset.",
       "sourceConfidence": "high"
     },
     {
@@ -295,17 +465,17 @@
       "event": "price increase",
       "inputPerMillion": 0.66,
       "outputPerMillion": 1.98,
-      "notes": "A steep hike from the Aug 13 launch flat rate, introduced alongside a new peak/off-peak split — off-peak rate shown here (matches the current listed rate); peak hours (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) double everything to $1.32 input / $3.96 output. Confirmed via DeepSeek's own announcement, corroborated by multiple outlets (Engadget, InfoWorld, Qz) reporting increases 'up to 1,100%' on some token types.",
+      "notes": "A steep hike from the $0.435/$0.87 rate that had been permanent since May 31, introduced alongside a new peak/off-peak split — off-peak rate shown here (matches the current listed rate); peak hours (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) double everything to $1.32 input / $3.96 output. Confirmed via DeepSeek's own announcement, corroborated by multiple outlets (Engadget, InfoWorld, Qz) reporting increases 'up to 1,100%' on some token types.",
       "sourceConfidence": "high"
     },
     {
       "date": "2026-09-10",
       "provider": "DeepSeek",
-      "model": "DeepSeek-V4-Flash",
-      "event": "launch",
+      "model": "DeepSeek-V4.1-Flash",
+      "event": "renamed and price cut",
       "inputPerMillion": 0.15,
       "outputPerMillion": 0.60,
-      "notes": "Off-peak rate, matching the current listed rate for this model; peak doubles everything per the standard V4-family split. Note: several independent trackers (Yotta Labs, AI Pricing Guru, Intelligent Living) refer to this release as 'DeepSeek-V4.1-Flash' rather than 'V4-Flash' — flagging the naming discrepancy rather than guessing which is correct.",
+      "notes": "Off-peak rate, matching the current listed rate for this model; peak doubles everything to $0.30/$1.20. A prior version of this dataset recorded this as 'DeepSeek-V4-Flash' launching on this date at this price — DeepSeek's own docs now confirm this is actually a rename: the 'DeepSeek-V4-Flash' model ID (which really launched 2026-04-24, see that entry) was retired on this date, with requests redirected to this new 'DeepSeek-V4.1-Flash' model under a new 'deepseek-flash' API name, at a cut price (down from $0.22/$0.66 off-peak). This resolves a naming discrepancy an earlier version of this dataset had flagged as unresolved.",
       "sourceConfidence": "high"
     },
     {
@@ -316,6 +486,16 @@
       "inputPerMillion": 1.25,
       "outputPerMillion": 10.00,
       "notes": "Cached input priced separately at $0.125/M. Priced low enough that press coverage described it as risking a renewed price war. Sourced directly from TechCrunch's launch-day coverage.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-10-15",
+      "provider": "Anthropic",
+      "model": "Claude Haiku 4.5",
+      "event": "launch",
+      "inputPerMillion": 1.00,
+      "outputPerMillion": 5.00,
+      "notes": "Same list price as Claude 3.5 Haiku's Dec 2024 cut, and matches the current listed rate — no price cut on record since launch. Launched a few weeks after Claude Sonnet 4.5. Previously missing from this dataset entirely; confirmed via CNBC's launch-day coverage and Anthropic's own announcement post (anthropic.com/news/claude-haiku-4-5), with the archived pricing page also showing this rate in effect by 2025-11-19.",
       "sourceConfidence": "high"
     },
     {
@@ -379,6 +559,56 @@
       "sourceConfidence": "high"
     },
     {
+      "date": "2025-07-09",
+      "provider": "xAI",
+      "model": "Grok 4",
+      "event": "launch",
+      "inputPerMillion": 3.00,
+      "outputPerMillion": 15.00,
+      "notes": "First xAI entry in this dataset, which previously had zero history before Aug 2026. Launched alongside a $300/month consumer subscription tier. Sourced from TechCrunch's launch-day coverage, corroborated by independent pricing trackers (eesel, mem0). xAI's own launch post (x.ai/news/grok-4) didn't scrape cleanly for a direct primary-source price quote, so this is press-confirmed rather than screenshot-verified.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2025-09-23",
+      "provider": "xAI",
+      "model": "Grok 4 Fast",
+      "event": "launch",
+      "inputPerMillion": 0.20,
+      "outputPerMillion": 0.50,
+      "notes": "Announced 2025-09-19, released 2025-09-23. Rate shown is for short-context requests; long-context (above the model's threshold) doubles to $0.40 input / $1.00 output. Sourced directly from xAI's own announcement post (x.ai/news/grok-4-fast), which scraped cleanly with a matching pricing table.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-04-17",
+      "provider": "xAI",
+      "model": "Grok 4.3",
+      "event": "launch",
+      "inputPerMillion": 1.25,
+      "outputPerMillion": 2.50,
+      "notes": "~40% cheaper input / ~60% cheaper output than its Grok 4.20 predecessor, per Artificial Analysis. No first-party xAI announcement post surfaced for this release — it appears to have been a quiet catalog release established via third-party trackers and resold inference endpoints rather than a formal launch (VentureBeat covered it as 'an aggressively low price' launch). Confirmed present and unchanged in xAI's official docs/migration pages as of the May 2026 retirement below.",
+      "sourceConfidence": "medium"
+    },
+    {
+      "date": "2026-05-15",
+      "provider": "xAI",
+      "model": "Grok 4 Fast",
+      "event": "retired / forced repricing",
+      "inputPerMillion": 1.25,
+      "outputPerMillion": 2.50,
+      "notes": "At 12:00 PM PT, xAI retired grok-4-0709 (original Grok 4), grok-4-fast (both reasoning and non-reasoning), grok-3, and grok-code-fast-1, silently redirecting all remaining traffic to grok-4.3 billing. For Grok 4 Fast callers this was an effective price *increase* of roughly 525% on input / 400% on output (from $0.20/$0.50 to $1.25/$2.50) with no model change on their end beyond the billing switch. Confirmed directly via xAI's own migration-guide page (docs.x.ai/developers/migration/may-15-retirement), which explicitly states callers 'will be billed at grok-4.3 pricing of $1.25 per 1M input tokens and $2.50 per 1M output tokens.' Not previously recorded in this dataset.",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-07-08",
+      "provider": "xAI",
+      "model": "Grok 4.5",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 6.00,
+      "notes": "API launch 2026-07-08; consumer rollout followed 2026-07-22. A price *increase* from Grok 4.3's $1.25/$2.50 — breaks this dataset's usual 'prices only fall' pattern. Sourced directly from xAI's own announcement post (x.ai/news/grok-4-5): 'Grok 4.5 is priced at $2 per million input tokens and $6 per million output tokens.' Same price Grok 4.6 and 4.7 both later launched at.",
+      "sourceConfidence": "high"
+    },
+    {
       "date": "2026-08-12",
       "provider": "xAI",
       "model": "Grok 4.6",
@@ -426,7 +656,7 @@
       "event": "price cut",
       "inputPerMillion": 4.00,
       "outputPerMillion": 20.00,
-      "notes": "20% input cut / 33% output cut from the $5.00/$30.00 launch price ($0.50->$0.40 cached input too); matches the current listed rate. This is the actual sticker-price event the Sept 14 blended-price entry below was tracking (0.75*input + 0.25*output reproduces both the $11.25/M launch and $8.00/M post-cut blended figures exactly) — not a cached-input-only change as earlier notes in this file speculated. Confirmed as promotional pricing in effect at least through 2026-11-21. Sourced from OpenAI's own developer community announcement ('20% price reduction for GPT 5.6 Sol'), corroborated by citybiz coverage, and verified live on developers.openai.com/api/docs/pricing (checked 2026-09-23).",
+      "notes": "20% input cut / 33% output cut from the $5.00/$30.00 launch price ($0.50->$0.40 cached input too); matches the current listed rate. This is the actual sticker-price event the Sept 14 blended-price entry below was tracking (0.75*input + 0.25*output reproduces both the $11.25/M launch and $8.00/M post-cut blended figures exactly) — not a cached-input-only change as earlier notes in this file speculated. Confirmed as promotional pricing in effect through 2026-11-21T23:59 UTC (exact expiration timestamp per OpenAI's own pricing-page embedded data, found via a 2026-09-09 archive.org snapshot). Sourced from OpenAI's own developer community announcement ('20% price reduction for GPT 5.6 Sol'), corroborated by citybiz coverage, and verified live on developers.openai.com/api/docs/pricing (checked 2026-09-23).",
       "sourceConfidence": "high"
     },
     {

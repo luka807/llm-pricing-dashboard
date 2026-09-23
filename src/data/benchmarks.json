@@ -45,7 +45,7 @@
       "provider": "DeepSeek",
       "models": [
         { "model": "DeepSeek-V4-Pro", "intelligenceIndex": 31, "valueScore": 76.3, "notes": "Best value score of any model in this dataset." },
-        { "model": "DeepSeek-V4-Flash", "intelligenceIndex": 35, "valueScore": null, "notes": "BenchLM did not publish a value score for this model at fetch time. Scores higher than V4-Pro on Intelligence Index despite being the cheaper/lighter tier — worth re-verifying rather than assuming a typo." }
+        { "model": "DeepSeek-V4.1-Flash", "intelligenceIndex": 35, "valueScore": null, "notes": "Renamed from 'DeepSeek-V4-Flash' on 2026-09-10 (see pricing.json note). BenchLM did not publish a value score for this model at fetch time. Scores higher than V4-Pro on Intelligence Index despite being the cheaper/lighter tier — worth re-verifying rather than assuming a typo." }
       ]
     },
     {

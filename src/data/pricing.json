@@ -183,13 +183,13 @@
           "pricingModel": "token"
         },
         {
-          "model": "DeepSeek-V4-Flash",
+          "model": "DeepSeek-V4.1-Flash",
           "tier": "lightweight",
           "inputPerMillion": 0.15,
           "outputPerMillion": 0.6,
           "cachedInputPerMillion": 0.003,
           "contextWindowTokens": 1000000,
-          "notes": "Off-peak rates shown. Peak (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) doubles all rates to $0.30 input / $1.20 output / $0.006 cached.",
+          "notes": "Renamed from 'DeepSeek-V4-Flash' on 2026-09-10, per DeepSeek's own docs — the old model ID was retired and requests are now served by this one under a new 'deepseek-flash' API name, resolving a naming discrepancy flagged in an earlier version of this dataset. Off-peak rates shown. Peak (01:00-04:00 & 06:00-10:00 UTC, Mon-Fri) doubles all rates to $0.30 input / $1.20 output / $0.006 cached.",
           "pricingModel": "token"
         }
       ]
