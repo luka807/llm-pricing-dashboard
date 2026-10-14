@@ -12,7 +12,7 @@ import MethodologyNote from "@/components/MethodologyNote";
 
 const DEFAULT_SELECTED_MODELS = [
   "GPT-5.6 Terra",
-  "Claude Sonnet 5",
+  "Claude Sonnet 5.5",
   "Gemini 3.8 Flash",
   "Mistral Medium 3.5",
   "DeepSeek-V4-Pro",

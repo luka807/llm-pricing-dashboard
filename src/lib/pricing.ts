@@ -46,13 +46,15 @@ export const MODEL_LINEAGES: { provider: Provider; label: string; models: string
   // separate, pricier frontier option, not a replacement for it — both are
   // still sold today (see pricing.json), so chaining them would falsely
   // suggest a succession and bury Astra's own current price mid-line.
-  { provider: "OpenAI", label: "OpenAI flagship", models: ["GPT-3.5 Turbo", "GPT-4 (8K)", "GPT-4 Turbo", "GPT-4o", "GPT-5", "GPT-5.6 Sol"] },
-  { provider: "Anthropic", label: "Claude flagship", models: ["Claude 2", "Claude 3 Opus", "Claude Opus 4.5", "Claude Opus 5"] },
-  { provider: "Anthropic", label: "Claude Sonnet", models: ["Claude 3 Sonnet", "Claude 3.5 Sonnet", "Claude Sonnet 5"] },
-  { provider: "Anthropic", label: "Claude Haiku", models: ["Claude 3 Haiku", "Claude 3.5 Haiku", "Claude Haiku 4.5"] },
-  { provider: "Google", label: "Gemini Pro", models: ["Gemini 1.0 Pro", "Gemini 1.5 Pro", "Gemini 2.5 Pro", "Gemini 3 Pro Preview", "Gemini 3.1 Pro Preview"] },
+  { provider: "OpenAI", label: "OpenAI flagship", models: ["GPT-3.5 Turbo", "GPT-4 (8K)", "GPT-4 Turbo", "GPT-4o", "GPT-5", "GPT-5.6 Sol", "GPT-6 Sol", "GPT-6.1 Sol"] },
+  { provider: "OpenAI", label: "OpenAI Luna", models: ["GPT-5.6 Luna", "GPT-6 Luna"] },
+  { provider: "Anthropic", label: "Claude flagship", models: ["Claude 2", "Claude 3 Opus", "Claude Opus 4.5", "Claude Opus 5", "Claude Opus 5.5"] },
+  { provider: "Anthropic", label: "Claude Sonnet", models: ["Claude 3 Sonnet", "Claude 3.5 Sonnet", "Claude Sonnet 5", "Claude Sonnet 5.5"] },
+  { provider: "Anthropic", label: "Claude Haiku", models: ["Claude 3 Haiku", "Claude 3.5 Haiku", "Claude Haiku 4.5", "Claude Haiku 5.5"] },
+  { provider: "Google", label: "Gemini Pro", models: ["Gemini 1.0 Pro", "Gemini 1.5 Pro", "Gemini 2.5 Pro", "Gemini 3 Pro Preview", "Gemini 3.1 Pro Preview", "Gemini 4 Argon"] },
   { provider: "Google", label: "Gemini Flash", models: ["Gemini 1.5 Flash", "Gemini 2.0 Flash", "Gemini 2.5 Flash", "Gemini 3 Flash Preview", "Gemini 3.6 Flash", "Gemini 3.7 Flash", "Gemini 3.8 Flash"] },
   { provider: "Google", label: "Gemini Flash-Lite", models: ["Gemini 2.5 Flash-Lite", "Gemini 3.5 Flash-Lite"] },
+  { provider: "Mistral", label: "Mistral Large", models: ["Mistral Large 3", "Mistral Large 4"] },
   { provider: "DeepSeek", label: "DeepSeek flagship", models: ["DeepSeek-V3", "DeepSeek-V3.1", "DeepSeek-V3.2-Exp", "DeepSeek-V4-Pro"] },
   { provider: "DeepSeek", label: "DeepSeek Flash", models: ["DeepSeek-V4-Flash", "DeepSeek-V4.1-Flash"] },
   { provider: "xAI", label: "Grok flagship", models: ["Grok 4", "Grok 4.3", "Grok 4.5", "Grok 4.6", "Grok 4.7"] },

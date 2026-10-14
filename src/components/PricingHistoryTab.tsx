@@ -52,11 +52,11 @@ export default function PricingHistoryTab() {
         description="Each point is a published launch price or price cut; hover for detail."
       />
 
-      {FRONTIER_INDEX && "indexValue" in FRONTIER_INDEX && (
+      {FRONTIER_INDEX && typeof FRONTIER_INDEX.indexValue === "number" && (
         <div className="mb-6 flex flex-wrap items-center gap-6 border bg-[var(--card)] p-6 shadow-[var(--shadow-1)]" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-baseline gap-2">
             <span className="num font-mono text-4xl font-extrabold" style={{ color: "var(--lnp-navy-deep)" }}>
-              -84%
+              -{100 - FRONTIER_INDEX.indexValue}%
             </span>
             <span className="text-faint-foreground text-xs">since GPT-4&apos;s March 2023 launch</span>
           </div>

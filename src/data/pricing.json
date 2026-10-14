@@ -1,8 +1,8 @@
 {
   "$schema": "LLM pricing comparison data — Tab 1 (Pricing Comparison) and Tab 2 (Cost Calculator)",
-  "generatedAt": "2026-09-23",
+  "generatedAt": "2026-10-14",
   "unit": "USD per 1,000,000 tokens",
-  "notes": "Prices pulled directly from each provider's official pricing page, most recently re-checked 2026-09-23 (OpenAI, Google, and xAI were re-verified live on that date; Anthropic, Mistral, and DeepSeek were last directly re-fetched 2026-09-15 but independently confirmed unchanged since via Wayback Machine research through at least that window — see pricing-history.json for the underlying evidence). One known exception: Anthropic announced Claude Opus 5.5 on 2026-09-22, which may supersede the Claude Opus 5 entry below — not yet investigated or reflected here. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
+  "notes": "Prices pulled directly from each provider's official pricing/docs pages, all six providers re-verified live on 2026-10-14 (x.ai/api itself returned 403, so xAI was checked via docs.x.ai). Each provider is represented by its current-generation model in each tier; where a newer model replaced an older one that is still sold (e.g. Claude Opus 5, GPT-5.6 Sol/Luna, Gemini 3.1 Pro Preview, Mistral Large 3), the replacement is noted in the new entry and the older model's history stays on the Pricing History tab. Several current rates are time-limited — Gemini 4 Argon doubles on 2026-12-01, Gemini 3.8 Flash doubles on 2027-01-01, Mistral Large 4 is on an open-ended sale price — see each model's notes. LLM pricing changes frequently — re-check the source URLs periodically rather than treating this as permanent. All providers below price in tokens; none required credit/compute-unit normalization at the time of writing.",
   "providers": [
     {
       "provider": "OpenAI",
@@ -19,13 +19,13 @@
           "pricingModel": "token"
         },
         {
-          "model": "GPT-5.6 Sol",
+          "model": "GPT-6.1 Sol",
           "tier": "frontier",
-          "inputPerMillion": 4.0,
-          "outputPerMillion": 20.0,
-          "cachedInputPerMillion": 0.4,
-          "contextWindowTokens": 1000000,
-          "notes": "Promotional pricing (20% off input, 33% off output vs. the $5/$30 launch price) in effect since 2026-08-21 and confirmed available at least through 2026-11-21, per developers.openai.com/api/docs/pricing (checked 2026-09-23). Context window not shown on that page; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "inputPerMillion": 2.0,
+          "outputPerMillion": 10.0,
+          "cachedInputPerMillion": 0.1,
+          "contextWindowTokens": 1050000,
+          "notes": "Launched 2026-09-29 (OpenAI DevDay), succeeding GPT-6 Sol (2026-09-22, $2/$10/$0.20) and GPT-5.6 Sol as the Sol-line frontier option; OpenAI positions it as 'near-Astra performance' for complex coding, computer use and professional work. GPT-5.6 Sol is still sold at its $4/$20 promotional rate (through at least 2026-11-21), now pricier than this newer model. Rate shown is for prompts <=272,000 tokens; above that it rises to $4 input / $15 output / $0.20 cached. Cache writes cost $2.50/MTok. Context window 1.05M (922K max input, 128K max output) per developers.openai.com/api/docs/models/gpt-6.1-sol; prices per developers.openai.com/api/docs/pricing (checked 2026-10-14).",
           "pricingModel": "token"
         },
         {
@@ -34,18 +34,18 @@
           "inputPerMillion": 2.0,
           "outputPerMillion": 12.0,
           "cachedInputPerMillion": 0.2,
-          "contextWindowTokens": 1000000,
-          "notes": "Context window not shown on openai.com/api/pricing; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "contextWindowTokens": 1050000,
+          "notes": "No GPT-6-generation Terra exists yet, so this remains OpenAI's mid-range entry — though note GPT-6.1 Sol now matches it on input and undercuts it on output and cached input. Context window 1.05M (922K max input, 128K max output) per developers.openai.com/api/docs/models (corrected from the earlier 1M figure); prices re-verified on developers.openai.com/api/docs/pricing 2026-10-14.",
           "pricingModel": "token"
         },
         {
-          "model": "GPT-5.6 Luna",
+          "model": "GPT-6 Luna",
           "tier": "lightweight",
-          "inputPerMillion": 0.2,
-          "outputPerMillion": 1.2,
-          "cachedInputPerMillion": 0.02,
-          "contextWindowTokens": 1000000,
-          "notes": "Context window not shown on openai.com/api/pricing; 1M figure confirmed via AWS Bedrock's GPT-5.6 long-context announcement (aws.amazon.com/about-aws/whats-new/2026/08/gpt-sol-terra-luna-long-context-bedrock/).",
+          "inputPerMillion": 0.1,
+          "outputPerMillion": 0.5,
+          "cachedInputPerMillion": 0.01,
+          "contextWindowTokens": 1050000,
+          "notes": "Launched 2026-09-22, replacing GPT-5.6 Luna ($0.20/$1.20, still sold) at roughly half the price; also OpenAI's named replacement for GPT-4o/4o mini/4.1/4.1 mini (shutdown 2027-01-14) and gpt-5.4-nano (shutdown 2027-04-01). Rate shown is for prompts <=272,000 tokens; above that input and cached double and output rises 1.5x. Context window 1.05M (922K max input, 128K max output) per developers.openai.com/api/docs/models/gpt-6-luna; prices per developers.openai.com/api/docs/pricing (checked 2026-10-14).",
           "pricingModel": "token"
         }
       ]
@@ -65,33 +65,33 @@
           "pricingModel": "token"
         },
         {
-          "model": "Claude Opus 5",
+          "model": "Claude Opus 5.5",
           "tier": "frontier",
-          "inputPerMillion": 5.0,
-          "outputPerMillion": 25.0,
-          "cachedInputPerMillion": 0.50,
+          "inputPerMillion": 4.0,
+          "outputPerMillion": 20.0,
+          "cachedInputPerMillion": 0.20,
           "contextWindowTokens": 1000000,
-          "notes": "Cached input shown is the cache-read (hit) rate (0.1x base input, standard across Claude models except Fable/Mythos 5.1). Writing to cache costs extra: 1.25x base input for a 5-min TTL ($6.25/MTok) or 2x for a 1-hour TTL ($10/MTok).",
+          "notes": "Launched 2026-09-22, replacing Claude Opus 5 ($5/$25/$0.50 — now 'Legacy', still available, retirement not before 2027-07-24) at 20% lower input/output and 60% lower cache reads. Anthropic recommends Opus 5.5 for most workloads and Fable 5.1 for the most demanding ones. Cached input shown is the cache-read rate (0.05x base input). Cache writes: $5/MTok (5-min TTL) or $8/MTok (1-hour TTL). Fast mode is $8/$40. 128K max output. Per platform.claude.com/docs/en/about-claude/pricing and release notes (checked 2026-10-14).",
           "pricingModel": "token"
         },
         {
-          "model": "Claude Sonnet 5",
+          "model": "Claude Sonnet 5.5",
           "tier": "mid-range",
           "inputPerMillion": 2.0,
           "outputPerMillion": 10.0,
-          "cachedInputPerMillion": 0.20,
+          "cachedInputPerMillion": 0.10,
           "contextWindowTokens": 1000000,
-          "notes": "Cached input shown is the cache-read (hit) rate (0.1x base input). Writing to cache costs extra: 1.25x base input for a 5-min TTL ($2.50/MTok) or 2x for a 1-hour TTL ($4/MTok).",
+          "notes": "Launched 2026-09-28 at the same list price as Claude Sonnet 5 (now 'Legacy'); cache reads cut from $0.20 to $0.10/MTok on 2026-10-07. Cache writes: $2.50/MTok (5-min TTL) or $4/MTok (1-hour TTL). 128K max output. Per platform.claude.com/docs/en/about-claude/pricing (checked 2026-10-14).",
           "pricingModel": "token"
         },
         {
-          "model": "Claude Haiku 4.5",
+          "model": "Claude Haiku 5.5",
           "tier": "lightweight",
-          "inputPerMillion": 1.0,
-          "outputPerMillion": 5.0,
-          "cachedInputPerMillion": 0.10,
+          "inputPerMillion": 0.10,
+          "outputPerMillion": 0.50,
+          "cachedInputPerMillion": 0.01,
           "contextWindowTokens": 1000000,
-          "notes": "Cached input shown is the cache-read (hit) rate (0.1x base input). Writing to cache costs extra: 1.25x base input for a 5-min TTL ($1.25/MTok) or 2x for a 1-hour TTL ($2/MTok).",
+          "notes": "Launched 2026-10-07, replacing Claude Haiku 4.5 ($1/$5, now 'Legacy'). Prompt-length-tiered pricing, set per request: rates shown are for prompts <=100K input tokens (cached tokens count toward the threshold); above 100K the whole request is billed at $0.50 input / $2.50 output / $0.05 cached. 128K max output. Per platform.claude.com/docs/en/about-claude/pricing (checked 2026-10-14).",
           "pricingModel": "token"
         }
       ]
@@ -101,13 +101,13 @@
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "models": [
         {
-          "model": "Gemini 3.1 Pro Preview",
+          "model": "Gemini 4 Argon",
           "tier": "frontier",
           "inputPerMillion": 2.0,
-          "outputPerMillion": 12.0,
-          "cachedInputPerMillion": 0.20,
-          "contextWindowTokens": 200000,
-          "notes": "Tiered pricing: rates shown are for prompts <=200k tokens. Above 200k tokens: $4.00 input / $18.00 output / $0.40 cached. Batch API gets 50% off; Priority tier is a 1.8x multiplier. Cached-content storage is billed separately at $4.50 per million tokens per hour.",
+          "outputPerMillion": 10.0,
+          "cachedInputPerMillion": 0.10,
+          "contextWindowTokens": 1048576,
+          "notes": "Google's new flagship reasoning model, GA 2026-10-13. Launch rate shown applies through 2026-11-30; from 2026-12-01 it doubles to $4.00 input / $20.00 output / $0.20 cached. No <=200K / >200K split; output price includes thinking tokens. Implicit caching only (no explicit caching). Batch/Flex 50% off; Priority 1.8x. Context window 1,048,576 tokens shared between input and output, per ai.google.dev/gemini-api/docs/models/gemini-4-argon. Supersedes Gemini 3.1 Pro Preview ($2/$12, still listed, no deprecation notice) as Google's frontier entry. Per ai.google.dev/gemini-api/docs/pricing (checked 2026-10-14).",
           "pricingModel": "token"
         },
         {
@@ -117,7 +117,7 @@
           "outputPerMillion": 3.75,
           "cachedInputPerMillion": 0.075,
           "contextWindowTokens": 1000000,
-          "notes": "Promotional rate through Dec 31, 2026; rises to $1.50 input / $7.50 output / $0.15 cached after. Batch API gets 50% off. 64k max output tokens. Cached-content storage is billed separately at $0.50 per million tokens per hour (rising to $1.00 in 2027).",
+          "notes": "Rate shown applies through Dec 31, 2026; Google's pricing page schedules a rise to $1.50 input / $7.50 output / $0.15 cached from Jan 1, 2027 (Batch/Flex/Priority double too). Re-verified 2026-10-14. Batch API gets 50% off. 64k max output tokens. Cached-content storage is billed separately at $0.50 per million tokens per hour (rising to $1.00 in 2027).",
           "pricingModel": "token"
         },
         {
@@ -137,13 +137,13 @@
       "sourceUrl": "https://docs.mistral.ai/inference/pricing",
       "models": [
         {
-          "model": "Mistral Large 3",
+          "model": "Mistral Large 4",
           "tier": "frontier",
-          "inputPerMillion": 0.5,
-          "outputPerMillion": 1.5,
-          "cachedInputPerMillion": 0.05,
-          "contextWindowTokens": 256000,
-          "notes": "Flagship model. Context window from docs.mistral.ai/models/mistral-large-3-25-12 (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
+          "inputPerMillion": 0.68,
+          "outputPerMillion": 2.09,
+          "cachedInputPerMillion": 0.07,
+          "contextWindowTokens": 1000000,
+          "notes": "Public Preview (not GA), launched 2026-10-06. Rates shown are the current sale price listed on docs.mistral.ai/inference/pricing and the model page; no end date is given. List price is $1.36 input / $4.18 output / $0.14 cached (the only price printed in the launch post, mistral.ai/news/mistral-large-4). Context window 1M per docs.mistral.ai/models/mistral-large-4-0 (some third-party trackers say 512K). Supersedes Mistral Large 3 ($0.50/$1.50, still listed, not deprecated) as the frontier entry; open weights promised for end of October 2026.",
           "pricingModel": "token"
         },
         {
@@ -153,7 +153,7 @@
           "outputPerMillion": 7.5,
           "cachedInputPerMillion": 0.15,
           "contextWindowTokens": 256000,
-          "notes": "Priced higher than Large 3 on this provider's page — worth double-checking, this is not a typo in this file. Confirmed still the case via Wayback Machine snapshots of mistral.ai's pricing pages through 2026-09-21, with no evidence of change since. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
+          "notes": "Priced higher than both Large 3 and Large 4 on this provider's page — not a typo in this file; re-verified 2026-10-14. Confirmed still the case via Wayback Machine snapshots of mistral.ai's pricing pages through 2026-09-21, with no evidence of change since. Context window from OpenRouter's Mistral Medium 3.5 listing (not shown on the pricing page itself). Cached input is a 90% discount off base input, consistent across the Mistral lineup.",
           "pricingModel": "token"
         },
         {
@@ -205,7 +205,7 @@
           "outputPerMillion": 6.0,
           "cachedInputPerMillion": 0.50,
           "contextWindowTokens": 500000,
-          "notes": "Launched 2026-09-21, replacing Grok 4.6 at the identical list price (xAI's own announcement highlighted this as unchanged pricing despite a larger base model). Cached input shown is the short-context cache rate (from docs.x.ai/developers/pricing, not the main x.ai/api marketing page). Long-context requests (once prompt tokens exceed the model's long-context threshold) use higher rates for everything: $4.00 input / $1.00 cached / $12.00 output.",
+          "notes": "Launched 2026-09-21, replacing Grok 4.6 at the identical list price (xAI's own announcement highlighted this as unchanged pricing despite a larger base model). Cached input shown is the short-context cache rate (from docs.x.ai/developers/pricing, not the main x.ai/api marketing page). Long-context requests (200K+ prompt tokens, per docs.x.ai/docs/models, re-checked 2026-10-14) use higher rates for every token in the request: $4.00 input / $1.00 cached / $12.00 output.",
           "pricingModel": "token"
         }
       ]

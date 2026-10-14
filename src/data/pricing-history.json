@@ -1,9 +1,9 @@
 {
   "$schema": "LLM pricing history data — Tab 4 (Pricing History)",
-  "generatedAt": "2026-09-23",
+  "generatedAt": "2026-10-14",
   "unit": "USD per 1,000,000 tokens",
   "baseline": {
-    "description": "BenchLM's frontier token price index uses GPT-4's March 2023 launch price as index value 100. As of 2026-09-14 the index stood at 16 — an 84% drop in frontier pricing over roughly 3.5 years.",
+    "description": "BenchLM's frontier token price index uses GPT-4's March 2023 launch price as index value 100. As of 2026-10-14 the index stood at 15.5 — an 84.5% drop in frontier pricing over roughly 3.5 years (down 3.1% month over month, across 36 frontier models).",
     "sourceUrl": "https://benchlm.ai/llm-pricing-trends"
   },
   "notes": "Curated launch-price and price-cut milestones, not continuous daily data, per the onboarding spec. Prices are as originally announced at each date, not today's price (see the Pricing Comparison tab for current rates). Some pre-2025 figures come from third-party aggregator sites rather than the original provider announcement and could not be independently cross-checked against a primary source — those are flagged in their own 'notes' field; treat them as reasonably-sourced rather than verified. A number of milestones were found or corrected by scrubbing the Wayback Machine / Internet Archive (web.archive.org) for archived snapshots of each provider's own pricing pages — those entries cite the specific archived URL/timestamp used as evidence, and are treated as primary-source-equivalent since they're direct captures of the provider's own page, not a third party's summary of it.",
@@ -699,12 +699,92 @@
       "sourceConfidence": "high"
     },
     {
-      "date": "2026-09-14",
+      "date": "2026-09-22",
+      "provider": "OpenAI",
+      "model": "GPT-6 Sol",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 10.00,
+      "notes": "First GPT-6-generation Sol model, at half GPT-5.6 Sol's $4/$20 promotional rate ($0.20 cached). Superseded a week later by GPT-6.1 Sol at the same input/output price. Per OpenAI's developer changelog and developers.openai.com/api/docs/models/gpt-6-sol (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-22",
+      "provider": "OpenAI",
+      "model": "GPT-6 Luna",
+      "event": "launch",
+      "inputPerMillion": 0.10,
+      "outputPerMillion": 0.50,
+      "notes": "Replaces GPT-5.6 Luna ($0.20/$1.20) at half the price; $0.01 cached. Rate shown is for prompts <=272K tokens. Per OpenAI's developer changelog and developers.openai.com/api/docs/models/gpt-6-luna (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-29",
+      "provider": "OpenAI",
+      "model": "GPT-6.1 Sol",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 10.00,
+      "notes": "Launched at OpenAI DevDay; same input/output as GPT-6 Sol with cached input halved to $0.10. Rate shown is for prompts <=272K tokens ($4/$15 above). Per OpenAI's developer changelog and developers.openai.com/api/docs/models/gpt-6.1-sol (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-22",
+      "provider": "Anthropic",
+      "model": "Claude Opus 5.5",
+      "event": "launch",
+      "inputPerMillion": 4.00,
+      "outputPerMillion": 20.00,
+      "notes": "20% below Claude Opus 5's $5/$25 on input/output, with cache reads cut 60% to $0.20. Opus 5 remains on sale as a Legacy model. Per Anthropic's release notes ('$4 / $20 USD per MTok (Claude Opus 5 is $5 / $25)') and platform.claude.com/docs/en/about-claude/pricing (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-09-28",
+      "provider": "Anthropic",
+      "model": "Claude Sonnet 5.5",
+      "event": "launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 10.00,
+      "notes": "Same list price as Claude Sonnet 5. Cache reads launched at $0.20 and were cut to $0.10 on 2026-10-07 (input/output unchanged, so no separate milestone). Per Anthropic's release notes and pricing page (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-10-07",
+      "provider": "Anthropic",
+      "model": "Claude Haiku 5.5",
+      "event": "launch",
+      "inputPerMillion": 0.10,
+      "outputPerMillion": 0.50,
+      "notes": "90% below Claude Haiku 4.5's $1/$5. Prompt-length-tiered: rates shown are for prompts <=100K input tokens; longer requests are billed entirely at $0.50/$2.50. Per Anthropic's release notes and pricing page (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-10-06",
+      "provider": "Mistral",
+      "model": "Mistral Large 4",
+      "event": "launch",
+      "inputPerMillion": 0.68,
+      "outputPerMillion": 2.09,
+      "notes": "Public Preview. Plotted at the sale price shown on Mistral's pricing page and model page (no end date given); the launch post lists only the $1.36/$4.18 list price. Per docs.mistral.ai/inference/pricing, docs.mistral.ai/models/mistral-large-4-0 and mistral.ai/news/mistral-large-4 (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-10-13",
+      "provider": "Google",
+      "model": "Gemini 4 Argon",
+      "event": "GA launch",
+      "inputPerMillion": 2.00,
+      "outputPerMillion": 10.00,
+      "notes": "GA date per the Gemini API changelog (third-party sites report a restricted preview from ~2026-09-30, not primary-source verified). Launch rate runs through 2026-11-30; Google's pricing page schedules a rise to $4/$20 from 2026-12-01 (not recorded as a milestone until it takes effect). Per ai.google.dev/gemini-api/docs/pricing and changelog (checked 2026-10-14).",
+      "sourceConfidence": "high"
+    },
+    {
+      "date": "2026-10-14",
       "provider": null,
       "model": "Frontier token price index",
       "event": "index snapshot",
-      "indexValue": 16,
-      "notes": "84% below the March 2023 GPT-4 baseline (index = 100). This is the single number that best tells Tab 4's overall story: frontier LLM pricing has fallen by roughly 6x since GPT-4's original launch.",
+      "indexValue": 15.5,
+      "notes": "84.5% below the March 2023 GPT-4 baseline (index = 100), per benchlm.ai/llm-pricing-trends checked 2026-10-14 (was 16 on 2026-09-14). BenchLM revises past months in its series (e.g. July now reads 21.3 vs. 12 published at the time), so only the latest value is recorded here. This is the single number that best tells Tab 4's overall story: frontier LLM pricing has fallen by roughly 6x since GPT-4's original launch.",
       "sourceConfidence": "high"
     }
   ]
